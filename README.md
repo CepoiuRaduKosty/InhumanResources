@@ -1,5 +1,7 @@
 # InhumanResources
 # VEDETI TABUL DE ISSUES PT CE TREBUIE FACUT
+# Vedeti folderul Documentatie\Templates pentru cum se fac documente
+# Vedeti folderul Documentatie\Exemple pentru exemple de documente
 
 # Roles
 
