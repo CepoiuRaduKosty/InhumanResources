@@ -23,3 +23,4 @@ Explicatii:
               trebuie ca userul sa fie logat in rol successfully)
 + < SOMETHING > - ce trebuie sa faca programu cand nu sunt indepliniti vreunu din pasi (ex. sa afiseze mesaj de eroare)
 
+
