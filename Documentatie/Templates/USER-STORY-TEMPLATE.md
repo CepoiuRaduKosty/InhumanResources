@@ -21,4 +21,5 @@ Explicatii:
 + < MOTIV > - Scopul pentru care este nevoie de capabilitate; poate fi acelasi pt mai multe use caseuri
 + < PAS-n > - La acceptance criteria trebuie puse in mare conditiile pentru utilizarea capabilitatii(gen 
               trebuie ca userul sa fie logat in rol successfully)
++ < SOMETHING > - ce trebuie sa faca programu cand nu sunt indepliniti vreunu din pasi (ex. sa afiseze mesaj de eroare)
 
