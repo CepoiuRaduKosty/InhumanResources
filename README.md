@@ -13,6 +13,9 @@ Manages user accounts, system configuration, and maintains the overall functiona
 ### HR Manager: 
 Oversees various HR functions, including employee management, performance evaluations, and recruitment processes.
  
+### Team Manager:
+Manages specific teams or departments within the organization and focuses on team-level HR activities, such as performance management and team-specific HR policies.
+
 ### Employee: 
 Has self-service access to personal information, leave requests, payroll details, and participation in performance evaluations.
  
