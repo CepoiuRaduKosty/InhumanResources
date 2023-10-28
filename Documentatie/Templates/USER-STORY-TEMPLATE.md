@@ -12,13 +12,13 @@
      * OTHERWISE <SOMETHING>
 ````
 
-```
 Explicatii:
-    <ROL> - Unul din rolurile: General Director, Administrator, HR Manager, Team Manager, Employee
-    <CAPABILITATE> - Actiune de care rolul ar trebui sa fie capabil pentru a-si realiza scopul(unic pentru 
+    
++ < ROL > - Unul din rolurile: General Director, Administrator, HR Manager, Team Manager, Employee
+    
++ < CAPABILITATE > - Actiune de care rolul ar trebui sa fie capabil pentru a-si realiza scopul(unic pentru 
                      fiecare user story)
-    <MOTIV> - Scopul pentru care este nevoie de capabilitate; poate fi acelasi pt mai multe use caseuri
-    <PAS-n> - La acceptance criteria trebuie puse in mare conditiile pentru utilizarea capabilitatii(gen 
++ < MOTIV > - Scopul pentru care este nevoie de capabilitate; poate fi acelasi pt mai multe use caseuri
++ < PAS-n > - La acceptance criteria trebuie puse in mare conditiile pentru utilizarea capabilitatii(gen 
               trebuie ca userul sa fie logat in rol successfully)
-```
-</span>
+
