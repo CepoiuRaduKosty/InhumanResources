@@ -12,6 +12,7 @@
      * OTHERWISE <SOMETHING>
 ````
 
+
 Explicatii:
     
 + < ROL > - Unul din rolurile: General Director, Administrator, HR Manager, Team Manager, Employee
