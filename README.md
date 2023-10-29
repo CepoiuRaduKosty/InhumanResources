@@ -22,3 +22,4 @@
 
 * ### Payroll Manager: 
     Configures and manages the payroll process, ensuring accurate and compliant payroll processing.
+
