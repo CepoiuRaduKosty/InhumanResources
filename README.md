@@ -1,7 +1,7 @@
 # DATABASE LOCAL CONFIGUARTION GUIDE
 #
 Before all the steps, make sure you have created a database
-in MySQL Workbench. And added a user with the following credentials:
+in MySQL Workbench with the name "inhuman_resources". And added a user with the following credentials:
 
 ```
 Login Name: InhumanResourcesUser
