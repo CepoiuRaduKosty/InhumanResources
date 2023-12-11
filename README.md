@@ -1,25 +1,14 @@
-# InhumanResources
-# VEDETI TABUL DE ISSUES PT CE TREBUIE FACUT
-# Vedeti folderul Documentatie\Templates pentru cum se fac documente
-# Vedeti folderul Documentatie\Exemple pentru exemple de documente
+# DATABASE LOCAL CONFIGUARTION GUIDE
 
-# Roles
-
-* ### General Director: 
-    Holds the highest level of authority with overall access, control, and decision-making capabilities across all functions of the HRM application.
-
-* ### Administrator: 
-    Manages user accounts, system configuration, and maintains the overall functionality and security of the application.
-
-* ### HR Manager:   
-    Oversees various HR functions, including employee management, performance evaluations, and recruitment processes.
-
-* ### Team Manager:
-    Manages specific teams or departments within the organization and focuses on team-level HR activities, such as performance management and team-specific HR policies.
-
-* ### Employee:
-    Has self-service access to personal information, leave requests, payroll details, and participation in performance evaluations.
-
-* ### Payroll Manager: 
-    Configures and manages the payroll process, ensuring accurate and compliant payroll processing.
-
+1. Deploy the application and go to http://localhost:4848
+2. Go to JDBC -> JDBC Connection Pools -> Press New
+3. Fill the form as follows, then click Next 
+   ![img_1.png](Documentatie/PNGs/img_1.png)
+4. Add this
+  ![img_2.png](Documentatie/PNGs/img_2.png)
+5. Add the additional properties as follows
+  ![img_3.png](Documentatie/PNGs/img_3.png)
+6. Check the ping and click Finish
+7. Go to JDBC -> JDBC Resources -> Press New
+8. Fill the form as follows, then click OK
+  ![img_4.png](Documentatie/PNGs/img_4.png)
