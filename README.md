@@ -1,4 +1,20 @@
 # DATABASE LOCAL CONFIGUARTION GUIDE
+#
+Before all the steps, make sure you have created a database
+in MySQL Workbench. And added a user with the following credentials:
+
+```
+Login Name: InhumanResourcesUser
+Password: InhumanResourcesPassword
+```
+Also add the following user privileges:
+
+![img5.png](Documentatie/PNGs/img5.png)
+
+
+
+##
+## Steps to configure the database:
 
 1. Deploy the application and go to http://localhost:4848
 2. Go to JDBC -> JDBC Connection Pools -> Press New
