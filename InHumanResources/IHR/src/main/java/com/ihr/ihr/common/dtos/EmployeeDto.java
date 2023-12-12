@@ -14,4 +14,17 @@ public class EmployeeDto {
     public String address;
     public String religion;
     public int hoursPerWeek; // must be within 40-10
+
+    public EmployeeDto(int id, String name, String surname, int id_bankinfo, int id_paymentinfo, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, int hoursPerWeek) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.id_bankinfo = id_bankinfo;
+        this.id_paymentinfo = id_paymentinfo;
+        this.gender = gender;
+        this.dateOfBirth = dateOfBirth;
+        this.address = address;
+        this.religion = religion;
+        this.hoursPerWeek = hoursPerWeek;
+    }
 }
