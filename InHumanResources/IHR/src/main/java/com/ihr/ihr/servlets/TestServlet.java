@@ -16,8 +16,8 @@ public class TestServlet extends HttpServlet {
         ArrayList<String> debug = new ArrayList<>();
 
         // test code
-        debug.add("pula");
-        debug.add("pizda?");
+        debug.add("croissant");
+        debug.add("lalele?");
         // end test
 
         request.setAttribute("debugtxt", debug);
