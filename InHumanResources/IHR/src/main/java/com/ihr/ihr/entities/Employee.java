@@ -1,10 +1,19 @@
-package com.ihr.ihr.common.dtos;
+package com.ihr.ihr.entities;
 
 import com.ihr.ihr.common.enums.GenderEnum;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 import java.time.LocalDate;
 
-public class EmployeeDto {
-    private int id;
+@Entity
+public class Employee {
+
+    @Id
+    @GeneratedValue
+    private int Id;
+
     private String name;
     private String surname;
     private int id_bankinfo;
@@ -13,29 +22,15 @@ public class EmployeeDto {
     private LocalDate dateOfBirth;
     private String address;
     private String religion;
+    private int hoursPerWeek; // must be within 40-10
 
-
-
-    public EmployeeDto(int id, String name, String surname, int id_bankinfo, int id_paymentinfo, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, int hoursPerWeek) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.id_bankinfo = id_bankinfo;
-        this.id_paymentinfo = id_paymentinfo;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.religion = religion;
-        this.hoursPerWeek = hoursPerWeek;
-    }
     public int getId() {
-        return id;
+        return Id;
     }
 
     public void setId(int id) {
-        this.id = id;
+        Id = id;
     }
-
     public String getName() {
         return name;
     }
@@ -43,6 +38,7 @@ public class EmployeeDto {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public String getSurname() {
         return surname;
@@ -107,6 +103,4 @@ public class EmployeeDto {
     public void setHoursPerWeek(int hoursPerWeek) {
         this.hoursPerWeek = hoursPerWeek;
     }
-
-    private int hoursPerWeek; // must be within 40-10
 }
