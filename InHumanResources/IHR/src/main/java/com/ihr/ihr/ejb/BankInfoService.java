@@ -60,6 +60,7 @@ public class BankInfoService implements BankInfoProvider{
         bankInfo.setBankName(bankInfoDto.getBankName());
         bankInfo.setIBAN(bankInfoDto.getIBAN());
     }
+
     @Override
     public void deleteById(int id_bankinfo) {
         LOG.info("deleteBankInfoById");
