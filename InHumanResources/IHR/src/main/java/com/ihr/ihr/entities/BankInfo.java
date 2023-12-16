@@ -15,6 +15,7 @@ public class BankInfo {
     public int getId() {
         return this.id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -22,6 +23,7 @@ public class BankInfo {
     public String getIBAN() {
         return this.IBAN;
     }
+
     public void setIBAN(String IBAN) {
         this.IBAN = IBAN;
     }
@@ -29,6 +31,7 @@ public class BankInfo {
     public String getBankName() {
         return this.bankName;
     }
+
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }

@@ -4,6 +4,7 @@ import com.ihr.ihr.common.dtos.BankInfoDto;
 
 public interface BankInfoProvider {
     BankInfoDto getById(int id_bankinfo);
+
     void addBankInfo(BankInfoDto bankinfoDto);
 
     void updateBankInfo(int id_bankinfo, BankInfoDto bankInfoDto);

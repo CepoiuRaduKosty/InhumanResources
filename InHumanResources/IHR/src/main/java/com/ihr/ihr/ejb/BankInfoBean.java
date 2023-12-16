@@ -12,7 +12,7 @@ import jakarta.persistence.TypedQuery;
 import java.util.logging.Logger;
 
 @Stateless
-public class BankInfoBean implements BankInfoProvider{
+public class BankInfoBean implements BankInfoProvider {
     private static final Logger LOG = Logger.getLogger(BankInfoBean.class.getName());
     @PersistenceContext
     EntityManager entityManager;
@@ -21,15 +21,13 @@ public class BankInfoBean implements BankInfoProvider{
     public BankInfoDto getById(int id_bankinfo) {
         LOG.info("getBankInfoById");
 
-        try{
+        try {
             TypedQuery<BankInfo> typedQuery = entityManager.createQuery("SELECT b FROM BankInfo b WHERE b.id = :id", BankInfo.class);
             typedQuery.setParameter("id", id_bankinfo);
             BankInfo bankInfo = typedQuery.getSingleResult();
 
             return new BankInfoDto(bankInfo.getId(), bankInfo.getIBAN(), bankInfo.getBankName());
-        }
-        catch (Exception ex)
-        {
+        } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
@@ -57,6 +55,7 @@ public class BankInfoBean implements BankInfoProvider{
         bankInfo.setBankName(bankInfoDto.getBankName());
         bankInfo.setIBAN(bankInfoDto.getIBAN());
     }
+
     @Override
     public void deleteById(int id_bankinfo) {
         LOG.info("deleteBankInfoById");
