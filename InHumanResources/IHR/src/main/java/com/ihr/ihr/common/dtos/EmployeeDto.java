@@ -1,6 +1,7 @@
 package com.ihr.ihr.common.dtos;
 
 import com.ihr.ihr.common.enums.GenderEnum;
+
 import java.time.LocalDate;
 
 public class EmployeeDto {
@@ -15,7 +16,6 @@ public class EmployeeDto {
     private String religion;
 
 
-
     public EmployeeDto(int id, String name, String surname, int id_bankinfo, int id_paymentinfo, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, int hoursPerWeek) {
         this.id = id;
         this.name = name;
@@ -28,6 +28,7 @@ public class EmployeeDto {
         this.religion = religion;
         this.hoursPerWeek = hoursPerWeek;
     }
+
     public int getId() {
         return id;
     }

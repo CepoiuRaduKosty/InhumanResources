@@ -13,7 +13,6 @@ public class Employee {
     @Id
     @GeneratedValue
     private int Id;
-
     private String name;
     private String surname;
     private int id_bankinfo;
@@ -31,6 +30,7 @@ public class Employee {
     public void setId(int id) {
         Id = id;
     }
+
     public String getName() {
         return name;
     }
@@ -38,7 +38,6 @@ public class Employee {
     public void setName(String name) {
         this.name = name;
     }
-
 
     public String getSurname() {
         return surname;

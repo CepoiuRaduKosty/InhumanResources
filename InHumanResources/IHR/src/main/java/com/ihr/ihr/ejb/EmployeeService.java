@@ -27,11 +27,9 @@ public class EmployeeService implements EmployeeProvider {
 
     @PersistenceContext
     EntityManager entityManager;
-    @Override
 
-    public  void createEmployee(EmployeeDto employeeDto) {
-        LOG.info("createEmployee");
-        Employee employee = new Employee();
+    private void setEmployeeInformation(Employee employee,EmployeeDto employeeDto)
+    {
         employee.setName(employeeDto.getName());
         employee.setSurname(employeeDto.getSurname());
         employee.setId_bankinfo(employeeDto.getId_bankinfo());
@@ -41,111 +39,82 @@ public class EmployeeService implements EmployeeProvider {
         employee.setAddress(employeeDto.getAddress());
         employee.setReligion(employeeDto.getReligion());
         employee.setHoursPerWeek(employeeDto.getHoursPerWeek());
-
-        entityManager.persist(employee);
-
-
-
     }
+    @Override
+    public void createEmployee(EmployeeDto employeeDto)
+    {
+        LOG.info("createEmployee");
+        Employee employee = new Employee();
+        setEmployeeInformation(employee,employeeDto);
+        entityManager.persist(employee);
+    }
+
     @Override
     public void deleteEmployeeById(int employeeId)
     {
         LOG.info("deleteEmployeeById");
-
-            Employee employee = entityManager.find(Employee.class, employeeId);
-            entityManager.remove(employee);
-
-
+        Employee employee = entityManager.find(Employee.class, employeeId);
+        entityManager.remove(employee);
     }
+
     @Override
     public void updateEmployee(int id_employee, EmployeeDto employeeDto)
     {
         LOG.info("updateEmployee");
-
-        Employee employee=entityManager.find(Employee.class,id_employee);
-        employee.setName(employeeDto.getName());
-        employee.setSurname(employeeDto.getSurname());
-        employee.setId_bankinfo(employeeDto.getId_bankinfo());
-        employee.setId_paymentinfo(employeeDto.getId_paymentinfo());
-        employee.setGender(employeeDto.getGender());
-        employee.setDateOfBirth(employeeDto.getDateOfBirth());
-        employee.setAddress(employeeDto.getAddress());
-        employee.setReligion(employeeDto.getReligion());
-        employee.setHoursPerWeek(employeeDto.getHoursPerWeek());
-
-
-
-
-
-
+        Employee employee = entityManager.find(Employee.class, id_employee);
+        setEmployeeInformation(employee,employeeDto);
     }
 
-    private List<EmployeeDto> copyEmployeesToDto(List<Employee> employees)
-    {
-        List<EmployeeDto> employeesDto=new ArrayList<>();
+    private List<EmployeeDto> copyEmployeesToDto(List<Employee> employees) {
+        List<EmployeeDto> employeesDto = new ArrayList<>();
         employees.forEach(employee ->
         {
-            EmployeeDto employeeDto=new EmployeeDto(employee.getId(),employee.getName(),employee.getSurname(),employee.getId_bankinfo(),employee.getId_paymentinfo(),employee.getGender(),employee.getDateOfBirth(),employee.getAddress(),employee.getReligion(),employee.getHoursPerWeek());
+            EmployeeDto employeeDto = new EmployeeDto(employee.getId(), employee.getName(), employee.getSurname(), employee.getId_bankinfo(), employee.getId_paymentinfo(), employee.getGender(), employee.getDateOfBirth(), employee.getAddress(), employee.getReligion(), employee.getHoursPerWeek());
             employeesDto.add(employeeDto);
         });
         return employeesDto;
     }
-    public List<EmployeeDto> findAllEmployees()
-    {
+    public List<EmployeeDto> findAllEmployees() {
         LOG.info("findAllEmployees");
-        try
-        {
-
-            TypedQuery<Employee> typedQuery=entityManager.createQuery("SELECT C FROM Employee c", Employee.class);
-            List<Employee> employees=typedQuery.getResultList();
+        try {
+            TypedQuery<Employee> typedQuery = entityManager.createQuery("SELECT C FROM Employee c", Employee.class);
+            List<Employee> employees = typedQuery.getResultList();
 
             return copyEmployeesToDto(employees);
-
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
 
-    public List<EmployeeDto> findAllEmployeesByName(String employeeName)
-    {
+    public List<EmployeeDto> findAllEmployeesByName(String employeeName) {
         LOG.info("findAllEmployeesByName");
-        try
-        {
-
-            TypedQuery<Employee> typedQuery=entityManager.createQuery("SELECT C FROM Employee c", Employee.class);
-            List<Employee> employees=typedQuery.getResultList();
-            List<Employee> employeesSearch=new ArrayList<>();
-            for(Employee employee:employees)
+        try {
+            TypedQuery<Employee> typedQuery = entityManager.createQuery("SELECT C FROM Employee c", Employee.class);
+            List<Employee> employees = typedQuery.getResultList();
+            List<Employee> employeesSearch = new ArrayList<>();
+            for (Employee employee : employees)
             {
-                if(employee.getName().contains(employeeName)||employee.getSurname().contains(employeeName))
-                {
+                if (employee.getName().contains(employeeName) || employee.getSurname().contains(employeeName)) {
                     employeesSearch.add(employee);
                 }
             }
-
             return copyEmployeesToDto(employeesSearch);
-
-        }
-        catch(Exception ex)
-        {
+        } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
+
     public EmployeeDto findById(int employeeId) {
         LOG.info("findById");
         try {
             Employee employee = entityManager.find(Employee.class, employeeId);
-            if (employee == null) {
+            if (employee == null)
+            {
                 return null;
             }
-
-            return new EmployeeDto(employee.getId(),employee.getName(),employee.getSurname(),employee.getId_bankinfo(),employee.getId_paymentinfo(),employee.getGender(),employee.getDateOfBirth(),employee.getAddress(),employee.getReligion(),employee.getHoursPerWeek());
+            return new EmployeeDto(employee.getId(), employee.getName(), employee.getSurname(), employee.getId_bankinfo(), employee.getId_paymentinfo(), employee.getGender(), employee.getDateOfBirth(), employee.getAddress(), employee.getReligion(), employee.getHoursPerWeek());
         } catch (Exception e) {
             throw new EJBException(e);
         }
     }
-
-
 }
