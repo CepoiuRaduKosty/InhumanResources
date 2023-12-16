@@ -13,21 +13,21 @@ public class BankInfo {
     private String bankName;
 
     public int getId() {
-        return id;
+        return this.id;
     }
     public void setId(int id) {
         this.id = id;
     }
 
     public String getIBAN() {
-        return IBAN;
+        return this.IBAN;
     }
     public void setIBAN(String IBAN) {
         this.IBAN = IBAN;
     }
 
     public String getBankName() {
-        return bankName;
+        return this.bankName;
     }
     public void setBankName(String bankName) {
         this.bankName = bankName;

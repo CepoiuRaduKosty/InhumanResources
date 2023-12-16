@@ -4,8 +4,6 @@ import com.ihr.ihr.common.dtos.BankInfoDto;
 import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
-import jakarta.ejb.Local;
-import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -14,9 +12,8 @@ import jakarta.persistence.TypedQuery;
 import java.util.logging.Logger;
 
 @Stateless
-@LocalBean
-public class BankInfoService implements BankInfoProvider{
-    private static final Logger LOG = Logger.getLogger(BankInfoService.class.getName());
+public class BankInfoBean implements BankInfoProvider{
+    private static final Logger LOG = Logger.getLogger(BankInfoBean.class.getName());
     @PersistenceContext
     EntityManager entityManager;
 
@@ -38,7 +35,7 @@ public class BankInfoService implements BankInfoProvider{
     }
 
     @Override
-    public void add(BankInfoDto bankinfoDto) {
+    public void addBankInfo(BankInfoDto bankinfoDto) {
         LOG.info("AddBankInfo");
 
         BankInfo bankInfo = new BankInfo();
@@ -52,7 +49,7 @@ public class BankInfoService implements BankInfoProvider{
     }
 
     @Override
-    public void update(int id_bankinfo, BankInfoDto bankInfoDto) {
+    public void updateBankInfo(int id_bankinfo, BankInfoDto bankInfoDto) {
         LOG.info("updateBankInfo");
 
         BankInfo bankInfo = entityManager.find(BankInfo.class, id_bankinfo);
