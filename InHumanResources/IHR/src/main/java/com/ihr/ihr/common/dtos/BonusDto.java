@@ -2,9 +2,9 @@ package com.ihr.ihr.common.dtos;
 
 public class BonusDto {
     Long id;
-    Long id_payment;
+    Long idPayment;
     int value;
-    String denumire_bonus;
+    String denumireBonus;
 
     public Long getId() {
         return this.id;
@@ -14,12 +14,12 @@ public class BonusDto {
         this.id = id;
     }
 
-    public Long getId_payment() {
-        return this.id_payment;
+    public Long getIdPayment() {
+        return this.idPayment;
     }
 
-    public void setId_payment(Long id_payment) {
-        this.id_payment = id_payment;
+    public void setIdPayment(Long idPayment) {
+        this.idPayment = idPayment;
     }
 
     public int getValue() {
@@ -30,11 +30,11 @@ public class BonusDto {
         this.value = value;
     }
 
-    public String getDenumire_bonus() {
-        return this.denumire_bonus;
+    public String getDenumireBonus() {
+        return this.denumireBonus;
     }
 
-    public void setDenumire_bonus(String denumire_bonus) {
-        this.denumire_bonus = denumire_bonus;
+    public void setDenumireBonus(String denumireBonus) {
+        this.denumireBonus = denumireBonus;
     }
 }
