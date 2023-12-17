@@ -2,29 +2,20 @@ package com.ihr.ihr.common.dtos;
 
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 
-public class PaymentInfoDto {
-    private Long id;
+public class CreatePaymentInfoDto {
     private Integer monthlyBasicSalary;
     private SalaryLevelEnum salaryLevel;
     private Integer bonusForSuccess;
     private Integer numberOfShares;
 
-    public PaymentInfoDto(Long id, Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
+    public CreatePaymentInfoDto(Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
                           Integer bonusForSuccess, Integer numberOfShares) {
-        this.id = id;
         this.monthlyBasicSalary = monthlyBasicSalary;
         this.salaryLevel = salaryLevel;
         this.bonusForSuccess = bonusForSuccess;
         this.numberOfShares = numberOfShares;
     }
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Integer getMonthlyBasicSalary() {
         return this.monthlyBasicSalary;
