@@ -6,8 +6,8 @@
   <persistence-unit name="default" transaction-type="JTA">
     <jta-data-source>jdbc/InhumanResources</jta-data-source>
       <class>com.ihr.ihr.entities.Employee</class>
-
-      <properties>
+      <class>com.ihr.ihr.entities.BankInfo</class>
+    <properties>
       <property name="jakarta.persistence.schema-generation.database.action" value="create-or-extend-tables" />
     </properties>
   </persistence-unit>
