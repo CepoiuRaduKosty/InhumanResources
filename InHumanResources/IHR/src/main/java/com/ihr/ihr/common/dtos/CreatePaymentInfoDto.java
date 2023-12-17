@@ -1,32 +1,21 @@
-package com.ihr.ihr.entities;
+package com.ihr.ihr.common.dtos;
 
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
 
-@Entity
-public class PaymentInfo {
-    @Id
-    @GeneratedValue
-    private Long id;
+public class CreatePaymentInfoDto {
+    private Integer monthlyBasicSalary;
+    private SalaryLevelEnum salaryLevel;
+    private Integer bonusForSuccess;
+    private Integer numberOfShares;
 
-    public Integer monthlyBasicSalary;
-
-    public SalaryLevelEnum salaryLevel;
-
-    public Integer bonusForSuccess;
-
-    public Integer numberOfShares;
-
-
-    public Long getId() {
-        return this.id;
+    public CreatePaymentInfoDto(Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
+                          Integer bonusForSuccess, Integer numberOfShares) {
+        this.monthlyBasicSalary = monthlyBasicSalary;
+        this.salaryLevel = salaryLevel;
+        this.bonusForSuccess = bonusForSuccess;
+        this.numberOfShares = numberOfShares;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Integer getMonthlyBasicSalary() {
         return this.monthlyBasicSalary;

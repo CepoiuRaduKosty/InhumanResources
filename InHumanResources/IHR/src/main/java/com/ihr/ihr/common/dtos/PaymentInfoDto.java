@@ -3,13 +3,13 @@ package com.ihr.ihr.common.dtos;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 
 public class PaymentInfoDto {
-    private Integer id;
+    private Long id;
     private Integer monthlyBasicSalary;
     private SalaryLevelEnum salaryLevel;
     private Integer bonusForSuccess;
     private Integer numberOfShares;
 
-    public PaymentInfoDto(Integer id, Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
+    public PaymentInfoDto(Long id, Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
                           Integer bonusForSuccess, Integer numberOfShares) {
         this.id = id;
         this.monthlyBasicSalary = monthlyBasicSalary;
@@ -18,11 +18,11 @@ public class PaymentInfoDto {
         this.numberOfShares = numberOfShares;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

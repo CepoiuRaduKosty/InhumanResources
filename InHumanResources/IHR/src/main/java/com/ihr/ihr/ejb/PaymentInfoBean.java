@@ -1,5 +1,6 @@
 package com.ihr.ihr.ejb;
 
+import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.NonPositiveIncomeException;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
@@ -13,15 +14,14 @@ import jakarta.persistence.TypedQuery;
 import java.util.logging.Logger;
 
 @Stateless
-public class PaymentInfoBean implements PaymentInfoProvider {
+public class PaymentInfoBean implements PaymentInfoProvider{
     private static final Logger LOG = Logger.getLogger(PaymentInfoBean.class.getName());
 
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @Override
-    public PaymentInfoDto findPaymentInfoById(Integer paymentInfoId) {
+    public PaymentInfoDto findPaymentInfoById(Long paymentInfoId) {
         try{
             LOG.info("findPaymentInfoById");
             TypedQuery<PaymentInfo> typedQuery = entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class);
@@ -40,16 +40,15 @@ public class PaymentInfoBean implements PaymentInfoProvider {
     }
 
     @Override
-    public void addPaymentInfo(PaymentInfoDto paymentinfoDto) throws NonPositiveIncomeException {
+    public void addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException {
         try{
             LOG.info("addPaymentInfo");
             PaymentInfo paymentInfo = new PaymentInfo();
 
-            paymentInfo.setId(paymentinfoDto.getId());
-            paymentInfo.setMonthlyBasicSalary(paymentinfoDto.getMonthlyBasicSalary());
-            paymentInfo.setSalaryLevel(paymentinfoDto.getSalaryLevel());
-            paymentInfo.setBonusForSuccess(paymentinfoDto.getBonusForSuccess());
-            paymentInfo.setNumberOfShares(paymentinfoDto.getNumberOfShares());
+            paymentInfo.setMonthlyBasicSalary(createPaymentInfoDto.getMonthlyBasicSalary());
+            paymentInfo.setSalaryLevel(createPaymentInfoDto.getSalaryLevel());
+            paymentInfo.setBonusForSuccess(createPaymentInfoDto.getBonusForSuccess());
+            paymentInfo.setNumberOfShares(createPaymentInfoDto.getNumberOfShares());
 
             entityManager.persist(paymentInfo);
         }
@@ -59,7 +58,7 @@ public class PaymentInfoBean implements PaymentInfoProvider {
     }
 
     @Override
-    public void updatePaymentInfo(Integer paymentInfoId, PaymentInfoDto paymentInfoDto) throws NonPositiveIncomeException {
+    public void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws NonPositiveIncomeException {
         try{
             LOG.info("updatePaymentInfo");
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
@@ -75,7 +74,7 @@ public class PaymentInfoBean implements PaymentInfoProvider {
     }
 
     @Override
-    public void deletePaymentInfo(Integer paymentInfoId) {
+    public void deletePaymentInfo(Long paymentInfoId) {
         try{
             LOG.info("deletePaymentInfo");
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
