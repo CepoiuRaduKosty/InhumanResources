@@ -8,11 +8,11 @@ import jakarta.persistence.Id;
 public class BankInfo {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     private String IBAN;
     private String bankName;
 
-    public int getId() {
+    public Integer getId() {
         return this.id;
     }
 
