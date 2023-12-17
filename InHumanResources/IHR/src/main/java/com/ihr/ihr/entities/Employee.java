@@ -1,11 +1,18 @@
-package com.ihr.ihr.common.dtos;
+package com.ihr.ihr.entities;
 
 import com.ihr.ihr.common.enums.GenderEnum;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 
 import java.time.LocalDate;
 
-public class EmployeeDto {
-    private Integer id;
+@Entity
+public class Employee {
+
+    @Id
+    @GeneratedValue
+    private Integer Id;
     private String name;
     private String surname;
     private Integer bankInfoId;
@@ -14,27 +21,14 @@ public class EmployeeDto {
     private LocalDate dateOfBirth;
     private String address;
     private String religion;
-    private Integer hoursPerWeek;
-
-    public EmployeeDto(Integer id, String name, String surname, Integer bankInfoId, Integer paymentInfoId, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, Integer hoursPerWeek) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.bankInfoId = bankInfoId;
-        this.paymentInfoId = paymentInfoId;
-        this.gender = gender;
-        this.dateOfBirth = dateOfBirth;
-        this.address = address;
-        this.religion = religion;
-        this.hoursPerWeek = hoursPerWeek;
-    }
+    private Integer hoursPerWeek; // must be within 40-10
 
     public Integer getId() {
-        return this.id;
+        return this.Id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        Id = id;
     }
 
     public String getName() {
@@ -57,16 +51,16 @@ public class EmployeeDto {
         return this.bankInfoId;
     }
 
-    public void setBankInfoId(Integer bankInfoId) {
-        this.bankInfoId = bankInfoId;
+    public void setBankInfoId(Integer id_bankinfo) {
+        this.bankInfoId = id_bankinfo;
     }
 
     public Integer getPaymentInfoId() {
         return this.paymentInfoId;
     }
 
-    public void setPaymentInfoId(Integer paymentInfoId) {
-        this.paymentInfoId = paymentInfoId;
+    public void setPaymentInfoId(Integer id_paymentinfo) {
+        this.paymentInfoId = id_paymentinfo;
     }
 
     public GenderEnum getGender() {
