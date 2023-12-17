@@ -24,6 +24,9 @@ tasks.withType(JavaCompile) {
 dependencies {
   compileOnly('jakarta.platform:jakarta.jakartaee-api:9.1.0')
   compileOnly('org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1')
+
+  implementation 'commons-validator:commons-validator:1.7'
+
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
   testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
