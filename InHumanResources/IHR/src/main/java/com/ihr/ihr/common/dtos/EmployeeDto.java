@@ -14,6 +14,7 @@ public class EmployeeDto {
     private LocalDate dateOfBirth;
     private String address;
     private String religion;
+    private int hoursPerWeek;
 
 
     public EmployeeDto(int id, String name, String surname, int id_bankinfo, int id_paymentinfo, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, int hoursPerWeek) {
@@ -30,7 +31,7 @@ public class EmployeeDto {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -38,7 +39,7 @@ public class EmployeeDto {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -46,7 +47,7 @@ public class EmployeeDto {
     }
 
     public String getSurname() {
-        return surname;
+        return this.surname;
     }
 
     public void setSurname(String surname) {
@@ -54,7 +55,7 @@ public class EmployeeDto {
     }
 
     public int getId_bankinfo() {
-        return id_bankinfo;
+        return this.id_bankinfo;
     }
 
     public void setId_bankinfo(int id_bankinfo) {
@@ -62,7 +63,7 @@ public class EmployeeDto {
     }
 
     public int getId_paymentinfo() {
-        return id_paymentinfo;
+        return this.id_paymentinfo;
     }
 
     public void setId_paymentinfo(int id_paymentinfo) {
@@ -70,7 +71,7 @@ public class EmployeeDto {
     }
 
     public GenderEnum getGender() {
-        return gender;
+        return this.gender;
     }
 
     public void setGender(GenderEnum gender) {
@@ -78,7 +79,7 @@ public class EmployeeDto {
     }
 
     public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+        return this.dateOfBirth;
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
@@ -86,7 +87,7 @@ public class EmployeeDto {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(String address) {
@@ -94,7 +95,7 @@ public class EmployeeDto {
     }
 
     public String getReligion() {
-        return religion;
+        return this.religion;
     }
 
     public void setReligion(String religion) {
@@ -102,12 +103,12 @@ public class EmployeeDto {
     }
 
     public int getHoursPerWeek() {
-        return hoursPerWeek;
+        return this.hoursPerWeek;
     }
 
     public void setHoursPerWeek(int hoursPerWeek) {
         this.hoursPerWeek = hoursPerWeek;
     }
 
-    private int hoursPerWeek; // must be within 40-10
+
 }

@@ -58,7 +58,7 @@ public class EmployeeService implements EmployeeProvider {
     }
 
     @Override
-    public void updateEmployee(int id_employee, EmployeeDto employeeDto)
+    public void updateEmployeeById(int id_employee, EmployeeDto employeeDto)
     {
         LOG.info("updateEmployee");
         Employee employee = entityManager.find(Employee.class, id_employee);

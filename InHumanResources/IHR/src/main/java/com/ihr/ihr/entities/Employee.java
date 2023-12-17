@@ -24,7 +24,7 @@ public class Employee {
     private int hoursPerWeek; // must be within 40-10
 
     public int getId() {
-        return Id;
+        return this.Id;
     }
 
     public void setId(int id) {
@@ -32,7 +32,7 @@ public class Employee {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -40,7 +40,7 @@ public class Employee {
     }
 
     public String getSurname() {
-        return surname;
+        return this.surname;
     }
 
     public void setSurname(String surname) {
@@ -48,7 +48,7 @@ public class Employee {
     }
 
     public int getId_bankinfo() {
-        return id_bankinfo;
+        return this.id_bankinfo;
     }
 
     public void setId_bankinfo(int id_bankinfo) {
@@ -56,7 +56,7 @@ public class Employee {
     }
 
     public int getId_paymentinfo() {
-        return id_paymentinfo;
+        return this.id_paymentinfo;
     }
 
     public void setId_paymentinfo(int id_paymentinfo) {
@@ -64,7 +64,7 @@ public class Employee {
     }
 
     public GenderEnum getGender() {
-        return gender;
+        return this.gender;
     }
 
     public void setGender(GenderEnum gender) {
@@ -72,7 +72,7 @@ public class Employee {
     }
 
     public LocalDate getDateOfBirth() {
-        return dateOfBirth;
+        return this.dateOfBirth;
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
@@ -80,7 +80,7 @@ public class Employee {
     }
 
     public String getAddress() {
-        return address;
+        return this.address;
     }
 
     public void setAddress(String address) {
@@ -88,7 +88,7 @@ public class Employee {
     }
 
     public String getReligion() {
-        return religion;
+        return this.religion;
     }
 
     public void setReligion(String religion) {
@@ -96,7 +96,7 @@ public class Employee {
     }
 
     public int getHoursPerWeek() {
-        return hoursPerWeek;
+        return this.hoursPerWeek;
     }
 
     public void setHoursPerWeek(int hoursPerWeek) {

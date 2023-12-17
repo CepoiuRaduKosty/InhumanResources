@@ -22,24 +22,7 @@ public class TestServlet extends HttpServlet {
 
         // test code
         debug.add("croissant");
-       // employeeService.deleteEmployeeById(123);
-        //employeeService.createEmployee(115,"radu","marian",3,3, GenderEnum.FEMALE, LocalDate.now(),"aa","aaaa",40);
-      //  employeeService.createEmployee(185,"radu","gabi",3,3, GenderEnum.FEMALE, LocalDate.now(),"aa","aaaa",40);
-       // employeeService.createEmployee(195,"hau ","mau",3,3, GenderEnum.FEMALE, LocalDate.now(),"aa","aaaa",40);
-        // employeeService.updateEmployee(125,"nuradu","nuradu",3,3, GenderEnum.FEMALE, LocalDate.now(),"aa","aaaa",40);
-       //employeeService.findByName("radu");
-        for(EmployeeDto employeeDto: employeeService.findAllEmployees())
-        {
-            debug.add(employeeDto.getName()+" "+ employeeDto.getSurname());
-        }
 
-        debug.add("ho fa");
-        for(EmployeeDto employeeDto: employeeService.findAllEmployeesByName("radu"))
-        {
-            debug.add(employeeDto.getName()+" "+ employeeDto.getSurname());
-        }
-
-      debug.add( employeeService.findById(125).getName());
 
             // end test
 
