@@ -39,7 +39,7 @@ public class EmployeeValidator {
     private boolean EmployeeDataValidator(EmployeeDto employeeDto)
     {
         return NameValidator(employeeDto) && SurnameValidator(employeeDto) && GenderValidator(employeeDto)
-                && DateOfBirthValidator(employeeDto) && AddressValidator(employeeDto) && DateOfBirthValidator(employeeDto)
+                && DateOfBirthValidator(employeeDto) && AddressValidator(employeeDto)
                 && ReligionValidator(employeeDto) && HoursPerWeekValidator(employeeDto);
     }
 }
