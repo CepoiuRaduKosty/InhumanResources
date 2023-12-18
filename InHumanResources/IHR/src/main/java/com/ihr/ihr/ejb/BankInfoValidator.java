@@ -2,16 +2,23 @@ package com.ihr.ihr.ejb;
 
 
 import com.ihr.ihr.common.dtos.BankInfoDto;
+import com.ihr.ihr.common.interf.IBankInfoValidator;
 import org.apache.commons.validator.routines.IBANValidator;
 
-public class BankInfoValidator {
+import java.util.logging.Logger;
 
-    private boolean BankNameValidator(BankInfoDto bankInfoDto) {
+public class BankInfoValidator implements IBankInfoValidator {
+
+    private static final Logger LOG = Logger.getLogger(BankInfoValidator.class.getName());
+
+    public boolean BankNameValidator(BankInfoDto bankInfoDto) {
+        LOG.info("BankNameValidator");
         return !bankInfoDto.getBankName().isEmpty();
     }
 
-    private boolean IBANValidator(BankInfoDto bankInfoDto) {
+    public boolean IBANValidator(BankInfoDto bankInfoDto) {
 
+        LOG.info("IBANValidator");
         if (bankInfoDto.getIBAN().isEmpty())
             return false;
 
@@ -20,7 +27,8 @@ public class BankInfoValidator {
         return validator.isValid(bankInfoDto.getIBAN());
     }
 
-    private boolean ValidateBankInfo(BankInfoDto bankInfoDto) {
+    public boolean ValidateBankInfo(BankInfoDto bankInfoDto) {
+        LOG.info("ValidateBankInfo");
         return IBANValidator(bankInfoDto) && BankNameValidator(bankInfoDto);
     }
 }
