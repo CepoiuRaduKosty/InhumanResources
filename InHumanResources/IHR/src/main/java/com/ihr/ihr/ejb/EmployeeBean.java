@@ -69,6 +69,7 @@ public class EmployeeBean implements EmployeeProvider {
         });
         return employeesDto;
     }
+    @Override
     public List<EmployeeDto> findAllEmployees() {
         LOG.info("findAllEmployees");
         try {
@@ -80,7 +81,7 @@ public class EmployeeBean implements EmployeeProvider {
             throw new EJBException(ex);
         }
     }
-
+    @Override
     public List<EmployeeDto> findAllEmployeesByName(String employeeName) {
         LOG.info("findAllEmployeesByName");
         try {
@@ -98,7 +99,7 @@ public class EmployeeBean implements EmployeeProvider {
             throw new EJBException(ex);
         }
     }
-
+    @Override
     public EmployeeDto findById(Integer employeeId) {
         LOG.info("findById");
         try {
