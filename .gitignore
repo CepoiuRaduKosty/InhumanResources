@@ -35,3 +35,7 @@ InHumanResources/libs/glassfish7/glassfish/domains/domain1/applications/IHR-1.0-
 InHumanResources/libs/glassfish7/glassfish/domains/domain1/applications/IHR-1.0-SNAPSHOT/index.jsp
 InHumanResources/libs/glassfish7/glassfish/domains/domain1/applications/__internal/IHR-1.0-SNAPSHOT/IHR-1.0-SNAPSHOT.war
 Documentatie/Exemple/Document La Comun/~$ftware engineering project.docx
+.idea/InhumanResources.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
