@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 import java.time.LocalDate;
 
 @Stateless
-@LocalBean
 public class EmployeeValidatorBean implements EmployeeValidation {
     private static final Logger LOG = Logger.getLogger(EmployeeValidatorBean.class.getName());
 

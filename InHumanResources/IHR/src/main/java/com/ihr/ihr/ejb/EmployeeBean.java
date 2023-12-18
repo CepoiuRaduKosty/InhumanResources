@@ -15,7 +15,6 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.TypedQuery;
 
 @Stateless
-@LocalBean
 public class EmployeeBean implements EmployeeProvider {
 
     private static final Logger LOG = Logger.getLogger(EmployeeBean.class.getName());
