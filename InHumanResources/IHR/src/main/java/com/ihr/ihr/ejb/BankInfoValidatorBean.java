@@ -13,26 +13,26 @@ public class BankInfoValidatorBean implements BankInfoValidation {
 
     private static final Logger LOG = Logger.getLogger(BankInfoValidatorBean.class.getName());
 
-    public boolean BankNameValidator(BankInfoDto bankInfoDto) {
+    public boolean BankNameValidator(String name) {
         LOG.info("BankNameValidator");
 
-        return !bankInfoDto.getBankName().isEmpty();
+        return name.isEmpty();
     }
 
-    public boolean IBANValidator(BankInfoDto bankInfoDto) {
+    public boolean IBANValidator(String IBAN) {
         LOG.info("IBANValidator");
 
-        if (bankInfoDto.getIBAN().isEmpty())
+        if (IBAN.isEmpty())
             return false;
 
         IBANValidator validator = IBANValidator.getInstance();
 
-        return validator.isValid(bankInfoDto.getIBAN());
+        return validator.isValid(IBAN);
     }
 
     public boolean ValidateBankInfo(BankInfoDto bankInfoDto) {
         LOG.info("ValidateBankInfo");
 
-        return IBANValidator(bankInfoDto) && BankNameValidator(bankInfoDto);
+        return IBANValidator(bankInfoDto.getIBAN()) && BankNameValidator(bankInfoDto.getBankName());
     }
 }
