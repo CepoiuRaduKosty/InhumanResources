@@ -3,7 +3,7 @@ package com.ihr.ihr.common.dtos;
 public class BonusDto {
     Long id;
     Long idPayment;
-    int value;
+    Integer value;
     String denumireBonus;
 
     public Long getId() {
@@ -22,7 +22,7 @@ public class BonusDto {
         this.idPayment = idPayment;
     }
 
-    public int getValue() {
+    public Integer getValue() {
         return this.value;
     }
 
