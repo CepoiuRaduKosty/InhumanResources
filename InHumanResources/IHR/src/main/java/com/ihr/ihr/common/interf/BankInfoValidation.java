@@ -3,7 +3,7 @@ package com.ihr.ihr.common.interf;
 import com.ihr.ihr.common.dtos.BankInfoDto;
 
 public interface BankInfoValidation {
-    boolean BankNameValidator(String bankName);
-    public boolean IBANValidator(String IBAN);
-    public boolean ValidateBankInfo(BankInfoDto bankInfoDto);
+    boolean isBankNameValid(String bankName);
+    boolean isIBANValid(String IBAN);
+    boolean isBankInfoDtoValid(BankInfoDto bankInfoDto);
 }
