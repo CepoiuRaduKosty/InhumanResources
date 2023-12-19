@@ -10,6 +10,13 @@ public class BonusDto {
         return this.id;
     }
 
+    public BonusDto(Long id, Long idPayment, int value, String denumireBonus) {
+        this.id = id;
+        this.idPayment = idPayment;
+        this.value = value;
+        this.denumireBonus = denumireBonus;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
