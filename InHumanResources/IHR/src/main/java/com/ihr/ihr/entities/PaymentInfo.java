@@ -4,59 +4,63 @@ import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class PaymentInfo {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long Id;
 
-    public Integer monthlyBasicSalary;
+    private Integer monthlyBasicSalary;
 
-    public SalaryLevelEnum salaryLevel;
+    private SalaryLevelEnum salaryLevel;
 
-    public Integer bonusForSuccess;
+    private Integer bonusForSuccess;
 
-    public Integer numberOfShares;
-
+    private Integer numberOfShares;
+    @OneToOne
+    private Employee employee;
 
     public Long getId() {
-        return this.id;
+        return Id;
     }
-
     public void setId(Long id) {
-        this.id = id;
+        Id = id;
     }
 
     public Integer getMonthlyBasicSalary() {
-        return this.monthlyBasicSalary;
+        return monthlyBasicSalary;
     }
-
     public void setMonthlyBasicSalary(Integer monthlyBasicSalary) {
         this.monthlyBasicSalary = monthlyBasicSalary;
     }
 
     public SalaryLevelEnum getSalaryLevel() {
-        return this.salaryLevel;
+        return salaryLevel;
     }
-
     public void setSalaryLevel(SalaryLevelEnum salaryLevel) {
         this.salaryLevel = salaryLevel;
     }
 
     public Integer getBonusForSuccess() {
-        return this.bonusForSuccess;
+        return bonusForSuccess;
     }
-
     public void setBonusForSuccess(Integer bonusForSuccess) {
         this.bonusForSuccess = bonusForSuccess;
     }
 
     public Integer getNumberOfShares() {
-        return this.numberOfShares;
+        return numberOfShares;
     }
-
     public void setNumberOfShares(Integer numberOfShares) {
         this.numberOfShares = numberOfShares;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

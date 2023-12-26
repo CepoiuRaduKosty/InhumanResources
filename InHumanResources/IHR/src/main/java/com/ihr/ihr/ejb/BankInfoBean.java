@@ -18,15 +18,15 @@ public class BankInfoBean implements BankInfoProvider {
     EntityManager entityManager;
 
     @Override
-    public BankInfoDto getById(Integer bankInfoId) {
+    public BankInfoDto getById(Long bankInfoId) {
         LOG.info("getBankInfoById");
 
         try {
-            TypedQuery<BankInfo> typedQuery = entityManager.createQuery("SELECT b FROM BankInfo b WHERE b.id = :id", BankInfo.class);
+            TypedQuery<BankInfo> typedQuery = entityManager.createQuery("SELECT b FROM BankInfo b WHERE b.Id = :id", BankInfo.class);
             typedQuery.setParameter("id", bankInfoId);
             BankInfo bankInfo = typedQuery.getSingleResult();
 
-            return new BankInfoDto(bankInfo.getId(), bankInfo.getIBAN(), bankInfo.getBankName());
+            return new BankInfoDto(bankInfo.getId(), bankInfo.getIBAN(), bankInfo.getBankName(), bankInfo.getEmployee().getId());
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
@@ -43,11 +43,10 @@ public class BankInfoBean implements BankInfoProvider {
         bankInfo.setBankName(bankinfoDto.getBankName());
 
         entityManager.persist(bankInfo);
-
     }
 
     @Override
-    public void updateBankInfo(Integer bankInfoId, BankInfoDto bankInfoDto) {
+    public void updateBankInfo(Long bankInfoId, BankInfoDto bankInfoDto) {
         LOG.info("updateBankInfo");
 
         BankInfo bankInfo = entityManager.find(BankInfo.class, bankInfoId);
@@ -57,7 +56,7 @@ public class BankInfoBean implements BankInfoProvider {
     }
 
     @Override
-    public void deleteById(Integer bankInfoId) {
+    public void deleteById(Long bankInfoId) {
         LOG.info("deleteBankInfoById");
 
         BankInfo bankInfo = entityManager.find(BankInfo.class, bankInfoId);

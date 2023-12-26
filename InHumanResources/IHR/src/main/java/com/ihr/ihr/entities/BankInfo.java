@@ -1,38 +1,42 @@
 package com.ihr.ihr.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class BankInfo {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long Id;
     private String IBAN;
     private String bankName;
+    @OneToOne
+    private Employee employee;
 
-    public Integer getId() {
-        return this.id;
+    public Long getId() {
+        return Id;
     }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getIBAN() {
-        return this.IBAN;
+        return IBAN;
     }
-
     public void setIBAN(String IBAN) {
         this.IBAN = IBAN;
     }
 
     public String getBankName() {
-        return this.bankName;
+        return bankName;
     }
-
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }

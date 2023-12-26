@@ -6,6 +6,7 @@ import com.ihr.ihr.common.excep.NonPositiveIncomeException;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
+import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import jakarta.persistence.TypedQuery;
 import java.util.logging.Logger;
 
 @Stateless
+@LocalBean
 public class PaymentInfoBean implements PaymentInfoProvider{
     private static final Logger LOG = Logger.getLogger(PaymentInfoBean.class.getName());
 
@@ -24,7 +26,7 @@ public class PaymentInfoBean implements PaymentInfoProvider{
     public PaymentInfoDto findPaymentInfoById(Long paymentInfoId) {
         try{
             LOG.info("findPaymentInfoById");
-            TypedQuery<PaymentInfo> typedQuery = entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class);
+            TypedQuery<PaymentInfo> typedQuery = entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.Id = :id", PaymentInfo.class);
             typedQuery.setParameter("id", paymentInfoId);
 
             PaymentInfo paymentInfo = typedQuery.getSingleResult();
@@ -33,7 +35,8 @@ public class PaymentInfoBean implements PaymentInfoProvider{
                     paymentInfo.getMonthlyBasicSalary(),
                     paymentInfo.getSalaryLevel(),
                     paymentInfo.getBonusForSuccess(),
-                    paymentInfo.getNumberOfShares());
+                    paymentInfo.getNumberOfShares(),
+                    paymentInfo.getEmployee().getId());
         } catch (Exception ex) {
             throw new EJBException(ex);
         }

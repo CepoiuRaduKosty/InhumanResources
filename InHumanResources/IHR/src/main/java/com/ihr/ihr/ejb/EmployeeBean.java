@@ -5,10 +5,14 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.ihr.ihr.common.dtos.EmployeeDto;
+import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.common.interf.EmployeeProvider;
+import com.ihr.ihr.common.interf.PaymentInfoProvider;
+import com.ihr.ihr.entities.BankInfo;
 import com.ihr.ihr.entities.Employee;
+import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
-import jakarta.ejb.LocalBean;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.ejb.Stateless;
@@ -26,8 +30,8 @@ public class EmployeeBean implements EmployeeProvider {
     {
         employee.setName(employeeDto.getName());
         employee.setSurname(employeeDto.getSurname());
-        employee.setBankInfoId(employeeDto.getBankInfoId());
-        employee.setPaymentInfoId(employeeDto.getPaymentInfoId());
+        employee.setBankInfo(entityManager.find(BankInfo.class, employeeDto.getBankInfoId()));
+        employee.setPaymentInfo(entityManager.find(PaymentInfo.class, employeeDto.getPaymentInfoId()));
         employee.setGender(employeeDto.getGender());
         employee.setDateOfBirth(employeeDto.getDateOfBirth());
         employee.setAddress(employeeDto.getAddress());
@@ -44,7 +48,7 @@ public class EmployeeBean implements EmployeeProvider {
     }
 
     @Override
-    public void deleteEmployeeById(Integer employeeId)
+    public void deleteEmployeeById(Long employeeId)
     {
         LOG.info("deleteEmployeeById");
         Employee employee = entityManager.find(Employee.class, employeeId);
@@ -52,22 +56,13 @@ public class EmployeeBean implements EmployeeProvider {
     }
 
     @Override
-    public void updateEmployeeById(Integer employeeId, EmployeeDto employeeDto)
+    public void updateEmployeeById(Long employeeId, EmployeeDto employeeDto)
     {
         LOG.info("updateEmployee");
         Employee employee = entityManager.find(Employee.class, employeeId);
         setEmployeeInformation(employee,employeeDto);
     }
 
-    private List<EmployeeDto> copyEmployeesToDto(List<Employee> employees) {
-        List<EmployeeDto> employeesDto = new ArrayList<>();
-        employees.forEach(employee ->
-        {
-            EmployeeDto employeeDto = new EmployeeDto(employee.getId(), employee.getName(), employee.getSurname(), employee.getBankInfoId(), employee.getPaymentInfoId(), employee.getGender(), employee.getDateOfBirth(), employee.getAddress(), employee.getReligion(), employee.getHoursPerWeek());
-            employeesDto.add(employeeDto);
-        });
-        return employeesDto;
-    }
     @Override
     public List<EmployeeDto> findAllEmployees() {
         LOG.info("findAllEmployees");
@@ -99,7 +94,7 @@ public class EmployeeBean implements EmployeeProvider {
         }
     }
     @Override
-    public EmployeeDto findById(Integer employeeId) {
+    public EmployeeDto findById(Long employeeId) {
         LOG.info("findById");
         try {
             Employee employee = entityManager.find(Employee.class, employeeId);
@@ -107,9 +102,23 @@ public class EmployeeBean implements EmployeeProvider {
             {
                 return null;
             }
-            return new EmployeeDto(employee.getId(), employee.getName(), employee.getSurname(), employee.getBankInfoId(), employee.getPaymentInfoId(), employee.getGender(), employee.getDateOfBirth(), employee.getAddress(), employee.getReligion(), employee.getHoursPerWeek());
+            return new EmployeeDto(employee.getId(), employee.getName(), employee.getSurname(),
+                    employee.getBankInfo().getId(), employee.getPaymentInfo().getId(),
+                    employee.getGender(), employee.getDateOfBirth(), employee.getAddress(),
+                    employee.getReligion(), employee.getHoursPerWeek());
         } catch (Exception e) {
             throw new EJBException(e);
         }
+    }
+    private List<EmployeeDto> copyEmployeesToDto(List<Employee> employees) {
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        employees.forEach(employee ->
+        {
+            EmployeeDto employeeDto = new EmployeeDto(employee.getId(), employee.getName(), employee.getSurname(),
+                    employee.getBankInfo().getId(), employee.getPaymentInfo().getId(), employee.getGender(), employee.getDateOfBirth(),
+                    employee.getAddress(), employee.getReligion(), employee.getHoursPerWeek());
+            employeesDto.add(employeeDto);
+        });
+        return employeesDto;
     }
 }

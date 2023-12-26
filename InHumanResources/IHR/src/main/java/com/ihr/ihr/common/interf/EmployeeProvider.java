@@ -10,11 +10,11 @@ public interface EmployeeProvider {
 
     void createEmployee(EmployeeDto employeeDto) throws WorkingHoursException, DateOfBirthException;
 
-    void updateEmployeeById(Integer employeeId, EmployeeDto employeeDto) throws DateOfBirthException, WorkingHoursException;
+    void updateEmployeeById(Long employeeId, EmployeeDto employeeDto) throws DateOfBirthException, WorkingHoursException;
 
-    void deleteEmployeeById(Integer employeeId);
+    void deleteEmployeeById(Long employeeId);
 
-    EmployeeDto findById(Integer employeeId);
+    EmployeeDto findById(Long employeeId);
 
     Collection<EmployeeDto> findAllEmployeesByName(String employeeName);
 

@@ -4,6 +4,8 @@ import com.ihr.ihr.common.enums.GenderEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+
 
 import java.time.LocalDate;
 
@@ -12,93 +14,85 @@ public class Employee {
 
     @Id
     @GeneratedValue
-    private Integer Id;
+    private Long Id;
     private String name;
     private String surname;
-    private Integer bankInfoId;
-    private Integer paymentInfoId;
+    @OneToOne
+    private BankInfo bankInfo;
+    @OneToOne
+    private PaymentInfo paymentInfo;
     private GenderEnum gender;
     private LocalDate dateOfBirth;
     private String address;
     private String religion;
     private Integer hoursPerWeek; // must be within 40-10
 
-    public Integer getId() {
-        return this.Id;
+    public Long getId() {
+        return Id;
     }
-
-    public void setId(Integer id) {
+    public void setId(Long id) {
         Id = id;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
 
     public String getSurname() {
-        return this.surname;
+        return surname;
     }
-
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    public Integer getBankInfoId() {
-        return this.bankInfoId;
+    public BankInfo getBankInfo() {
+        return bankInfo;
+    }
+    public void setBankInfo(BankInfo bankInfo) {
+        this.bankInfo = bankInfo;
     }
 
-    public void setBankInfoId(Integer id_bankinfo) {
-        this.bankInfoId = id_bankinfo;
+    public PaymentInfo getPaymentInfo() {
+        return paymentInfo;
     }
-
-    public Integer getPaymentInfoId() {
-        return this.paymentInfoId;
-    }
-
-    public void setPaymentInfoId(Integer id_paymentinfo) {
-        this.paymentInfoId = id_paymentinfo;
+    public void setPaymentInfo(PaymentInfo paymentInfo) {
+        this.paymentInfo = paymentInfo;
     }
 
     public GenderEnum getGender() {
-        return this.gender;
+        return gender;
     }
-
     public void setGender(GenderEnum gender) {
         this.gender = gender;
     }
 
     public LocalDate getDateOfBirth() {
-        return this.dateOfBirth;
+        return dateOfBirth;
     }
-
     public void setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
     public String getAddress() {
-        return this.address;
+        return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
 
     public String getReligion() {
-        return this.religion;
+        return religion;
     }
-
     public void setReligion(String religion) {
         this.religion = religion;
     }
 
     public Integer getHoursPerWeek() {
-        return this.hoursPerWeek;
+        return hoursPerWeek;
     }
-
     public void setHoursPerWeek(Integer hoursPerWeek) {
         this.hoursPerWeek = hoursPerWeek;
     }

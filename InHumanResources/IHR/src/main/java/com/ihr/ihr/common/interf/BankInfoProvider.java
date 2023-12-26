@@ -3,12 +3,12 @@ package com.ihr.ihr.common.interf;
 import com.ihr.ihr.common.dtos.BankInfoDto;
 
 public interface BankInfoProvider {
-    BankInfoDto getById(Integer bankInfoId);
+    BankInfoDto getById(Long bankInfoId);
 
     void addBankInfo(BankInfoDto bankinfoDto);
 
-    void updateBankInfo(Integer bankInfoId, BankInfoDto bankInfoDto);
+    void updateBankInfo(Long bankInfoId, BankInfoDto bankInfoDto);
 
-    void deleteById(Integer bankInfoId);
+    void deleteById(Long bankInfoId);
 
 }

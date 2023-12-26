@@ -1,26 +1,28 @@
 package com.ihr.ihr.common.dtos;
 
 public class BankInfoDto {
-    private Integer id;
+    private Long Id;
     private String IBAN;
     private String bankName;
+    private Long employeeId;
 
-    public BankInfoDto(Integer id, String IBAN, String bankName) {
-        this.id = id;
+    public BankInfoDto(Long id, String IBAN, String bankName, Long employeeId) {
+        Id = id;
         this.IBAN = IBAN;
         this.bankName = bankName;
+        this.employeeId = employeeId;
     }
 
-    public Integer getId() {
-        return this.id;
+    public Long getId() {
+        return Id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(Long id) {
+        Id = id;
     }
 
     public String getIBAN() {
-        return this.IBAN;
+        return IBAN;
     }
 
     public void setIBAN(String IBAN) {
@@ -28,10 +30,18 @@ public class BankInfoDto {
     }
 
     public String getBankName() {
-        return this.bankName;
+        return bankName;
     }
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 }
