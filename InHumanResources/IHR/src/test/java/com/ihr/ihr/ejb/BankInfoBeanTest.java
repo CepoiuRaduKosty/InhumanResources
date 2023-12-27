@@ -5,8 +5,10 @@ import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
+import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -86,10 +88,59 @@ class BankInfoBeanTest {
     }
 
     @Test
-    void updateBankInfo() {
+    void updateBankInfo_positive() {
+        BankInfoDto updatedBankInfoDto = new BankInfoDto(1, "UpdatedIBAN", "UpdatedBank");
+
+        BankInfo existingBankInfo = new BankInfo();
+        existingBankInfo.setId(1);
+        existingBankInfo.setIBAN("InitialIBAN");
+        existingBankInfo.setBankName("InitialBank");
+
+        when(entityManager.find(BankInfo.class, updatedBankInfoDto.getId())).thenReturn(existingBankInfo);
+
+        bankInfoBean.updateBankInfo(updatedBankInfoDto.getId(), updatedBankInfoDto);
+
+        verify(entityManager).find(BankInfo.class, updatedBankInfoDto.getId());
+
+        assertEquals(updatedBankInfoDto.getIBAN(), existingBankInfo.getIBAN());
+        assertEquals(updatedBankInfoDto.getBankName(), existingBankInfo.getBankName());
     }
 
     @Test
-    void deleteById() {
+    void updateBankInfo_negative_idNotFound() {
+        BankInfoDto nonExistingBankInfoDto = new BankInfoDto(999, "UpdatedIBAN", "UpdatedBank");
+
+        when(entityManager.find(BankInfo.class, nonExistingBankInfoDto.getId())).thenReturn(null);
+
+        assertThrows(NullPointerException.class, () -> bankInfoBean.updateBankInfo(nonExistingBankInfoDto.getId(), nonExistingBankInfoDto));
+    }
+
+    @Test
+    void deleteById_positive() {
+        Integer bankInfoIdToDelete = 1;
+
+        BankInfo existingBankInfo = new BankInfo();
+        existingBankInfo.setId(bankInfoIdToDelete);
+
+        when(entityManager.find(BankInfo.class, bankInfoIdToDelete)).thenReturn(existingBankInfo);
+
+        bankInfoBean.deleteById(bankInfoIdToDelete);
+
+        verify(entityManager).remove(existingBankInfo);
+    }
+
+    @Test
+    void deleteById_negative_idNotFound(){
+        Integer nonExistingBankInfoId = 999;
+
+        when(entityManager.find(BankInfo.class, nonExistingBankInfoId)).thenReturn(null);
+
+        bankInfoBean.deleteById(nonExistingBankInfoId);
+
+        ArgumentCaptor<BankInfo> captor = ArgumentCaptor.forClass(BankInfo.class);
+        verify(entityManager).remove(captor.capture());
+
+        BankInfo capturedBankInfo = captor.getValue();
+        assertNull(capturedBankInfo);
     }
 }
