@@ -9,16 +9,16 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
 
 @ExtendWith(MockitoExtension.class)
 class BankInfoBeanTest {
@@ -63,7 +63,26 @@ class BankInfoBeanTest {
     }
 
     @Test
-    void addBankInfo() {
+    void addBankInfo_positive() {
+        BankInfoDto sampleBankInfoDto = new BankInfoDto(1, "SampleIBAN", "SampleBank");
+
+        bankInfoBean.addBankInfo(sampleBankInfoDto);
+
+        verify(entityManager).persist(any(BankInfo.class));
+
+        ArgumentCaptor<BankInfo> captor = ArgumentCaptor.forClass(BankInfo.class);
+        verify(entityManager).persist(captor.capture());
+
+        BankInfo capturedBankInfo = captor.getValue();
+        assertNotNull(capturedBankInfo);
+        assertEquals(sampleBankInfoDto.getId(), capturedBankInfo.getId());
+        assertEquals(sampleBankInfoDto.getIBAN(), capturedBankInfo.getIBAN());
+        assertEquals(sampleBankInfoDto.getBankName(), capturedBankInfo.getBankName());
+    }
+
+    @Test
+    void addBankInfo_negative_null() {
+        assertThrows(NullPointerException.class, () -> bankInfoBean.addBankInfo(null));
     }
 
     @Test
