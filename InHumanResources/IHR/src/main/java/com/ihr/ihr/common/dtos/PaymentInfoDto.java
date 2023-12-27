@@ -8,16 +8,15 @@ public class PaymentInfoDto {
     private SalaryLevelEnum salaryLevel;
     private Integer bonusForSuccess;
     private Integer numberOfShares;
-    private Long employeeId;
+    private EmployeeDto employeeDto;
 
     public PaymentInfoDto(Long id, Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
-                          Integer bonusForSuccess, Integer numberOfShares, Long employeeId) {
+                          Integer bonusForSuccess, Integer numberOfShares) {
         this.id = id;
         this.monthlyBasicSalary = monthlyBasicSalary;
         this.salaryLevel = salaryLevel;
         this.bonusForSuccess = bonusForSuccess;
         this.numberOfShares = numberOfShares;
-        this.employeeId = employeeId;
     }
 
     public Long getId() {
@@ -60,11 +59,11 @@ public class PaymentInfoDto {
         this.numberOfShares = numberOfShares;
     }
 
-    public Long getEmployeeId() {
-        return employeeId;
+    public EmployeeDto getEmployeeDto() {
+        return employeeDto;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployeeDto(EmployeeDto employeeDto) {
+        this.employeeDto = employeeDto;
     }
 }

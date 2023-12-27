@@ -1,9 +1,6 @@
 package com.ihr.ihr.servlets;
 
-import com.ihr.ihr.common.dtos.BankInfoDto;
-import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
-import com.ihr.ihr.common.dtos.EmployeeDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.*;
 import com.ihr.ihr.common.enums.GenderEnum;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import com.ihr.ihr.common.interf.BankInfoProvider;
@@ -41,9 +38,25 @@ public class TestServlet extends HttpServlet {
         // test code
 
         debug.add("croissant");
-//        paymentInfoProvider.addPaymentInfo(new CreatePaymentInfoDto(56, SalaryLevelEnum.ASSOCIATE, 82, 29));
-//        bankInfoProvider.addBankInfo(new BankInfoDto(-1L, "SBt2138t", "BT", null));
-        employeeProvider.createEmployee(new EmployeeDto(-1L, "nume1", "prenume1", -1L, 51L, GenderEnum.MALE, LocalDate.now(), "address1", "evreu", 35));
+//        CreatePaymentInfoDto createPaymentInfoDto = new CreatePaymentInfoDto(56, SalaryLevelEnum.ASSOCIATE, 82, 29);
+//        CreateBankInfoDto bankInfoDto = new CreateBankInfoDto("SBt2138t", "BT");
+//
+//        Long paymentInfoId = paymentInfoProvider.addPaymentInfo(createPaymentInfoDto);
+//        Long bankInfoId = bankInfoProvider.addBankInfo(bankInfoDto);
+//        EmployeeDto employeeDto = new EmployeeDto(-1L, "nume1", "prenume1", GenderEnum.MALE, LocalDate.now(), "address1", "evreu", 35);
+//
+//        BankInfoDto bankInfoDto1 = new BankInfoDto(bankInfoId, bankInfoDto.getIBAN(), bankInfoDto.getBankName());
+//        PaymentInfoDto paymentInfoDto = new PaymentInfoDto(paymentInfoId, createPaymentInfoDto.getMonthlyBasicSalary(),
+//                createPaymentInfoDto.getSalaryLevel(), createPaymentInfoDto.getBonusForSuccess(),
+//                createPaymentInfoDto.getNumberOfShares());
+//
+//        employeeDto.setPaymentInfoDto(paymentInfoDto);
+//        employeeDto.setBankInfoDto(bankInfoDto1);
+
+
+
+//        employeeProvider.createEmployee(employeeDto);
+        employeeProvider.deleteEmployeeById(3L);
         debug.add("lalele?");
         // end test
 

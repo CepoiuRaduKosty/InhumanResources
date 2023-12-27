@@ -6,17 +6,15 @@ import jakarta.persistence.*;
 public class BankInfo {
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
     private String IBAN;
     private String bankName;
-    @OneToOne
-    private Employee employee;
 
     public Long getId() {
-        return Id;
+        return id;
     }
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getIBAN() {
@@ -33,9 +31,13 @@ public class BankInfo {
         this.bankName = bankName;
     }
 
+    @OneToOne
+    private Employee employee;
+
     public Employee getEmployee() {
         return employee;
     }
+
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }

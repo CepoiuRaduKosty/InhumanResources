@@ -1,10 +1,7 @@
 package com.ihr.ihr.entities;
 
 import com.ihr.ihr.common.enums.GenderEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 
 import java.time.LocalDate;
@@ -14,24 +11,20 @@ public class Employee {
 
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
     private String name;
     private String surname;
-    @OneToOne
-    private BankInfo bankInfo;
-    @OneToOne
-    private PaymentInfo paymentInfo;
     private GenderEnum gender;
     private LocalDate dateOfBirth;
     private String address;
     private String religion;
-    private Integer hoursPerWeek; // must be within 40-10
+    private Integer hoursPerWeek;
 
     public Long getId() {
-        return Id;
+        return id;
     }
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -46,20 +39,6 @@ public class Employee {
     }
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public BankInfo getBankInfo() {
-        return bankInfo;
-    }
-    public void setBankInfo(BankInfo bankInfo) {
-        this.bankInfo = bankInfo;
-    }
-
-    public PaymentInfo getPaymentInfo() {
-        return paymentInfo;
-    }
-    public void setPaymentInfo(PaymentInfo paymentInfo) {
-        this.paymentInfo = paymentInfo;
     }
 
     public GenderEnum getGender() {
@@ -95,5 +74,27 @@ public class Employee {
     }
     public void setHoursPerWeek(Integer hoursPerWeek) {
         this.hoursPerWeek = hoursPerWeek;
+    }
+
+    @OneToOne
+    private BankInfo bankInfo;
+
+    public BankInfo getBankInfo() {
+        return bankInfo;
+    }
+
+    public void setBankInfo(BankInfo bankInfo) {
+        this.bankInfo = bankInfo;
+    }
+
+    @OneToOne
+    private PaymentInfo paymentInfo;
+
+    public PaymentInfo getPaymentInfo() {
+        return paymentInfo;
+    }
+
+    public void setPaymentInfo(PaymentInfo paymentInfo) {
+        this.paymentInfo = paymentInfo;
     }
 }

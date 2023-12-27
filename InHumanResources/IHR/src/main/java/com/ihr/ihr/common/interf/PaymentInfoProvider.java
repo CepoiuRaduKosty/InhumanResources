@@ -8,7 +8,7 @@ import jakarta.ejb.Local;
 @Local
 public interface PaymentInfoProvider {
     PaymentInfoDto findPaymentInfoById(Long paymentInfoId);
-    void addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException;
+    Long addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException;
     void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws NonPositiveIncomeException;
     void deletePaymentInfo(Long paymentInfoId);
 

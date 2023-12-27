@@ -10,7 +10,7 @@ import jakarta.persistence.OneToOne;
 public class PaymentInfo {
     @Id
     @GeneratedValue
-    private Long Id;
+    private Long id;
 
     private Integer monthlyBasicSalary;
 
@@ -19,14 +19,12 @@ public class PaymentInfo {
     private Integer bonusForSuccess;
 
     private Integer numberOfShares;
-    @OneToOne
-    private Employee employee;
 
     public Long getId() {
-        return Id;
+        return id;
     }
     public void setId(Long id) {
-        Id = id;
+        this.id = id;
     }
 
     public Integer getMonthlyBasicSalary() {
@@ -57,9 +55,13 @@ public class PaymentInfo {
         this.numberOfShares = numberOfShares;
     }
 
+    @OneToOne
+    private Employee employee;
+
     public Employee getEmployee() {
         return employee;
     }
+
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }

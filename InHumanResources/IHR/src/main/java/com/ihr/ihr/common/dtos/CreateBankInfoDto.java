@@ -1,25 +1,13 @@
 package com.ihr.ihr.common.dtos;
 
-import com.ihr.ihr.entities.Employee;
-
-public class BankInfoDto {
-    private Long id;
+public class CreateBankInfoDto {
     private String IBAN;
     private String bankName;
     private EmployeeDto employeeDto;
 
-    public BankInfoDto(Long id, String IBAN, String bankName) {
-        this.id = id;
+    public CreateBankInfoDto(String IBAN, String bankName) {
         this.IBAN = IBAN;
         this.bankName = bankName;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getIBAN() {

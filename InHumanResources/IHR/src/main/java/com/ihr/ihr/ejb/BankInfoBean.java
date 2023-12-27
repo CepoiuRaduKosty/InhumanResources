@@ -1,6 +1,7 @@
 package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.CreateBankInfoDto;
 import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
@@ -22,27 +23,28 @@ public class BankInfoBean implements BankInfoProvider {
         LOG.info("getBankInfoById");
 
         try {
-            TypedQuery<BankInfo> typedQuery = entityManager.createQuery("SELECT b FROM BankInfo b WHERE b.Id = :id", BankInfo.class);
+            TypedQuery<BankInfo> typedQuery = entityManager.createQuery("SELECT b FROM BankInfo b WHERE b.id = :id", BankInfo.class);
             typedQuery.setParameter("id", bankInfoId);
             BankInfo bankInfo = typedQuery.getSingleResult();
 
-            return new BankInfoDto(bankInfo.getId(), bankInfo.getIBAN(), bankInfo.getBankName(), bankInfo.getEmployee().getId());
+            return new BankInfoDto(bankInfo.getId(), bankInfo.getIBAN(), bankInfo.getBankName());
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
 
     @Override
-    public void addBankInfo(BankInfoDto bankinfoDto) {
+    public Long addBankInfo(CreateBankInfoDto createBankInfoDto) {
         LOG.info("AddBankInfo");
 
         BankInfo bankInfo = new BankInfo();
 
-        bankInfo.setId(bankinfoDto.getId());
-        bankInfo.setIBAN(bankinfoDto.getIBAN());
-        bankInfo.setBankName(bankinfoDto.getBankName());
+        bankInfo.setIBAN(createBankInfoDto.getIBAN());
+        bankInfo.setBankName(createBankInfoDto.getBankName());
 
         entityManager.persist(bankInfo);
+
+        return bankInfo.getId();
     }
 
     @Override

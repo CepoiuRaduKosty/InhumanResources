@@ -9,20 +9,18 @@ public class EmployeeDto {
     private Long id;
     private String name;
     private String surname;
-    private Long paymentInfoId;
-    private Long bankInfoId;
+    private PaymentInfoDto paymentInfoDto;
+    private BankInfoDto bankInfoDto;
     private GenderEnum gender;
     private LocalDate dateOfBirth;
     private String address;
     private String religion;
     private Integer hoursPerWeek;
 
-    public EmployeeDto(Long id, String name, String surname, Long bankInfoId, Long paymentInfoId, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, Integer hoursPerWeek) {
+    public EmployeeDto(Long id, String name, String surname, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, Integer hoursPerWeek) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.bankInfoId = bankInfoId;
-        this.paymentInfoId = paymentInfoId;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
@@ -54,20 +52,20 @@ public class EmployeeDto {
         this.surname = surname;
     }
 
-    public Long getPaymentInfoId() {
-        return paymentInfoId;
+    public PaymentInfoDto getPaymentInfoDto() {
+        return paymentInfoDto;
     }
 
-    public void setPaymentInfoId(Long paymentInfoId) {
-        this.paymentInfoId = paymentInfoId;
+    public void setPaymentInfoDto(PaymentInfoDto paymentInfoDto) {
+        this.paymentInfoDto = paymentInfoDto;
     }
 
-    public Long getBankInfoId() {
-        return bankInfoId;
+    public BankInfoDto getBankInfoDto() {
+        return bankInfoDto;
     }
 
-    public void setBankInfoId(Long bankInfoId) {
-        this.bankInfoId = bankInfoId;
+    public void setBankInfoDto(BankInfoDto bankInfoDto) {
+        this.bankInfoDto = bankInfoDto;
     }
 
     public GenderEnum getGender() {

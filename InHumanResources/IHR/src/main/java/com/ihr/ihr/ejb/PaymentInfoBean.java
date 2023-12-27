@@ -26,7 +26,7 @@ public class PaymentInfoBean implements PaymentInfoProvider{
     public PaymentInfoDto findPaymentInfoById(Long paymentInfoId) {
         try{
             LOG.info("findPaymentInfoById");
-            TypedQuery<PaymentInfo> typedQuery = entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.Id = :id", PaymentInfo.class);
+            TypedQuery<PaymentInfo> typedQuery = entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class);
             typedQuery.setParameter("id", paymentInfoId);
 
             PaymentInfo paymentInfo = typedQuery.getSingleResult();
@@ -35,15 +35,14 @@ public class PaymentInfoBean implements PaymentInfoProvider{
                     paymentInfo.getMonthlyBasicSalary(),
                     paymentInfo.getSalaryLevel(),
                     paymentInfo.getBonusForSuccess(),
-                    paymentInfo.getNumberOfShares(),
-                    paymentInfo.getEmployee().getId());
+                    paymentInfo.getNumberOfShares());
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
 
     @Override
-    public void addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException {
+    public Long addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException {
         try{
             LOG.info("addPaymentInfo");
             PaymentInfo paymentInfo = new PaymentInfo();
@@ -54,6 +53,8 @@ public class PaymentInfoBean implements PaymentInfoProvider{
             paymentInfo.setNumberOfShares(createPaymentInfoDto.getNumberOfShares());
 
             entityManager.persist(paymentInfo);
+
+            return paymentInfo.getId();
         }
         catch (Exception ex){
             throw new EJBException(ex);
