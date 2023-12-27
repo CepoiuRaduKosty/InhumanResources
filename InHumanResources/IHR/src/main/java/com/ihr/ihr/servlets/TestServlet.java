@@ -3,6 +3,7 @@ package com.ihr.ihr.servlets;
 import com.ihr.ihr.common.dtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
+import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.common.interf.EmployeeProvider;
 
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
@@ -18,7 +19,6 @@ import java.util.ArrayList;
 @WebServlet(name = "TestServlet", value = "/test")
 public class TestServlet extends HttpServlet {
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
@@ -28,8 +28,6 @@ public class TestServlet extends HttpServlet {
         // test code
 
         debug.add("croissant");
-
-
 
         debug.add("lalele?");
         // end test
