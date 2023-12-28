@@ -45,10 +45,8 @@ class BankInfoBeanTest {
         tempBankInfo.setIBAN(sampleBankInfoDto.getIBAN());
         when(typedQuery.getSingleResult()).thenReturn(tempBankInfo);
 
-        // Invoke the method
         BankInfoDto result = bankInfoBean.getById(1L);
 
-        // Assertions
         assertEquals(sampleBankInfoDto.getId(), result.getId());
         assertEquals(sampleBankInfoDto.getIBAN(), result.getIBAN());
         assertEquals(sampleBankInfoDto.getBankName(), result.getBankName());
@@ -60,8 +58,7 @@ class BankInfoBeanTest {
         when(entityManager.createQuery("SELECT b FROM BankInfo b WHERE b.id = :id", BankInfo.class)).thenReturn(typedQuery);
         when(typedQuery.setParameter(eq("id"), anyLong())).thenReturn(typedQuery);
         when(typedQuery.getSingleResult()).thenThrow(NoResultException.class);
-
-        // Testing if the method throws an exception when BankInfo is not found
+        
         assertThrows(EJBException.class, () -> bankInfoBean.getById(999L));
     }
 
