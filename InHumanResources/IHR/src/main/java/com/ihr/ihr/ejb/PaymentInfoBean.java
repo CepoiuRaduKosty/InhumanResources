@@ -6,6 +6,7 @@ import com.ihr.ihr.common.excep.NonPositiveIncomeException;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
+import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import jakarta.persistence.TypedQuery;
 import java.util.logging.Logger;
 
 @Stateless
+@LocalBean
 public class PaymentInfoBean implements PaymentInfoProvider{
     private static final Logger LOG = Logger.getLogger(PaymentInfoBean.class.getName());
 
@@ -40,7 +42,7 @@ public class PaymentInfoBean implements PaymentInfoProvider{
     }
 
     @Override
-    public void addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException {
+    public Long addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException {
         try{
             LOG.info("addPaymentInfo");
             PaymentInfo paymentInfo = new PaymentInfo();
@@ -51,6 +53,8 @@ public class PaymentInfoBean implements PaymentInfoProvider{
             paymentInfo.setNumberOfShares(createPaymentInfoDto.getNumberOfShares());
 
             entityManager.persist(paymentInfo);
+
+            return paymentInfo.getId();
         }
         catch (Exception ex){
             throw new EJBException(ex);

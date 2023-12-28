@@ -1,6 +1,7 @@
 package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.CreateBankInfoDto;
 import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
@@ -18,7 +19,7 @@ public class BankInfoBean implements BankInfoProvider {
     EntityManager entityManager;
 
     @Override
-    public BankInfoDto getById(Integer bankInfoId) {
+    public BankInfoDto getById(Long bankInfoId) {
         LOG.info("getBankInfoById");
 
         try {
@@ -33,21 +34,21 @@ public class BankInfoBean implements BankInfoProvider {
     }
 
     @Override
-    public void addBankInfo(BankInfoDto bankinfoDto) {
+    public Long addBankInfo(CreateBankInfoDto createBankInfoDto) {
         LOG.info("AddBankInfo");
 
         BankInfo bankInfo = new BankInfo();
 
-        bankInfo.setId(bankinfoDto.getId());
-        bankInfo.setIBAN(bankinfoDto.getIBAN());
-        bankInfo.setBankName(bankinfoDto.getBankName());
+        bankInfo.setIBAN(createBankInfoDto.getIBAN());
+        bankInfo.setBankName(createBankInfoDto.getBankName());
 
         entityManager.persist(bankInfo);
 
+        return bankInfo.getId();
     }
 
     @Override
-    public void updateBankInfo(Integer bankInfoId, BankInfoDto bankInfoDto) {
+    public void updateBankInfo(Long bankInfoId, BankInfoDto bankInfoDto) {
         LOG.info("updateBankInfo");
 
         BankInfo bankInfo = entityManager.find(BankInfo.class, bankInfoId);
@@ -57,7 +58,7 @@ public class BankInfoBean implements BankInfoProvider {
     }
 
     @Override
-    public void deleteById(Integer bankInfoId) {
+    public void deleteById(Long bankInfoId) {
         LOG.info("deleteBankInfoById");
 
         BankInfo bankInfo = entityManager.find(BankInfo.class, bankInfoId);
