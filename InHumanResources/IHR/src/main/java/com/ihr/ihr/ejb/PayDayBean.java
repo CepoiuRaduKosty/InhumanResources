@@ -1,6 +1,7 @@
 package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.BankInfoDto;
+import com.ihr.ihr.common.excep.InvalidPayDayException;
 import com.ihr.ihr.common.excep.PayDayAlreadyExistsException;
 import com.ihr.ihr.common.excep.PayDayDoesNotExistException;
 import com.ihr.ihr.common.interf.BankInfoValidation;
@@ -46,11 +47,11 @@ public class PayDayBean implements PayDayProvider {
     }
 
     @Override
-    public void addPayDayOfMonth(Integer dayOfMonth) throws ValidationException, PayDayAlreadyExistsException {
+    public void addPayDayOfMonth(Integer dayOfMonth) throws InvalidPayDayException, PayDayAlreadyExistsException {
         if(isPayDateSet())
             throw new PayDayAlreadyExistsException("");
         if(!payDayValidation.isPayDayValid(dayOfMonth))
-            throw new ValidationException("Payday not valid");
+            throw new InvalidPayDayException("Payday not valid");
 
         PayDay payDay = new PayDay();
         payDay.setDayOfMonth(dayOfMonth);
@@ -58,11 +59,13 @@ public class PayDayBean implements PayDayProvider {
     }
 
     @Override
-    public void updatePayDay(Integer dayOfMonth) throws ValidationException, PayDayDoesNotExistException {
+    public void updatePayDay(Integer dayOfMonth) throws InvalidPayDayException, PayDayDoesNotExistException {
         if(!isPayDateSet())
             throw new PayDayDoesNotExistException("");
-        if(!payDayValidation.isPayDayValid(dayOfMonth))
-            throw new ValidationException("Payday not valid");
+        if(!payDayValidation.isPayDayValid(dayOfMonth)) {
+            throw new InvalidPayDayException("Payday not valid");
+        }
+
 
         PayDay payDay = entityManager.createQuery("SELECT b FROM PayDay b", PayDay.class).getSingleResult();
         payDay.setDayOfMonth(dayOfMonth);
