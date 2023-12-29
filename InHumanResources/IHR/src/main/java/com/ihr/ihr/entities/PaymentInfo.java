@@ -17,9 +17,16 @@ public class PaymentInfo {
 
     private Integer numberOfShares;
 
+    @Basic
+    private Integer cumulatedShares;
+
+    @OneToOne
+    private Employee employee;
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -27,6 +34,7 @@ public class PaymentInfo {
     public Integer getMonthlyBasicSalary() {
         return monthlyBasicSalary;
     }
+
     public void setMonthlyBasicSalary(Integer monthlyBasicSalary) {
         this.monthlyBasicSalary = monthlyBasicSalary;
     }
@@ -34,6 +42,7 @@ public class PaymentInfo {
     public SalaryLevelEnum getSalaryLevel() {
         return salaryLevel;
     }
+
     public void setSalaryLevel(SalaryLevelEnum salaryLevel) {
         this.salaryLevel = salaryLevel;
     }
@@ -41,6 +50,7 @@ public class PaymentInfo {
     public Integer getBonusForSuccess() {
         return bonusForSuccess;
     }
+
     public void setBonusForSuccess(Integer bonusForSuccess) {
         this.bonusForSuccess = bonusForSuccess;
     }
@@ -48,12 +58,10 @@ public class PaymentInfo {
     public Integer getNumberOfShares() {
         return numberOfShares;
     }
+
     public void setNumberOfShares(Integer numberOfShares) {
         this.numberOfShares = numberOfShares;
     }
-
-    @OneToOne
-    private Employee employee;
 
     public Employee getEmployee() {
         return employee;
@@ -63,10 +71,6 @@ public class PaymentInfo {
         this.employee = employee;
     }
 
-
-    @Basic
-    private Integer cumulatedShares;
-
     public Integer getCumulatedShares() {
         return this.cumulatedShares;
     }
@@ -74,4 +78,5 @@ public class PaymentInfo {
     public void setCumulatedShares(Integer cumulatedShares) {
         this.cumulatedShares = cumulatedShares;
     }
+
 }

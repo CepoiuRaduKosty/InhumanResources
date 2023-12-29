@@ -9,11 +9,9 @@ public class PaymentInfoDto {
     private Integer bonusForSuccess;
     private Integer numberOfShares;
     private EmployeeDto employeeDto;
-
     private Integer cumulatedShares;
 
-    public PaymentInfoDto(Long id, Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
-                          Integer bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
+    public PaymentInfoDto(Long id, Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel, Integer bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
         this.id = id;
         this.monthlyBasicSalary = monthlyBasicSalary;
         this.salaryLevel = salaryLevel;

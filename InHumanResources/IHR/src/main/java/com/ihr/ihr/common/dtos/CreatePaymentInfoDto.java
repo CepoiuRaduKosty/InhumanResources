@@ -7,11 +7,10 @@ public class CreatePaymentInfoDto {
     private SalaryLevelEnum salaryLevel;
     private Integer bonusForSuccess;
     private Integer numberOfShares;
-
     private Integer cumulatedShares;
 
     public CreatePaymentInfoDto(Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
-                          Integer bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
+                                Integer bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
         this.monthlyBasicSalary = monthlyBasicSalary;
         this.salaryLevel = salaryLevel;
         this.bonusForSuccess = bonusForSuccess;
