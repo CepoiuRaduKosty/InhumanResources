@@ -1,27 +1,26 @@
 package com.ihr.ihr.common.dtos;
 
 import com.ihr.ihr.common.enums.GenderEnum;
+import com.ihr.ihr.entities.BankInfo;
 
 import java.time.LocalDate;
 
 public class EmployeeDto {
-    private Integer id;
+    private Long id;
     private String name;
     private String surname;
-    private Integer bankInfoId;
-    private Integer paymentInfoId;
+    private PaymentInfoDto paymentInfoDto;
+    private BankInfoDto bankInfoDto;
     private GenderEnum gender;
     private LocalDate dateOfBirth;
     private String address;
     private String religion;
     private Integer hoursPerWeek;
 
-    public EmployeeDto(Integer id, String name, String surname, Integer bankInfoId, Integer paymentInfoId, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, Integer hoursPerWeek) {
+    public EmployeeDto(Long id, String name, String surname, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, Integer hoursPerWeek) {
         this.id = id;
         this.name = name;
         this.surname = surname;
-        this.bankInfoId = bankInfoId;
-        this.paymentInfoId = paymentInfoId;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
@@ -29,16 +28,16 @@ public class EmployeeDto {
         this.hoursPerWeek = hoursPerWeek;
     }
 
-    public Integer getId() {
-        return this.id;
+    public Long getId() {
+        return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
     public void setName(String name) {
@@ -46,31 +45,31 @@ public class EmployeeDto {
     }
 
     public String getSurname() {
-        return this.surname;
+        return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    public Integer getBankInfoId() {
-        return this.bankInfoId;
+    public PaymentInfoDto getPaymentInfoDto() {
+        return paymentInfoDto;
     }
 
-    public void setBankInfoId(Integer bankInfoId) {
-        this.bankInfoId = bankInfoId;
+    public void setPaymentInfoDto(PaymentInfoDto paymentInfoDto) {
+        this.paymentInfoDto = paymentInfoDto;
     }
 
-    public Integer getPaymentInfoId() {
-        return this.paymentInfoId;
+    public BankInfoDto getBankInfoDto() {
+        return bankInfoDto;
     }
 
-    public void setPaymentInfoId(Integer paymentInfoId) {
-        this.paymentInfoId = paymentInfoId;
+    public void setBankInfoDto(BankInfoDto bankInfoDto) {
+        this.bankInfoDto = bankInfoDto;
     }
 
     public GenderEnum getGender() {
-        return this.gender;
+        return gender;
     }
 
     public void setGender(GenderEnum gender) {
@@ -78,7 +77,7 @@ public class EmployeeDto {
     }
 
     public LocalDate getDateOfBirth() {
-        return this.dateOfBirth;
+        return dateOfBirth;
     }
 
     public void setDateOfBirth(LocalDate dateOfBirth) {
@@ -86,7 +85,7 @@ public class EmployeeDto {
     }
 
     public String getAddress() {
-        return this.address;
+        return address;
     }
 
     public void setAddress(String address) {
@@ -94,7 +93,7 @@ public class EmployeeDto {
     }
 
     public String getReligion() {
-        return this.religion;
+        return religion;
     }
 
     public void setReligion(String religion) {
@@ -102,7 +101,7 @@ public class EmployeeDto {
     }
 
     public Integer getHoursPerWeek() {
-        return this.hoursPerWeek;
+        return hoursPerWeek;
     }
 
     public void setHoursPerWeek(Integer hoursPerWeek) {

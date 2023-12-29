@@ -1,18 +1,23 @@
 package com.ihr.ihr.ejb;
 
+import com.ihr.ihr.common.dtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.excep.UnknownBankInfoException;
+import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
+import com.ihr.ihr.common.interf.EmployeeProvider;
+import com.ihr.ihr.entities.BankInfo;
+import com.ihr.ihr.entities.Employee;
+import com.ihr.ihr.entities.PaymentInfo;
+import jakarta.ejb.EJBException;
+import jakarta.ejb.Stateless;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-
-import com.ihr.ihr.common.dtos.EmployeeDto;
-import com.ihr.ihr.common.interf.EmployeeProvider;
-import com.ihr.ihr.entities.Employee;
-import jakarta.ejb.EJBException;
-import jakarta.ejb.LocalBean;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.ejb.Stateless;
-import jakarta.persistence.TypedQuery;
 
 @Stateless
 public class EmployeeBean implements EmployeeProvider {
@@ -22,12 +27,10 @@ public class EmployeeBean implements EmployeeProvider {
     @PersistenceContext
     EntityManager entityManager;
 
-    private void setEmployeeInformation(Employee employee,EmployeeDto employeeDto)
+    private void setEmployeeInformation(Employee employee, EmployeeDto employeeDto)
     {
         employee.setName(employeeDto.getName());
         employee.setSurname(employeeDto.getSurname());
-        employee.setBankInfoId(employeeDto.getBankInfoId());
-        employee.setPaymentInfoId(employeeDto.getPaymentInfoId());
         employee.setGender(employeeDto.getGender());
         employee.setDateOfBirth(employeeDto.getDateOfBirth());
         employee.setAddress(employeeDto.getAddress());
@@ -35,39 +38,72 @@ public class EmployeeBean implements EmployeeProvider {
         employee.setHoursPerWeek(employeeDto.getHoursPerWeek());
     }
     @Override
-    public void createEmployee(EmployeeDto employeeDto)
-    {
+    public void createEmployee(EmployeeDto employeeDto) throws UnknownBankInfoException, UnknownPaymentInfoException {
         LOG.info("createEmployee");
         Employee employee = new Employee();
-        setEmployeeInformation(employee,employeeDto);
+        setEmployeeInformation(employee, employeeDto);
+
         entityManager.persist(employee);
+
+        BankInfo bankInfo;
+
+        try {
+            bankInfo = entityManager.find(BankInfo.class, employeeDto.getBankInfoDto().getId());
+        }
+        catch (EJBException ex)
+        {
+            throw new UnknownBankInfoException(ex.getMessage());
+        }
+        bankInfo.setEmployee(employee);
+
+
+        PaymentInfo paymentInfo;
+        try {
+            paymentInfo = entityManager.find(PaymentInfo.class, employeeDto.getPaymentInfoDto().getId());
+        }
+        catch (EJBException ex)
+        {
+            throw new UnknownPaymentInfoException(ex.getMessage());
+        }
+        paymentInfo.setEmployee(employee);
+
+        employee.setBankInfo(bankInfo);
+        employee.setPaymentInfo(paymentInfo);
+
+        entityManager.merge(employee);
+        entityManager.merge(bankInfo);
+        entityManager.merge(paymentInfo);
     }
 
     @Override
-    public void deleteEmployeeById(Integer employeeId)
+    public void deleteEmployeeById(Long employeeId)
     {
         LOG.info("deleteEmployeeById");
         Employee employee = entityManager.find(Employee.class, employeeId);
+
+        BankInfo bankInfo = employee.getBankInfo();
+        PaymentInfo paymentInfo = employee.getPaymentInfo();
+
+        employee.setPaymentInfo(null);
+        employee.setBankInfo(null);
+
+        paymentInfo.setEmployee(null);
+        bankInfo.setEmployee(null);
+
+        entityManager.remove(bankInfo);
+        entityManager.remove(paymentInfo);
+
         entityManager.remove(employee);
     }
 
     @Override
-    public void updateEmployeeById(Integer employeeId, EmployeeDto employeeDto)
+    public void updateEmployeeById(Long employeeId, EmployeeDto employeeDto)
     {
         LOG.info("updateEmployee");
         Employee employee = entityManager.find(Employee.class, employeeId);
         setEmployeeInformation(employee,employeeDto);
     }
 
-    private List<EmployeeDto> copyEmployeesToDto(List<Employee> employees) {
-        List<EmployeeDto> employeesDto = new ArrayList<>();
-        employees.forEach(employee ->
-        {
-            EmployeeDto employeeDto = new EmployeeDto(employee.getId(), employee.getName(), employee.getSurname(), employee.getBankInfoId(), employee.getPaymentInfoId(), employee.getGender(), employee.getDateOfBirth(), employee.getAddress(), employee.getReligion(), employee.getHoursPerWeek());
-            employeesDto.add(employeeDto);
-        });
-        return employeesDto;
-    }
     @Override
     public List<EmployeeDto> findAllEmployees() {
         LOG.info("findAllEmployees");
@@ -99,17 +135,54 @@ public class EmployeeBean implements EmployeeProvider {
         }
     }
     @Override
-    public EmployeeDto findById(Integer employeeId) {
+    public EmployeeDto findById(Long employeeId) {
         LOG.info("findById");
         try {
             Employee employee = entityManager.find(Employee.class, employeeId);
+
             if (employee == null)
             {
                 return null;
             }
-            return new EmployeeDto(employee.getId(), employee.getName(), employee.getSurname(), employee.getBankInfoId(), employee.getPaymentInfoId(), employee.getGender(), employee.getDateOfBirth(), employee.getAddress(), employee.getReligion(), employee.getHoursPerWeek());
+
+            return copyEmployeeToDto(employee);
         } catch (Exception e) {
             throw new EJBException(e);
         }
+    }
+    private List<EmployeeDto> copyEmployeesToDto(List<Employee> employees) {
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        employees.forEach(employee ->
+        {
+            employeesDto.add(copyEmployeeToDto(employee));
+        });
+        return employeesDto;
+    }
+
+    private EmployeeDto copyEmployeeToDto(Employee employee)
+    {
+        EmployeeDto employeeDto = new EmployeeDto(employee.getId(),
+                employee.getName(),
+                employee.getSurname(),
+                employee.getGender(),
+                employee.getDateOfBirth(),
+                employee.getAddress(),
+                employee.getReligion(),
+                employee.getHoursPerWeek());
+
+        BankInfoDto bankInfoDto = new BankInfoDto(employee.getBankInfo().getId(),
+                employee.getBankInfo().getIBAN(),
+                employee.getBankInfo().getBankName());
+
+        PaymentInfoDto paymentInfoDto = new PaymentInfoDto(employee.getPaymentInfo().getId(),
+                employee.getPaymentInfo().getMonthlyBasicSalary(),
+                employee.getPaymentInfo().getSalaryLevel(),
+                employee.getPaymentInfo().getBonusForSuccess(),
+                employee.getPaymentInfo().getNumberOfShares());
+
+        employeeDto.setBankInfoDto(bankInfoDto);
+        employeeDto.setPaymentInfoDto(paymentInfoDto);
+
+        return employeeDto;
     }
 }
