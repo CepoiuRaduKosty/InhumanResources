@@ -12,5 +12,5 @@ public interface PaymentInfoProvider {
     Long addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException, ValidationException;
     void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws NonPositiveIncomeException, ValidationException;
     void deletePaymentInfo(Long paymentInfoId);
-
+    void incrementCummulatedSharesByNumberOfShares(Long paymentInfoId);
 }

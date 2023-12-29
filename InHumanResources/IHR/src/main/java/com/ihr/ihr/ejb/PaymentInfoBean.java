@@ -105,4 +105,18 @@ public class PaymentInfoBean implements PaymentInfoProvider {
             throw new EJBException(ex);
         }
     }
+
+    @Override
+    public void incrementCummulatedSharesByNumberOfShares(Long paymentInfoId) {
+        try{
+            LOG.info("incrementCummulatedSharesByNumberOfShares");
+            PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
+            Integer currentCummulatedShares = paymentInfo.getCummulatedShares();
+            Integer numberOfMonthlyShares = paymentInfo.getNumberOfShares();
+            paymentInfo.setCummulatedShares(currentCummulatedShares + numberOfMonthlyShares);
+        }
+        catch (Exception ex){
+            throw new EJBException(ex);
+        }
+    }
 }
