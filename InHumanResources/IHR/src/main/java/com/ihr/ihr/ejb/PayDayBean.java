@@ -3,6 +3,7 @@ package com.ihr.ihr.ejb;
 import com.ihr.ihr.common.dtos.BankInfoDto;
 import com.ihr.ihr.common.excep.PayDayAlreadyExistsException;
 import com.ihr.ihr.common.excep.PayDayDoesNotExistException;
+import com.ihr.ihr.common.interf.BankInfoValidation;
 import com.ihr.ihr.common.interf.PayDayProvider;
 import com.ihr.ihr.common.interf.PayDayValidation;
 import com.ihr.ihr.entities.BankInfo;
@@ -20,12 +21,14 @@ import java.util.logging.Logger;
 
 @Stateless
 public class PayDayBean implements PayDayProvider {
-    private static final Logger LOG = Logger.getLogger(BankInfoBean.class.getName());
+    private static final Logger LOG = Logger.getLogger(PayDayBean.class.getName());
     @PersistenceContext
     EntityManager entityManager;
 
     @Inject
     PayDayValidation payDayValidation;
+
+
 
     @Override
     public Integer getDayOfMonth() {
