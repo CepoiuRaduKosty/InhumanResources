@@ -11,6 +11,9 @@ public class PayDay {
     @Id
     private Long id;
 
+    @Basic
+    private Integer dayOfMonth;
+
     public Long getId() {
         return this.id;
     }
@@ -18,9 +21,6 @@ public class PayDay {
     public void setId(Long id) {
         this.id = id;
     }
-
-    @Basic
-    private Integer dayOfMonth;
 
     public Integer getDayOfMonth() {
         return this.dayOfMonth;
