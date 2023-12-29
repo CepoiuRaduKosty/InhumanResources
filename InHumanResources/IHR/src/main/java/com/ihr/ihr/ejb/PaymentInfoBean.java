@@ -63,7 +63,7 @@ public class PaymentInfoBean implements PaymentInfoProvider {
             paymentInfo.setSalaryLevel(createPaymentInfoDto.getSalaryLevel());
             paymentInfo.setBonusForSuccess(createPaymentInfoDto.getBonusForSuccess());
             paymentInfo.setNumberOfShares(createPaymentInfoDto.getNumberOfShares());
-            paymentInfo.setCummulatedShares(createPaymentInfoDto.getCummulatedShares());
+            paymentInfo.setCummulatedShares(0);
 
             entityManager.persist(paymentInfo);
 
