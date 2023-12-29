@@ -119,4 +119,16 @@ public class PaymentInfoBean implements PaymentInfoProvider {
             throw new EJBException(ex);
         }
     }
+
+    @Override
+    public void resetCummulatedShares(Long paymentInfoId) {
+        try{
+            LOG.info("resetCummulatedShares");
+            PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
+            paymentInfo.setCummulatedShares(0);
+        }
+        catch (Exception ex){
+            throw new EJBException(ex);
+        }
+    }
 }
