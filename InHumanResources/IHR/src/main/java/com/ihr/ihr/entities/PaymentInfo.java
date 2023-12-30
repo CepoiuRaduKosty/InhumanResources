@@ -65,13 +65,13 @@ public class PaymentInfo {
 
 
     @Basic
-    private Integer cummulatedShares;
+    private Integer cumulatedShares;
 
-    public Integer getCummulatedShares() {
-        return this.cummulatedShares;
+    public Integer getCumulatedShares() {
+        return this.cumulatedShares;
     }
 
-    public void setCummulatedShares(Integer cummulatedShares) {
-        this.cummulatedShares = cummulatedShares;
+    public void setCumulatedShares(Integer cumulatedShares) {
+        this.cumulatedShares = cumulatedShares;
     }
 }
