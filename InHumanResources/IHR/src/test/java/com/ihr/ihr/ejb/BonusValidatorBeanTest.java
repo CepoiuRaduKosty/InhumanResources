@@ -7,54 +7,57 @@ import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 import com.ihr.ihr.common.interf.BankInfoValidation;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 public class BonusValidatorBeanTest {
-    private final BonusValidation tempBonusValidation = new BonusValidatorBean();
-    @Inject
-    BonusValidation bonusValidation;
+    @InjectMocks
+    BonusValidatorBean bonusValidatorBean;
 
     @Test
     void isValueValid_positive() {
         int value = 5;
-        boolean isValid = tempBonusValidation.isValueValid(value);
+        boolean isValid = bonusValidatorBean.isValueValid(value);
         assertTrue(isValid);
     }
 
     @Test
     void isValueValid_negative() {
         int value = 0;
-        boolean isValid = tempBonusValidation.isValueValid(value);
+        boolean isValid = bonusValidatorBean.isValueValid(value);
         assertFalse(isValid);
     }
 
     @Test
     void isDenumireBonusValid_positive() {
         String denumireBonus = "Bonus";
-        boolean isValid = tempBonusValidation.isDenumireBonusValid(denumireBonus);
+        boolean isValid = bonusValidatorBean.isDenumireBonusValid(denumireBonus);
         assertTrue(isValid);
     }
 
     @Test
     void isDenumireBonusValid_negative() {
         String denumireBonus = "";
-        boolean isValid = tempBonusValidation.isDenumireBonusValid(denumireBonus);
+        boolean isValid = bonusValidatorBean.isDenumireBonusValid(denumireBonus);
         assertFalse(isValid);
     }
 
     @Test
     void isBonusDtoValid_positive() {
         BonusDto validBonusDto = new BonusDto(1L, 2L, 300, "Bonus");
-        boolean isValid = tempBonusValidation.isBonusDtoValid(validBonusDto);
+        boolean isValid = bonusValidatorBean.isBonusDtoValid(validBonusDto);
         assertTrue(isValid);
     }
 
     @Test
     void isBonusDtoValid_negative() {
         BonusDto validBonusDto = new BonusDto(1L, 2L, 0, "Bonus");
-        boolean isValid = tempBonusValidation.isBonusDtoValid(validBonusDto);
+        boolean isValid = bonusValidatorBean.isBonusDtoValid(validBonusDto);
         assertFalse(isValid);
     }
 
