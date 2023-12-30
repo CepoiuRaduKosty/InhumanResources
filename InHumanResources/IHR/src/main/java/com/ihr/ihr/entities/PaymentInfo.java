@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Collection;
+
 @Entity
 public class PaymentInfo {
     @Id
@@ -28,6 +30,9 @@ public class PaymentInfo {
 
     @OneToMany(mappedBy = "paymentInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BonusInfo> bonuses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "paymentInfo")
+    private Collection<Paycheck> paychecks;
 
     public Long getId() {
         return id;
@@ -92,5 +97,13 @@ public class PaymentInfo {
 
     public void setBonuses(List<BonusInfo> bonuses) {
         this.bonuses = bonuses;
+    }
+
+    public Collection<Paycheck> getPaychecks() {
+        return paychecks;
+    }
+
+    public void setPaychecks(Collection<Paycheck> paychecks) {
+        this.paychecks = paychecks;
     }
 }

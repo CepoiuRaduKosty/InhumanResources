@@ -58,17 +58,28 @@ public class PaymentInfoValidatorBean implements PaymentInfoValidation {
 
     @Override
     public boolean isPaymentInfoDtoValid(PaymentInfoDto paymentInfoDto) {
+        boolean isMonthlyBasicSalaryValid = isMonthlyBasicSalaryValid(paymentInfoDto.getMonthlyBasicSalary());
+
+        boolean isSalaryLevelValid = isSalaryLevelValid(paymentInfoDto.getSalaryLevel());
+
+        boolean isBonusForSuccessValid = isBonusForSuccessValid(paymentInfoDto.getBonusForSuccess());
+
+        boolean isNumberOfSharesValid = isNumberOfSharesValid(paymentInfoDto.getNumberOfShares());
+
+        boolean salaryLevelIsAssociateOrExecutive = salaryLevelIsAssociateOrExecutive(paymentInfoDto.getSalaryLevel(),
+                paymentInfoDto.getBonusForSuccess());
+
+        boolean salaryLevelIsExecutive = salaryLevelIsExecutive(paymentInfoDto.getSalaryLevel(),
+                paymentInfoDto.getNumberOfShares());
+
+        boolean isNumberOfSharesZeroForLecturerAssociate = isNumberOfSharesZeroForLecturerAssociate(paymentInfoDto.getSalaryLevel(), paymentInfoDto.getNumberOfShares());
+
+        boolean isPaymentInfoDtoValid = isMonthlyBasicSalaryValid && isSalaryLevelValid && isBonusForSuccessValid &&
+                isNumberOfSharesValid && salaryLevelIsAssociateOrExecutive && salaryLevelIsExecutive && isNumberOfSharesZeroForLecturerAssociate;
 
         LOG.info("PaymentInfoDtoRules");
 
-        return isMonthlyBasicSalaryValid(paymentInfoDto.getMonthlyBasicSalary()) &&
-                isSalaryLevelValid(paymentInfoDto.getSalaryLevel()) &&
-                isBonusForSuccessValid(paymentInfoDto.getBonusForSuccess()) &&
-                isNumberOfSharesValid(paymentInfoDto.getNumberOfShares()) &&
-                salaryLevelIsAssociateOrExecutive(paymentInfoDto.getSalaryLevel(), paymentInfoDto.getBonusForSuccess()) &&
-                salaryLevelIsExecutive(paymentInfoDto.getSalaryLevel(), paymentInfoDto.getNumberOfShares()) &&
-                isCumulatedSharesValid(paymentInfoDto.getCumulatedShares()) &&
-                isNumberOfSharesZeroForLecturerAssociate(paymentInfoDto.getSalaryLevel(), paymentInfoDto.getNumberOfShares());
+        return isPaymentInfoDtoValid;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.NonPositiveIncomeException;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
 import com.ihr.ihr.common.interf.PaymentInfoValidation;
+import com.ihr.ihr.entities.Paycheck;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.LocalBean;
@@ -15,6 +16,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.validation.ValidationException;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Stateless
@@ -98,6 +100,11 @@ public class PaymentInfoBean implements PaymentInfoProvider {
     public void deletePaymentInfo(Long paymentInfoId) {
         try {
             LOG.info("deletePaymentInfo");
+            TypedQuery<Paycheck> typedQuery = entityManager.createQuery("SELECT p FROM Paycheck p WHERE p.paymentInfo.id = :id", Paycheck.class);
+            typedQuery.setParameter("id", paymentInfoId);
+            List<Paycheck> paychecks = typedQuery.getResultList();
+            deletePaychecks(paychecks);
+
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
             entityManager.remove(paymentInfo);
         } catch (Exception ex) {
@@ -126,6 +133,12 @@ public class PaymentInfoBean implements PaymentInfoProvider {
             paymentInfo.setCumulatedShares(0);
         } catch (Exception ex) {
             throw new EJBException(ex);
+        }
+    }
+
+    private void deletePaychecks(List<Paycheck> paychecks) {
+        for (Paycheck paycheck : paychecks) {
+            entityManager.remove(paycheck);
         }
     }
 }
