@@ -25,6 +25,6 @@ public class BonusValidatorBean implements BonusValidation {
     @Override
     public boolean isBonusDtoValid(BonusDto bonusDto) {
         LOG.info("BonusValidator");
-        return isValueValid(bonusDto.getValue()) && isDenumireBonusValid(bonusDto.getDenumireBonus());
+        return isValueValid(bonusDto.getValue()) && isDenumireBonusValid(bonusDto.getBonusDescription());
     }
 }

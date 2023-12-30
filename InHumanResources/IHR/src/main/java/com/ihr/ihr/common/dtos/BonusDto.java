@@ -4,17 +4,17 @@ public class BonusDto {
     Long id;
     Long idPayment;
     Integer value;
-    String denumireBonus;
+    String bonusDescription;
 
     public Long getId() {
         return this.id;
     }
 
-    public BonusDto(Long id, Long idPayment, int value, String denumireBonus) {
+    public BonusDto(Long id, Long idPayment, int value, String bonusDescription) {
         this.id = id;
         this.idPayment = idPayment;
         this.value = value;
-        this.denumireBonus = denumireBonus;
+        this.bonusDescription = bonusDescription;
     }
 
     public void setId(Long id) {
@@ -37,11 +37,11 @@ public class BonusDto {
         this.value = value;
     }
 
-    public String getDenumireBonus() {
-        return this.denumireBonus;
+    public String getBonusDescription() {
+        return this.bonusDescription;
     }
 
-    public void setDenumireBonus(String denumireBonus) {
-        this.denumireBonus = denumireBonus;
+    public void setBonusDescription(String bonusDescription) {
+        this.bonusDescription = bonusDescription;
     }
 }
