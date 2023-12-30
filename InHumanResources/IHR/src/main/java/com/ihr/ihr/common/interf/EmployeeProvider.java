@@ -7,6 +7,7 @@ import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.excep.WorkingHoursException;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface EmployeeProvider {
 
@@ -18,9 +19,9 @@ public interface EmployeeProvider {
 
     EmployeeDto findById(Long employeeId);
 
-    Collection<EmployeeDto> findAllEmployeesByName(String employeeName);
+    List<EmployeeDto> findAllEmployeesByName(String employeeName);
 
-    Collection<EmployeeDto> findAllEmployees();
+    List<EmployeeDto> findAllEmployees();
 
 
 

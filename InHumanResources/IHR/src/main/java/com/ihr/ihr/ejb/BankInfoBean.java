@@ -2,6 +2,7 @@ package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.CreateBankInfoDto;
+import com.ihr.ihr.common.dtos.EmployeeDto;
 import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
@@ -64,4 +65,5 @@ public class BankInfoBean implements BankInfoProvider {
         BankInfo bankInfo = entityManager.find(BankInfo.class, bankInfoId);
         entityManager.remove(bankInfo);
     }
+
 }
