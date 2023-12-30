@@ -10,13 +10,16 @@ public class PaymentInfoDto {
     private Integer numberOfShares;
     private EmployeeDto employeeDto;
 
+    private Integer cummulatedShares;
+
     public PaymentInfoDto(Long id, Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
-                          Integer bonusForSuccess, Integer numberOfShares) {
+                          Integer bonusForSuccess, Integer numberOfShares, Integer cummulatedShares) {
         this.id = id;
         this.monthlyBasicSalary = monthlyBasicSalary;
         this.salaryLevel = salaryLevel;
         this.bonusForSuccess = bonusForSuccess;
         this.numberOfShares = numberOfShares;
+        this.cummulatedShares = cummulatedShares;
     }
 
     public Long getId() {
@@ -65,6 +68,14 @@ public class PaymentInfoDto {
 
     public void setEmployeeDto(EmployeeDto employeeDto) {
         this.employeeDto = employeeDto;
+    }
+
+    public Integer getCummulatedShares() {
+        return this.cummulatedShares;
+    }
+
+    public void setCummulatedShares(Integer cummulatedShares) {
+        this.cummulatedShares = cummulatedShares;
     }
 
     public PaymentInfoDto(CreatePaymentInfoDto createPaymentInfoDto) {

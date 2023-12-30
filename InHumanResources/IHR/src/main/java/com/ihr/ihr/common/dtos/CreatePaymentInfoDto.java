@@ -8,12 +8,15 @@ public class CreatePaymentInfoDto {
     private Integer bonusForSuccess;
     private Integer numberOfShares;
 
+    private Integer cummulatedShares;
+
     public CreatePaymentInfoDto(Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
-                          Integer bonusForSuccess, Integer numberOfShares) {
+                          Integer bonusForSuccess, Integer numberOfShares, Integer cummulatedShares) {
         this.monthlyBasicSalary = monthlyBasicSalary;
         this.salaryLevel = salaryLevel;
         this.bonusForSuccess = bonusForSuccess;
         this.numberOfShares = numberOfShares;
+        this.cummulatedShares = cummulatedShares;
     }
 
 
@@ -47,5 +50,13 @@ public class CreatePaymentInfoDto {
 
     public void setNumberOfShares(Integer numberOfShares) {
         this.numberOfShares = numberOfShares;
+    }
+
+    public Integer getCummulatedShares() {
+        return cummulatedShares;
+    }
+
+    public void setCummulatedShares(Integer cummulatedShares) {
+        this.cummulatedShares = cummulatedShares;
     }
 }

@@ -41,7 +41,8 @@ public class PaymentInfoBean implements PaymentInfoProvider {
                     paymentInfo.getMonthlyBasicSalary(),
                     paymentInfo.getSalaryLevel(),
                     paymentInfo.getBonusForSuccess(),
-                    paymentInfo.getNumberOfShares());
+                    paymentInfo.getNumberOfShares(),
+                    paymentInfo.getCummulatedShares());
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
@@ -62,6 +63,7 @@ public class PaymentInfoBean implements PaymentInfoProvider {
             paymentInfo.setSalaryLevel(createPaymentInfoDto.getSalaryLevel());
             paymentInfo.setBonusForSuccess(createPaymentInfoDto.getBonusForSuccess());
             paymentInfo.setNumberOfShares(createPaymentInfoDto.getNumberOfShares());
+            paymentInfo.setCummulatedShares(createPaymentInfoDto.getCummulatedShares());
 
             entityManager.persist(paymentInfo);
 
@@ -85,6 +87,7 @@ public class PaymentInfoBean implements PaymentInfoProvider {
             paymentInfo.setSalaryLevel(paymentInfoDto.getSalaryLevel());
             paymentInfo.setBonusForSuccess(paymentInfoDto.getBonusForSuccess());
             paymentInfo.setNumberOfShares(paymentInfoDto.getNumberOfShares());
+            paymentInfo.setCummulatedShares(paymentInfoDto.getCummulatedShares());
         } catch (NullPointerException ex) {
             throw new NullPointerException(ex.getMessage());
         } catch (Exception ex) {

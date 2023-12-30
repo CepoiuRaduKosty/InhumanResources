@@ -1,10 +1,7 @@
 package com.ihr.ihr.entities;
 
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class PaymentInfo {
@@ -64,5 +61,17 @@ public class PaymentInfo {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+
+    @Basic
+    private Integer cummulatedShares;
+
+    public Integer getCummulatedShares() {
+        return this.cummulatedShares;
+    }
+
+    public void setCummulatedShares(Integer cummulatedShares) {
+        this.cummulatedShares = cummulatedShares;
     }
 }
