@@ -4,14 +4,16 @@ import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.NonPositiveIncomeException;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
+import com.ihr.ihr.common.interf.PaymentInfoValidation;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.LocalBean;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import jakarta.validation.constraints.Null;
+import jakarta.validation.ValidationException;
 
 import java.util.logging.Logger;
 
@@ -22,6 +24,9 @@ public class PaymentInfoBean implements PaymentInfoProvider {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Inject
+    PaymentInfoValidation paymentInfoValidation;
 
     @Override
     public PaymentInfoDto findPaymentInfoById(Long paymentInfoId) {
@@ -43,9 +48,14 @@ public class PaymentInfoBean implements PaymentInfoProvider {
     }
 
     @Override
-    public Long addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException {
+    public Long addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException, ValidationException {
+        LOG.info("addPaymentInfo");
+        PaymentInfoDto extractedPaymentInfoDto = new PaymentInfoDto(createPaymentInfoDto);
+        if(!paymentInfoValidation.isPaymentInfoDtoValid(extractedPaymentInfoDto))
+            throw new ValidationException("Wrong PaymentInfoDto");
+
         try {
-            LOG.info("addPaymentInfo");
+
             PaymentInfo paymentInfo = new PaymentInfo();
 
             paymentInfo.setMonthlyBasicSalary(createPaymentInfoDto.getMonthlyBasicSalary());
@@ -56,17 +66,19 @@ public class PaymentInfoBean implements PaymentInfoProvider {
             entityManager.persist(paymentInfo);
 
             return paymentInfo.getId();
-        } catch (NullPointerException ex) {
-            throw new NullPointerException(ex.getMessage());
-        } catch (Exception ex) {
+        }
+        catch (Exception ex){
             throw new EJBException(ex);
         }
     }
 
     @Override
-    public void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws NonPositiveIncomeException {
+    public void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws NonPositiveIncomeException, ValidationException {
+        LOG.info("updatePaymentInfo");
+        if(!paymentInfoValidation.isPaymentInfoDtoValid(paymentInfoDto))
+            throw new ValidationException("Wrong PaymentInfoDto");
+
         try {
-            LOG.info("updatePaymentInfo");
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
 
             paymentInfo.setMonthlyBasicSalary(paymentInfoDto.getMonthlyBasicSalary());

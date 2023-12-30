@@ -66,4 +66,12 @@ public class PaymentInfoDto {
     public void setEmployeeDto(EmployeeDto employeeDto) {
         this.employeeDto = employeeDto;
     }
+
+    public PaymentInfoDto(CreatePaymentInfoDto createPaymentInfoDto) {
+        this.id = 0L;
+        this.monthlyBasicSalary = createPaymentInfoDto.getMonthlyBasicSalary();
+        this.salaryLevel = createPaymentInfoDto.getSalaryLevel();
+        this.bonusForSuccess = createPaymentInfoDto.getBonusForSuccess();
+        this.numberOfShares = createPaymentInfoDto.getNumberOfShares();
+    }
 }
