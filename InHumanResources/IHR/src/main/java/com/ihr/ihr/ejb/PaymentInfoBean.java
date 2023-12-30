@@ -11,12 +11,13 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import jakarta.validation.constraints.Null;
 
 import java.util.logging.Logger;
 
 @Stateless
 @LocalBean
-public class PaymentInfoBean implements PaymentInfoProvider{
+public class PaymentInfoBean implements PaymentInfoProvider {
     private static final Logger LOG = Logger.getLogger(PaymentInfoBean.class.getName());
 
     @PersistenceContext
@@ -24,7 +25,7 @@ public class PaymentInfoBean implements PaymentInfoProvider{
 
     @Override
     public PaymentInfoDto findPaymentInfoById(Long paymentInfoId) {
-        try{
+        try {
             LOG.info("findPaymentInfoById");
             TypedQuery<PaymentInfo> typedQuery = entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class);
             typedQuery.setParameter("id", paymentInfoId);
@@ -43,7 +44,7 @@ public class PaymentInfoBean implements PaymentInfoProvider{
 
     @Override
     public Long addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException {
-        try{
+        try {
             LOG.info("addPaymentInfo");
             PaymentInfo paymentInfo = new PaymentInfo();
 
@@ -55,15 +56,16 @@ public class PaymentInfoBean implements PaymentInfoProvider{
             entityManager.persist(paymentInfo);
 
             return paymentInfo.getId();
-        }
-        catch (Exception ex){
+        } catch (NullPointerException ex) {
+            throw new NullPointerException(ex.getMessage());
+        } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
 
     @Override
     public void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws NonPositiveIncomeException {
-        try{
+        try {
             LOG.info("updatePaymentInfo");
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
 
@@ -71,20 +73,20 @@ public class PaymentInfoBean implements PaymentInfoProvider{
             paymentInfo.setSalaryLevel(paymentInfoDto.getSalaryLevel());
             paymentInfo.setBonusForSuccess(paymentInfoDto.getBonusForSuccess());
             paymentInfo.setNumberOfShares(paymentInfoDto.getNumberOfShares());
-        }
-        catch (Exception ex){
+        } catch (NullPointerException ex) {
+            throw new NullPointerException(ex.getMessage());
+        } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
 
     @Override
     public void deletePaymentInfo(Long paymentInfoId) {
-        try{
+        try {
             LOG.info("deletePaymentInfo");
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
             entityManager.remove(paymentInfo);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
