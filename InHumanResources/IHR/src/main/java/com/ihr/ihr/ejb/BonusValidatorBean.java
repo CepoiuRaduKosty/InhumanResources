@@ -1,6 +1,6 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.BonusDtos.BonusDto;
+import com.ihr.ihr.common.dtos.BonusDtos.UpdateBonusDto;
 import com.ihr.ihr.common.interf.BonusValidation;
 import jakarta.ejb.Stateless;
 
@@ -23,7 +23,7 @@ public class BonusValidatorBean implements BonusValidation {
     }
 
     @Override
-    public boolean isBonusDtoValid(BonusDto bonusDto) {
+    public boolean isBonusDtoValid(UpdateBonusDto bonusDto) {
         LOG.info("BonusValidator");
         return isValueValid(bonusDto.getValue()) && isDenumireBonusValid(bonusDto.getBonusDescription());
     }
