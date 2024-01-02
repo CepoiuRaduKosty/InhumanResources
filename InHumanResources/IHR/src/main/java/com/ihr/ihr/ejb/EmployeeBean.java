@@ -5,14 +5,17 @@ import com.ihr.ihr.common.dtos.EmployeeDtos.CreateEmployeeDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.UpdateEmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.excep.InvalidEmployeeDto;
 import com.ihr.ihr.common.excep.UnknownBankInfoException;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.interf.EmployeeProvider;
+import com.ihr.ihr.common.interf.EmployeeValidation;
 import com.ihr.ihr.entities.BankInfo;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -29,6 +32,9 @@ public class EmployeeBean implements EmployeeProvider {
     @PersistenceContext
     EntityManager entityManager;
 
+    @Inject
+    EmployeeValidation employeeValidation;
+
     private void setEmployeeInformation(Employee employee, UpdateEmployeeDto updateEmployeeDto)
     {
         employee.setName(updateEmployeeDto.getName());
@@ -40,8 +46,12 @@ public class EmployeeBean implements EmployeeProvider {
         employee.setHoursPerWeek(updateEmployeeDto.getHoursPerWeek());
     }
     @Override
-    public void createEmployee(CreateEmployeeDto createEmployeeDto) throws UnknownBankInfoException, UnknownPaymentInfoException {
+    public void createEmployee(CreateEmployeeDto createEmployeeDto) throws UnknownBankInfoException, UnknownPaymentInfoException, InvalidEmployeeDto {
         LOG.info("createEmployee");
+
+        if(!employeeValidation.isEmployeeDataValid(createEmployeeDto))
+            throw new InvalidEmployeeDto();
+
         Employee employee = new Employee();
         setEmployeeInformation(employee, createEmployeeDto);
 
@@ -99,9 +109,12 @@ public class EmployeeBean implements EmployeeProvider {
     }
 
     @Override
-    public void updateEmployeeById(Long employeeId, UpdateEmployeeDto updateEmployeeDto)
-    {
+    public void updateEmployeeById(Long employeeId, UpdateEmployeeDto updateEmployeeDto) throws InvalidEmployeeDto {
         LOG.info("updateEmployee");
+
+        if(!employeeValidation.isEmployeeDataValid(updateEmployeeDto))
+            throw new InvalidEmployeeDto();
+
         Employee employee = entityManager.find(Employee.class, employeeId);
         setEmployeeInformation(employee,updateEmployeeDto);
     }

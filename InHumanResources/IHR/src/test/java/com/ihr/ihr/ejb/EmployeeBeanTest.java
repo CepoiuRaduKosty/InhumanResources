@@ -5,6 +5,7 @@ import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.GenderEnum;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
+import com.ihr.ihr.common.interf.EmployeeValidation;
 import com.ihr.ihr.entities.BankInfo;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
@@ -34,6 +36,9 @@ class EmployeeBeanTest {
 
     @InjectMocks
     EmployeeBean employeeBean;
+
+    @Spy
+    EmployeeValidatorBean employeeValidatorBean;
 
     @Test
     void createEmployee_positive_knownBankPaymentInfo() {
