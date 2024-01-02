@@ -1,16 +1,13 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.BankInfoDto;
-import jakarta.inject.Inject;
+import com.ihr.ihr.common.dtos.CreateBankInfoDto;
 import org.junit.jupiter.api.Test;
-
-import com.ihr.ihr.common.interf.BankInfoValidation;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 class BankInfoValidatorTest {
@@ -46,12 +43,12 @@ class BankInfoValidatorTest {
     }
     @Test
     void isBankInfoDtoValid_positive() {
-        BankInfoDto validDto = new BankInfoDto(1L, "RO49AAAA1B31007593840000", "ValidBankName");
+        CreateBankInfoDto validDto = new CreateBankInfoDto("RO49AAAA1B31007593840000", "ValidBankName");
         assertTrue(bankInfoValidatorBean.isBankInfoDtoValid(validDto));
     }
     @Test
     void isBankInfoDtoValid_negative() {
-        BankInfoDto invalidDto = new BankInfoDto(1L, "RA1B31007593840000", "");
+        CreateBankInfoDto invalidDto = new CreateBankInfoDto("RA1B31007593840000", "");
         assertFalse(bankInfoValidatorBean.isBankInfoDtoValid(invalidDto));
     }
 }

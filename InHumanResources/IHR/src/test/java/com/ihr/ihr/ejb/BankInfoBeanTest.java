@@ -2,6 +2,7 @@ package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.CreateBankInfoDto;
+import com.ihr.ihr.common.excep.InvalidBankInfoException;
 import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
@@ -63,7 +64,7 @@ class BankInfoBeanTest {
     }
 
     @Test
-    void addBankInfo_positive() {
+    void addBankInfo_positive() throws InvalidBankInfoException {
         CreateBankInfoDto sampleBankInfoDto = new CreateBankInfoDto("SampleIBAN", "SampleBank");
 
         bankInfoBean.addBankInfo(sampleBankInfoDto);
@@ -85,19 +86,20 @@ class BankInfoBeanTest {
     }
 
     @Test
-    void updateBankInfo_positive() {
-        BankInfoDto updatedBankInfoDto = new BankInfoDto(1L, "UpdatedIBAN", "UpdatedBank");
+    void updateBankInfo_positive() throws InvalidBankInfoException {
+        CreateBankInfoDto updatedBankInfoDto = new CreateBankInfoDto("UpdatedIBAN", "UpdatedBank");
+        Long updatedBankInfoId = 1L;
 
         BankInfo existingBankInfo = new BankInfo();
         existingBankInfo.setId(1L);
         existingBankInfo.setIBAN("InitialIBAN");
         existingBankInfo.setBankName("InitialBank");
 
-        when(entityManager.find(BankInfo.class, updatedBankInfoDto.getId())).thenReturn(existingBankInfo);
+        when(entityManager.find(BankInfo.class, updatedBankInfoId)).thenReturn(existingBankInfo);
 
-        bankInfoBean.updateBankInfo(updatedBankInfoDto.getId(), updatedBankInfoDto);
+        bankInfoBean.updateBankInfo(updatedBankInfoId, updatedBankInfoDto);
 
-        verify(entityManager).find(BankInfo.class, updatedBankInfoDto.getId());
+        verify(entityManager).find(BankInfo.class, updatedBankInfoId);
 
         assertEquals(updatedBankInfoDto.getIBAN(), existingBankInfo.getIBAN());
         assertEquals(updatedBankInfoDto.getBankName(), existingBankInfo.getBankName());
@@ -105,11 +107,13 @@ class BankInfoBeanTest {
 
     @Test
     void updateBankInfo_negative_idNotFound() {
-        BankInfoDto nonExistingBankInfoDto = new BankInfoDto(999L, "UpdatedIBAN", "UpdatedBank");
+        CreateBankInfoDto nonExistingBankInfoDto = new CreateBankInfoDto("UpdatedIBAN", "UpdatedBank");
 
-        when(entityManager.find(BankInfo.class, nonExistingBankInfoDto.getId())).thenReturn(null);
+        Long Id = 999L;
 
-        assertThrows(NullPointerException.class, () -> bankInfoBean.updateBankInfo(nonExistingBankInfoDto.getId(), nonExistingBankInfoDto));
+        when(entityManager.find(BankInfo.class, Id)).thenReturn(null);
+
+        assertThrows(NullPointerException.class, () -> bankInfoBean.updateBankInfo(Id, nonExistingBankInfoDto));
     }
 
     @Test
