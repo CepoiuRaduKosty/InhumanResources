@@ -1,11 +1,10 @@
-package com.ihr.ihr.common.dtos;
+package com.ihr.ihr.common.dtos.BankInfoDtos;
 
-public class CreateBankInfoDto {
+public class UpdateBankInfoDto {
     private String IBAN;
     private String bankName;
-    private EmployeeDto employeeDto;
 
-    public CreateBankInfoDto(String IBAN, String bankName) {
+    public UpdateBankInfoDto(String IBAN, String bankName) {
         this.IBAN = IBAN;
         this.bankName = bankName;
     }
@@ -24,13 +23,5 @@ public class CreateBankInfoDto {
 
     public void setBankName(String bankName) {
         this.bankName = bankName;
-    }
-
-    public EmployeeDto getEmployeeDto() {
-        return employeeDto;
-    }
-
-    public void setEmployeeDto(EmployeeDto employeeDto) {
-        this.employeeDto = employeeDto;
     }
 }

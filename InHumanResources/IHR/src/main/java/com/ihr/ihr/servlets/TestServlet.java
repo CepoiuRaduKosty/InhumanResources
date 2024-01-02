@@ -1,14 +1,5 @@
 package com.ihr.ihr.servlets;
 
-import com.ihr.ihr.common.dtos.EmployeeDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
-import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import com.ihr.ihr.common.interf.BankInfoProvider;
-import com.ihr.ihr.common.interf.EmployeeProvider;
-
-import com.ihr.ihr.common.interf.PaymentInfoProvider;
-
-import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;

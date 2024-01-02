@@ -1,9 +1,7 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.enums.GenderEnum;
-import com.ihr.ihr.common.interf.EmployeeValidation;
-import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

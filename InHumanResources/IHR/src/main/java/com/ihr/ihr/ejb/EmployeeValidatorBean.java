@@ -1,7 +1,8 @@
 package com.ihr.ihr.ejb;
 
 
-import com.ihr.ihr.common.dtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.EmployeeDtos.UpdateEmployeeDto;
 import com.ihr.ihr.common.enums.GenderEnum;
 import com.ihr.ihr.common.interf.EmployeeValidation;
 import jakarta.ejb.Stateless;
@@ -50,14 +51,14 @@ public class EmployeeValidatorBean implements EmployeeValidation {
         return hoursPerWeek >= 10 && hoursPerWeek <= 40;
     }
 
-    public boolean isEmployeeDataValid(EmployeeDto employeeDto) {
+    public boolean isEmployeeDataValid(UpdateEmployeeDto updateEmployeeDto) {
         LOG.info("EmployeeDataValidator");
-        return isNameValid(employeeDto.getName())
-                && isSurnameValid(employeeDto.getSurname())
-                && isGenderValid(employeeDto.getGender())
-                && isDateOfBirthValid(employeeDto.getDateOfBirth())
-                && isAddressValid(employeeDto.getAddress())
-                && isReligionValid(employeeDto.getReligion())
-                && isHoursPerWeekValid(employeeDto.getHoursPerWeek());
+        return isNameValid(updateEmployeeDto.getName())
+                && isSurnameValid(updateEmployeeDto.getSurname())
+                && isGenderValid(updateEmployeeDto.getGender())
+                && isDateOfBirthValid(updateEmployeeDto.getDateOfBirth())
+                && isAddressValid(updateEmployeeDto.getAddress())
+                && isReligionValid(updateEmployeeDto.getReligion())
+                && isHoursPerWeekValid(updateEmployeeDto.getHoursPerWeek());
     }
 }

@@ -1,6 +1,7 @@
 package com.ihr.ihr.common.interf;
-import com.ihr.ihr.common.dtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 
+import com.ihr.ihr.common.dtos.EmployeeDtos.UpdateEmployeeDto;
 import com.ihr.ihr.common.enums.GenderEnum;
 
 import java.time.LocalDate;
@@ -20,6 +21,6 @@ public interface EmployeeValidation {
 
    boolean isHoursPerWeekValid(Integer hoursPerWeek);
 
-   boolean isEmployeeDataValid(EmployeeDto employeeDto);
+   boolean isEmployeeDataValid(UpdateEmployeeDto updateEmployeeDto);
 
 }

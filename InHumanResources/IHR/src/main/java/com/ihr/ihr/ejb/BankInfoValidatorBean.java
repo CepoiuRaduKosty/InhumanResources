@@ -1,7 +1,8 @@
 package com.ihr.ihr.ejb;
 
 
-import com.ihr.ihr.common.dtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.BankInfoDtos.UpdateBankInfoDto;
 import com.ihr.ihr.common.interf.BankInfoValidation;
 import jakarta.ejb.Stateless;
 import org.apache.commons.validator.routines.IBANValidator;
@@ -29,9 +30,9 @@ public class BankInfoValidatorBean implements BankInfoValidation {
         return validator.isValid(IBAN);
     }
 
-    public boolean isBankInfoDtoValid(BankInfoDto bankInfoDto) {
+    public boolean isBankInfoDtoValid(UpdateBankInfoDto updateBankInfoDto) {
         LOG.info("ValidateBankInfo");
 
-        return isIBANValid(bankInfoDto.getIBAN()) && isBankNameValid(bankInfoDto.getBankName());
+        return isIBANValid(updateBankInfoDto.getIBAN()) && isBankNameValid(updateBankInfoDto.getBankName());
     }
 }
