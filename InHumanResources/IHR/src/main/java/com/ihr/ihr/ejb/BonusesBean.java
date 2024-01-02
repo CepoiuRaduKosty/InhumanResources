@@ -112,7 +112,7 @@ public class BonusesBean implements BonusProvider {
     public List<BonusDto> getAllBonusesByPaymentId(Long paymentId) {
         LOG.info("getAllBonusesByPaymentId");
         try {
-            TypedQuery<BonusInfo> typedQuery = entityManager.createQuery("SELECT b FROM BonusInfo b WHERE b.paymentInfo.id = :paymentId", BonusInfo.class);
+            TypedQuery<BonusInfo> typedQuery = entityManager.createQuery("SELECT b FROM BonusInfo b WHERE b.paymentInfo.id = :paymentId", BonusInfo.class).setParameter("paymentId", paymentId);
             List<BonusInfo> bonuses = typedQuery.getResultList();
             return getBonusDtoListFromBonusInfoList(bonuses);
         } catch (Exception ex) {
