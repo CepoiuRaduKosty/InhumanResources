@@ -3,20 +3,14 @@ package com.ihr.ihr.ejb;
 import com.ihr.ihr.common.dtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.CreateBankInfoDto;
 import com.ihr.ihr.common.excep.InvalidBankInfoException;
-import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
-import jakarta.validation.ValidationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,9 +26,13 @@ class BankInfoBeanTest {
 
     @InjectMocks
     BankInfoBean bankInfoBean;
+
+    @Spy
+    BankInfoValidatorBean bankInfoValidatorBean;
+
     @Test
     void getById_positive_idExists() {
-        BankInfoDto sampleBankInfoDto = new BankInfoDto(1L, "SampleIBAN", "SampleBank");
+        BankInfoDto sampleBankInfoDto = new BankInfoDto(1L, "RO49AAAA1B31007593840000", "SampleBank");
 
         TypedQuery<BankInfo> typedQuery = Mockito.mock(TypedQuery.class);
         when(entityManager.createQuery("SELECT b FROM BankInfo b WHERE b.id = :id", BankInfo.class)).thenReturn(typedQuery);
@@ -65,7 +63,7 @@ class BankInfoBeanTest {
 
     @Test
     void addBankInfo_positive() throws InvalidBankInfoException {
-        CreateBankInfoDto sampleBankInfoDto = new CreateBankInfoDto("SampleIBAN", "SampleBank");
+        CreateBankInfoDto sampleBankInfoDto = new CreateBankInfoDto("RO49AAAA1B31007593840000", "SampleBank");
 
         bankInfoBean.addBankInfo(sampleBankInfoDto);
 
@@ -87,7 +85,7 @@ class BankInfoBeanTest {
 
     @Test
     void updateBankInfo_positive() throws InvalidBankInfoException {
-        CreateBankInfoDto updatedBankInfoDto = new CreateBankInfoDto("UpdatedIBAN", "UpdatedBank");
+        CreateBankInfoDto updatedBankInfoDto = new CreateBankInfoDto("RO49AAAA1B31007593840000", "UpdatedBank");
         Long updatedBankInfoId = 1L;
 
         BankInfo existingBankInfo = new BankInfo();
@@ -107,7 +105,7 @@ class BankInfoBeanTest {
 
     @Test
     void updateBankInfo_negative_idNotFound() {
-        CreateBankInfoDto nonExistingBankInfoDto = new CreateBankInfoDto("UpdatedIBAN", "UpdatedBank");
+        CreateBankInfoDto nonExistingBankInfoDto = new CreateBankInfoDto("RO49AAAA1B31007593840000", "UpdatedBank");
 
         Long Id = 999L;
 
