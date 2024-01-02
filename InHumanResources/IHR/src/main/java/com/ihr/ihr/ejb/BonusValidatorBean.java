@@ -1,6 +1,6 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.BonusDto;
+import com.ihr.ihr.common.dtos.BonusDtos.BonusDto;
 import com.ihr.ihr.common.interf.BonusValidation;
 import jakarta.ejb.Stateless;
 
