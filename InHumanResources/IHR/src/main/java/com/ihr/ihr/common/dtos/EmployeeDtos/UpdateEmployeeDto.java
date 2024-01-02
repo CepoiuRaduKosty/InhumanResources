@@ -1,24 +1,21 @@
-package com.ihr.ihr.common.dtos;
+package com.ihr.ihr.common.dtos.EmployeeDtos;
 
+import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.GenderEnum;
-import com.ihr.ihr.entities.BankInfo;
 
 import java.time.LocalDate;
 
-public class EmployeeDto {
-    private Long id;
+public class UpdateEmployeeDto {
     private String name;
     private String surname;
-    private PaymentInfoDto paymentInfoDto;
-    private BankInfoDto bankInfoDto;
     private GenderEnum gender;
     private LocalDate dateOfBirth;
     private String address;
     private String religion;
     private Integer hoursPerWeek;
 
-    public EmployeeDto(Long id, String name, String surname, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, Integer hoursPerWeek) {
-        this.id = id;
+    public UpdateEmployeeDto(String name, String surname, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, Integer hoursPerWeek) {
         this.name = name;
         this.surname = surname;
         this.gender = gender;
@@ -26,14 +23,6 @@ public class EmployeeDto {
         this.address = address;
         this.religion = religion;
         this.hoursPerWeek = hoursPerWeek;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -50,22 +39,6 @@ public class EmployeeDto {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public PaymentInfoDto getPaymentInfoDto() {
-        return paymentInfoDto;
-    }
-
-    public void setPaymentInfoDto(PaymentInfoDto paymentInfoDto) {
-        this.paymentInfoDto = paymentInfoDto;
-    }
-
-    public BankInfoDto getBankInfoDto() {
-        return bankInfoDto;
-    }
-
-    public void setBankInfoDto(BankInfoDto bankInfoDto) {
-        this.bankInfoDto = bankInfoDto;
     }
 
     public GenderEnum getGender() {

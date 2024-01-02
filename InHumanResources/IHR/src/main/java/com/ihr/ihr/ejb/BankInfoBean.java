@@ -1,8 +1,8 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.BankInfoDto;
-import com.ihr.ihr.common.dtos.CreateBankInfoDto;
-import com.ihr.ihr.common.dtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.BankInfoDtos.CreateBankInfoDto;
+import com.ihr.ihr.common.dtos.BankInfoDtos.UpdateBankInfoDto;
 import com.ihr.ihr.common.interf.BankInfoProvider;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
@@ -49,13 +49,13 @@ public class BankInfoBean implements BankInfoProvider {
     }
 
     @Override
-    public void updateBankInfo(Long bankInfoId, BankInfoDto bankInfoDto) {
+    public void updateBankInfo(Long bankInfoId, UpdateBankInfoDto updateBankInfoDto) {
         LOG.info("updateBankInfo");
 
         BankInfo bankInfo = entityManager.find(BankInfo.class, bankInfoId);
 
-        bankInfo.setBankName(bankInfoDto.getBankName());
-        bankInfo.setIBAN(bankInfoDto.getIBAN());
+        bankInfo.setBankName(updateBankInfoDto.getBankName());
+        bankInfo.setIBAN(updateBankInfoDto.getIBAN());
     }
 
     @Override

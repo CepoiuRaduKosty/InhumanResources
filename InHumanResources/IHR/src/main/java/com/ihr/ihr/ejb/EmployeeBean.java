@@ -1,7 +1,9 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.BankInfoDto;
-import com.ihr.ihr.common.dtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.EmployeeDtos.CreateEmployeeDto;
+import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.EmployeeDtos.UpdateEmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.UnknownBankInfoException;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
@@ -27,28 +29,28 @@ public class EmployeeBean implements EmployeeProvider {
     @PersistenceContext
     EntityManager entityManager;
 
-    private void setEmployeeInformation(Employee employee, EmployeeDto employeeDto)
+    private void setEmployeeInformation(Employee employee, UpdateEmployeeDto updateEmployeeDto)
     {
-        employee.setName(employeeDto.getName());
-        employee.setSurname(employeeDto.getSurname());
-        employee.setGender(employeeDto.getGender());
-        employee.setDateOfBirth(employeeDto.getDateOfBirth());
-        employee.setAddress(employeeDto.getAddress());
-        employee.setReligion(employeeDto.getReligion());
-        employee.setHoursPerWeek(employeeDto.getHoursPerWeek());
+        employee.setName(updateEmployeeDto.getName());
+        employee.setSurname(updateEmployeeDto.getSurname());
+        employee.setGender(updateEmployeeDto.getGender());
+        employee.setDateOfBirth(updateEmployeeDto.getDateOfBirth());
+        employee.setAddress(updateEmployeeDto.getAddress());
+        employee.setReligion(updateEmployeeDto.getReligion());
+        employee.setHoursPerWeek(updateEmployeeDto.getHoursPerWeek());
     }
     @Override
-    public void createEmployee(EmployeeDto employeeDto) throws UnknownBankInfoException, UnknownPaymentInfoException {
+    public void createEmployee(CreateEmployeeDto createEmployeeDto) throws UnknownBankInfoException, UnknownPaymentInfoException {
         LOG.info("createEmployee");
         Employee employee = new Employee();
-        setEmployeeInformation(employee, employeeDto);
+        setEmployeeInformation(employee, createEmployeeDto);
 
         entityManager.persist(employee);
 
         BankInfo bankInfo;
 
         try {
-            bankInfo = entityManager.find(BankInfo.class, employeeDto.getBankInfoDto().getId());
+            bankInfo = entityManager.find(BankInfo.class, createEmployeeDto.getBankInfoDto().getId());
         }
         catch (EJBException ex)
         {
@@ -59,7 +61,7 @@ public class EmployeeBean implements EmployeeProvider {
 
         PaymentInfo paymentInfo;
         try {
-            paymentInfo = entityManager.find(PaymentInfo.class, employeeDto.getPaymentInfoDto().getId());
+            paymentInfo = entityManager.find(PaymentInfo.class, createEmployeeDto.getPaymentInfoDto().getId());
         }
         catch (EJBException ex)
         {
@@ -97,11 +99,11 @@ public class EmployeeBean implements EmployeeProvider {
     }
 
     @Override
-    public void updateEmployeeById(Long employeeId, EmployeeDto employeeDto)
+    public void updateEmployeeById(Long employeeId, UpdateEmployeeDto updateEmployeeDto)
     {
         LOG.info("updateEmployee");
         Employee employee = entityManager.find(Employee.class, employeeId);
-        setEmployeeInformation(employee,employeeDto);
+        setEmployeeInformation(employee,updateEmployeeDto);
     }
 
     @Override

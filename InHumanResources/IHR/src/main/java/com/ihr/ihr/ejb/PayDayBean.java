@@ -1,21 +1,16 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.BankInfoDto;
 import com.ihr.ihr.common.excep.InvalidPayDayException;
 import com.ihr.ihr.common.excep.PayDayAlreadyExistsException;
 import com.ihr.ihr.common.excep.PayDayDoesNotExistException;
-import com.ihr.ihr.common.interf.BankInfoValidation;
 import com.ihr.ihr.common.interf.PayDayProvider;
 import com.ihr.ihr.common.interf.PayDayValidation;
-import com.ihr.ihr.entities.BankInfo;
 import com.ihr.ihr.entities.PayDay;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
-import jakarta.validation.ValidationException;
 
 import java.util.List;
 import java.util.logging.Logger;
