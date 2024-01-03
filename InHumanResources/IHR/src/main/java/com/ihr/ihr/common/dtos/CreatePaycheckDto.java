@@ -14,6 +14,19 @@ public class CreatePaycheckDto {
     private Integer socialCharge;
     private Integer finalSalary;
 
+    public CreatePaycheckDto(Long paymentId, LocalDate date, Integer basicSalary, Integer bonusForSuccess, Integer numberOfShares, Integer cumulatedShares, Integer salaryBeforeTaxes, Integer tax, Integer socialCharge, Integer finalSalary) {
+        this.paymentId = paymentId;
+        this.date = date;
+        this.basicSalary = basicSalary;
+        this.bonusForSuccess = bonusForSuccess;
+        this.numberOfShares = numberOfShares;
+        this.cumulatedShares = cumulatedShares;
+        this.salaryBeforeTaxes = salaryBeforeTaxes;
+        this.tax = tax;
+        this.socialCharge = socialCharge;
+        this.finalSalary = finalSalary;
+    }
+
     public Long getPaymentId() {
         return paymentId;
     }
