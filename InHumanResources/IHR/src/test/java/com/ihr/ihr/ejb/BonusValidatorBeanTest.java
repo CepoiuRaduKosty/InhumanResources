@@ -1,6 +1,9 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.BonusDto;
+import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.BonusDtos.BonusDto;
+import com.ihr.ihr.common.interf.BonusValidation;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;

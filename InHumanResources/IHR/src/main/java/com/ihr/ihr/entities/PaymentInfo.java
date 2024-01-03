@@ -3,6 +3,9 @@ package com.ihr.ihr.entities;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 public class PaymentInfo {
     @Id
@@ -22,6 +25,9 @@ public class PaymentInfo {
 
     @OneToOne
     private Employee employee;
+
+    @OneToMany(mappedBy = "paymentInfo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BonusInfo> bonuses = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -79,4 +85,12 @@ public class PaymentInfo {
         this.cumulatedShares = cumulatedShares;
     }
 
+
+    public List<BonusInfo> getBonuses() {
+        return bonuses;
+    }
+
+    public void setBonuses(List<BonusInfo> bonuses) {
+        this.bonuses = bonuses;
+    }
 }
