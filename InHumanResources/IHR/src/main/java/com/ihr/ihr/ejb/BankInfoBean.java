@@ -19,7 +19,6 @@ import jakarta.validation.ValidationException;
 import java.util.logging.Logger;
 
 @Stateless
-@LocalBean
 public class BankInfoBean implements BankInfoProvider {
     private static final Logger LOG = Logger.getLogger(BankInfoBean.class.getName());
     @PersistenceContext
