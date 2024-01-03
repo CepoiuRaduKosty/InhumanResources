@@ -2,6 +2,7 @@ package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.BankInfoDtos.CreateBankInfoDto;
+import com.ihr.ihr.common.excep.InvalidBankInfoException;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
 import jakarta.persistence.EntityManager;
@@ -9,10 +10,7 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,9 +26,13 @@ class BankInfoBeanTest {
 
     @InjectMocks
     BankInfoBean bankInfoBean;
+
+    @Spy
+    BankInfoValidatorBean bankInfoValidatorBean;
+
     @Test
     void getById_positive_idExists() {
-        BankInfoDto sampleBankInfoDto = new BankInfoDto(1L, "SampleIBAN", "SampleBank");
+        BankInfoDto sampleBankInfoDto = new BankInfoDto(1L, "RO49AAAA1B31007593840000", "SampleBank");
 
         TypedQuery<BankInfo> typedQuery = Mockito.mock(TypedQuery.class);
         when(entityManager.createQuery("SELECT b FROM BankInfo b WHERE b.id = :id", BankInfo.class)).thenReturn(typedQuery);
@@ -60,8 +62,8 @@ class BankInfoBeanTest {
     }
 
     @Test
-    void addBankInfo_positive() {
-        CreateBankInfoDto sampleBankInfoDto = new CreateBankInfoDto("SampleIBAN", "SampleBank");
+    void addBankInfo_positive() throws InvalidBankInfoException {
+        CreateBankInfoDto sampleBankInfoDto = new CreateBankInfoDto("RO49AAAA1B31007593840000", "SampleBank");
 
         bankInfoBean.addBankInfo(sampleBankInfoDto);
 
@@ -82,19 +84,20 @@ class BankInfoBeanTest {
     }
 
     @Test
-    void updateBankInfo_positive() {
-        BankInfoDto updatedBankInfoDto = new BankInfoDto(1L, "UpdatedIBAN", "UpdatedBank");
+    void updateBankInfo_positive() throws InvalidBankInfoException {
+        CreateBankInfoDto updatedBankInfoDto = new CreateBankInfoDto("RO49AAAA1B31007593840000", "UpdatedBank");
+        Long updatedBankInfoId = 1L;
 
         BankInfo existingBankInfo = new BankInfo();
         existingBankInfo.setId(1L);
         existingBankInfo.setIBAN("InitialIBAN");
         existingBankInfo.setBankName("InitialBank");
 
-        when(entityManager.find(BankInfo.class, updatedBankInfoDto.getId())).thenReturn(existingBankInfo);
+        when(entityManager.find(BankInfo.class, updatedBankInfoId)).thenReturn(existingBankInfo);
 
-        bankInfoBean.updateBankInfo(updatedBankInfoDto.getId(), updatedBankInfoDto);
+        bankInfoBean.updateBankInfo(updatedBankInfoId, updatedBankInfoDto);
 
-        verify(entityManager).find(BankInfo.class, updatedBankInfoDto.getId());
+        verify(entityManager).find(BankInfo.class, updatedBankInfoId);
 
         assertEquals(updatedBankInfoDto.getIBAN(), existingBankInfo.getIBAN());
         assertEquals(updatedBankInfoDto.getBankName(), existingBankInfo.getBankName());
@@ -102,11 +105,13 @@ class BankInfoBeanTest {
 
     @Test
     void updateBankInfo_negative_idNotFound() {
-        BankInfoDto nonExistingBankInfoDto = new BankInfoDto(999L, "UpdatedIBAN", "UpdatedBank");
+        CreateBankInfoDto nonExistingBankInfoDto = new CreateBankInfoDto("RO49AAAA1B31007593840000", "UpdatedBank");
 
-        when(entityManager.find(BankInfo.class, nonExistingBankInfoDto.getId())).thenReturn(null);
+        Long Id = 999L;
 
-        assertThrows(NullPointerException.class, () -> bankInfoBean.updateBankInfo(nonExistingBankInfoDto.getId(), nonExistingBankInfoDto));
+        when(entityManager.find(BankInfo.class, Id)).thenReturn(null);
+
+        assertThrows(NullPointerException.class, () -> bankInfoBean.updateBankInfo(Id, nonExistingBankInfoDto));
     }
 
     @Test

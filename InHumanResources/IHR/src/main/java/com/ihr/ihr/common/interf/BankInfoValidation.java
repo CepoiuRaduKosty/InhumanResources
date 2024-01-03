@@ -1,6 +1,5 @@
 package com.ihr.ihr.common.interf;
 
-import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.BankInfoDtos.UpdateBankInfoDto;
 
 public interface BankInfoValidation {

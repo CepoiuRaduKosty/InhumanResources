@@ -3,10 +3,13 @@ package com.ihr.ihr.ejb;
 import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.BankInfoDtos.CreateBankInfoDto;
 import com.ihr.ihr.common.dtos.BankInfoDtos.UpdateBankInfoDto;
+import com.ihr.ihr.common.excep.InvalidBankInfoException;
 import com.ihr.ihr.common.interf.BankInfoProvider;
+import com.ihr.ihr.common.interf.BankInfoValidation;
 import com.ihr.ihr.entities.BankInfo;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -18,6 +21,9 @@ public class BankInfoBean implements BankInfoProvider {
     private static final Logger LOG = Logger.getLogger(BankInfoBean.class.getName());
     @PersistenceContext
     EntityManager entityManager;
+
+    @Inject
+    BankInfoValidation bankInfoValidation;
 
     @Override
     public BankInfoDto getById(Long bankInfoId) {
@@ -35,8 +41,11 @@ public class BankInfoBean implements BankInfoProvider {
     }
 
     @Override
-    public Long addBankInfo(CreateBankInfoDto createBankInfoDto) {
+    public Long addBankInfo(CreateBankInfoDto createBankInfoDto) throws InvalidBankInfoException {
         LOG.info("AddBankInfo");
+
+        if(!bankInfoValidation.isBankInfoDtoValid(createBankInfoDto))
+            throw new InvalidBankInfoException();
 
         BankInfo bankInfo = new BankInfo();
 
@@ -49,8 +58,11 @@ public class BankInfoBean implements BankInfoProvider {
     }
 
     @Override
-    public void updateBankInfo(Long bankInfoId, UpdateBankInfoDto updateBankInfoDto) {
+    public void updateBankInfo(Long bankInfoId, UpdateBankInfoDto updateBankInfoDto) throws InvalidBankInfoException {
         LOG.info("updateBankInfo");
+
+        if(!bankInfoValidation.isBankInfoDtoValid(updateBankInfoDto))
+            throw new InvalidBankInfoException();
 
         BankInfo bankInfo = entityManager.find(BankInfo.class, bankInfoId);
 
