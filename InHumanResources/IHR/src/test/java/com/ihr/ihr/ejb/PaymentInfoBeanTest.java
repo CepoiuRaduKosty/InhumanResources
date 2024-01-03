@@ -39,7 +39,7 @@ public class PaymentInfoBeanTest {
 
     @Test
     void findPaymentInfoById_positive_idExists() {
-        PaymentInfoDto samplePaymentInfoDto = new PaymentInfoDto(1L, 5000, SalaryLevelEnum.LECTURER, 200, 100);
+        PaymentInfoDto samplePaymentInfoDto = new PaymentInfoDto(1L, 5000, SalaryLevelEnum.LECTURER, 200, 100, 0);
 
         TypedQuery<PaymentInfo> typedQuery = mock(TypedQuery.class);
         when(entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class)).thenReturn(typedQuery);
@@ -74,7 +74,7 @@ public class PaymentInfoBeanTest {
 
     @Test
     void addPaymentInfo_positive() throws NonPositiveIncomeException {
-        CreatePaymentInfoDto samplePaymentInfoDto = new CreatePaymentInfoDto(5000, SalaryLevelEnum.LECTURER, 200, 100);
+        CreatePaymentInfoDto samplePaymentInfoDto = new CreatePaymentInfoDto(5000, SalaryLevelEnum.LECTURER, 200, 100, 0);
 
         paymentInfoBean.addPaymentInfo(samplePaymentInfoDto);
 
@@ -91,7 +91,7 @@ public class PaymentInfoBeanTest {
     @Test
     void updatePaymentInfo_positive() throws NonPositiveIncomeException {
         Long paymentInfoIdToUpdate = 1L;
-        PaymentInfoDto updatedPaymentInfoDto = new PaymentInfoDto(paymentInfoIdToUpdate, 6000, SalaryLevelEnum.LECTURER, 300, 150);
+        PaymentInfoDto updatedPaymentInfoDto = new PaymentInfoDto(paymentInfoIdToUpdate, 6000, SalaryLevelEnum.LECTURER, 300, 150, 0);
 
         PaymentInfo existingPaymentInfo = new PaymentInfo();
         existingPaymentInfo.setId(paymentInfoIdToUpdate);
@@ -115,7 +115,7 @@ public class PaymentInfoBeanTest {
     @Test
     void updatePaymentInfo_negative_idNotFound() {
         Long nonExistingPaymentInfoId = 999L;
-        PaymentInfoDto nonExistingPaymentInfoDto = new PaymentInfoDto(nonExistingPaymentInfoId, 6000, SalaryLevelEnum.ASSOCIATE, 300, 150);
+        PaymentInfoDto nonExistingPaymentInfoDto = new PaymentInfoDto(nonExistingPaymentInfoId, 6000, SalaryLevelEnum.ASSOCIATE, 300, 150, 0);
 
         when(entityManager.find(PaymentInfo.class, nonExistingPaymentInfoId)).thenReturn(null);
 

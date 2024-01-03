@@ -47,7 +47,7 @@ class EmployeeBeanTest {
                 "Sibiu", "none", 30);
         BankInfoDto bankInfoDto = new BankInfoDto(1L, "IBAN1", "BCR");
         PaymentInfoDto paymentInfoDto=new PaymentInfoDto(1L,1000, SalaryLevelEnum.ASSOCIATE,
-                66, 99);
+                66, 99, 0);
 
         testEmployeeDto.setBankInfoDto(bankInfoDto);
         testEmployeeDto.setPaymentInfoDto(paymentInfoDto);
