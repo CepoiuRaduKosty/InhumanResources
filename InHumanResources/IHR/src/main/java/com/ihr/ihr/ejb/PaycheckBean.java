@@ -29,22 +29,10 @@ public class PaycheckBean implements PaycheckProvider {
     public PaycheckDto getPaycheckById(Long paycheckId) {
         try {
             LOG.info("getPaycheckById");
-            TypedQuery<Paycheck> typedQuery = entityManager.createQuery("SELECT p FROM Paycheck p WHERE p.id = :id", Paycheck.class);
-            typedQuery.setParameter("id", paycheckId);
 
-            Paycheck paycheck = typedQuery.getSingleResult();
+            Paycheck paycheck = findPaycheckById(paycheckId);
 
-            return paycheck != null ? new PaycheckDto(paycheck.getId(),
-                    paycheck.getPaymentInfo().getId(),
-                    paycheck.getDate(),
-                    paycheck.getBasicSalary(),
-                    paycheck.getBonusForSuccess(),
-                    paycheck.getNumberOfShares(),
-                    paycheck.getCumulatedShares(),
-                    paycheck.getSalaryBeforeTaxes(),
-                    paycheck.getTax(),
-                    paycheck.getSocialCharge(),
-                    paycheck.getFinalSalary()) : null;
+            return copyPaycheckToDto(paycheck);
         }
         catch (Exception ex) {
             throw new EJBException(ex);
@@ -198,5 +186,19 @@ public class PaycheckBean implements PaycheckProvider {
                     paycheck.getFinalSalary()));
         }
         return paycheckDtos;
+    }
+
+    private PaycheckDto copyPaycheckToDto(Paycheck paycheck) {
+        return new PaycheckDto(paycheck.getId(),
+                paycheck.getPaymentInfo().getId(),
+                paycheck.getDate(),
+                paycheck.getBasicSalary(),
+                paycheck.getBonusForSuccess(),
+                paycheck.getNumberOfShares(),
+                paycheck.getCumulatedShares(),
+                paycheck.getSalaryBeforeTaxes(),
+                paycheck.getTax(),
+                paycheck.getSocialCharge(),
+                paycheck.getFinalSalary());
     }
 }
