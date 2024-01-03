@@ -10,6 +10,7 @@
     <class>com.ihr.ihr.entities.PaymentInfo</class>
       <class>com.ihr.ihr.entities.PayDay</class>
       <class>com.ihr.ihr.entities.BonusInfo</class>
+      <class>com.ihr.ihr.entities.Paycheck</class>
 
 
       <properties>
