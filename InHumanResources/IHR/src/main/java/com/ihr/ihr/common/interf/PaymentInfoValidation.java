@@ -14,4 +14,6 @@ public interface PaymentInfoValidation {
 
     boolean isPaymentInfoDtoValid(PaymentInfoDto paymentInfoDto);
 
+    boolean isCumulatedSharesValid(Integer cumulatedShares);
+
 }

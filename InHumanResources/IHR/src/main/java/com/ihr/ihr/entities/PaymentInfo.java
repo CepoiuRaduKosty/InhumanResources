@@ -1,10 +1,7 @@
 package com.ihr.ihr.entities;
 
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class PaymentInfo {
@@ -20,9 +17,16 @@ public class PaymentInfo {
 
     private Integer numberOfShares;
 
+    @Basic
+    private Integer cumulatedShares;
+
+    @OneToOne
+    private Employee employee;
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -30,6 +34,7 @@ public class PaymentInfo {
     public Integer getMonthlyBasicSalary() {
         return monthlyBasicSalary;
     }
+
     public void setMonthlyBasicSalary(Integer monthlyBasicSalary) {
         this.monthlyBasicSalary = monthlyBasicSalary;
     }
@@ -37,6 +42,7 @@ public class PaymentInfo {
     public SalaryLevelEnum getSalaryLevel() {
         return salaryLevel;
     }
+
     public void setSalaryLevel(SalaryLevelEnum salaryLevel) {
         this.salaryLevel = salaryLevel;
     }
@@ -44,6 +50,7 @@ public class PaymentInfo {
     public Integer getBonusForSuccess() {
         return bonusForSuccess;
     }
+
     public void setBonusForSuccess(Integer bonusForSuccess) {
         this.bonusForSuccess = bonusForSuccess;
     }
@@ -51,12 +58,10 @@ public class PaymentInfo {
     public Integer getNumberOfShares() {
         return numberOfShares;
     }
+
     public void setNumberOfShares(Integer numberOfShares) {
         this.numberOfShares = numberOfShares;
     }
-
-    @OneToOne
-    private Employee employee;
 
     public Employee getEmployee() {
         return employee;
@@ -65,4 +70,13 @@ public class PaymentInfo {
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
+
+    public Integer getCumulatedShares() {
+        return this.cumulatedShares;
+    }
+
+    public void setCumulatedShares(Integer cumulatedShares) {
+        this.cumulatedShares = cumulatedShares;
+    }
+
 }

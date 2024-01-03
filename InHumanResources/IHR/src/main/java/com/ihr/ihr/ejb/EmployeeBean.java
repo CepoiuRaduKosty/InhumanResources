@@ -193,7 +193,8 @@ public class EmployeeBean implements EmployeeProvider {
                 employee.getPaymentInfo().getMonthlyBasicSalary(),
                 employee.getPaymentInfo().getSalaryLevel(),
                 employee.getPaymentInfo().getBonusForSuccess(),
-                employee.getPaymentInfo().getNumberOfShares());
+                employee.getPaymentInfo().getNumberOfShares(),
+                employee.getPaymentInfo().getCumulatedShares());
 
         employeeDto.setBankInfoDto(bankInfoDto);
         employeeDto.setPaymentInfoDto(paymentInfoDto);
