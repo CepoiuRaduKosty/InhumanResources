@@ -34,7 +34,7 @@ public class PaycheckBean implements PaycheckProvider {
 
             Paycheck paycheck = typedQuery.getSingleResult();
 
-            return new PaycheckDto(paycheck.getId(),
+            return paycheck != null ? new PaycheckDto(paycheck.getId(),
                     paycheck.getPaymentInfo().getId(),
                     paycheck.getDate(),
                     paycheck.getBasicSalary(),
@@ -44,7 +44,7 @@ public class PaycheckBean implements PaycheckProvider {
                     paycheck.getSalaryBeforeTaxes(),
                     paycheck.getTax(),
                     paycheck.getSocialCharge(),
-                    paycheck.getFinalSalary());
+                    paycheck.getFinalSalary()) : null;
         }
         catch (Exception ex) {
             throw new EJBException(ex);
@@ -142,7 +142,7 @@ public class PaycheckBean implements PaycheckProvider {
     public List<PaycheckDto> getAllPaychecksByMonth(Integer month) {
         try{
             LOG.info("getAllPaychecksByMonth");
-            TypedQuery<Paycheck> typedQuery = entityManager.createQuery("SELECT p FROM Paycheck p WHERE MONTH(p.date) = :month", Paycheck.class);
+            TypedQuery<Paycheck> typedQuery = entityManager.createQuery("SELECT p FROM Paycheck p WHERE FUNCTION('MONTH', p.date) = :month", Paycheck.class);
             typedQuery.setParameter("month", month);
 
             List<Paycheck> paychecks = typedQuery.getResultList();
