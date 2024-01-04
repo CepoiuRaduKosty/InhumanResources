@@ -144,29 +144,23 @@ public class PaycheckBean implements PaycheckProvider {
         }
     }
 
-    public EmployeeDto getEmployeeByPaycheck(Long paycheckId)
-    {
-        try {
-            LOG.info("getEmployeeByPaycheck");
+    public EmployeeDto getEmployeeByPaycheck(Long paycheckId) throws UnknownPaycheckException {
+        LOG.info("getEmployeeByPaycheck");
 
-            Paycheck paycheck = findPaycheckById(paycheckId);
+        Paycheck paycheck = findPaycheckById(paycheckId);
 
-            PaymentInfo paymentInfo =  paycheck.getPaymentInfo();
+        PaymentInfo paymentInfo =  paycheck.getPaymentInfo();
 
-            Employee employee = paymentInfo.getEmployee();
+        Employee employee = paymentInfo.getEmployee();
 
-            return new EmployeeDto(employee.getId(),
-                    employee.getName(),
-                    employee.getSurname(),
-                    employee.getGender(),
-                    employee.getDateOfBirth(),
-                    employee.getAddress(),
-                    employee.getReligion(),
-                    employee.getHoursPerWeek());
-        }
-        catch (Exception ex) {
-            throw new EJBException(ex);
-        }
+        return new EmployeeDto(employee.getId(),
+                employee.getName(),
+                employee.getSurname(),
+                employee.getGender(),
+                employee.getDateOfBirth(),
+                employee.getAddress(),
+                employee.getReligion(),
+                employee.getHoursPerWeek());
     }
 
     private void setPaycheckInformation(Paycheck paycheck, CreatePaycheckDto paycheckDto) {
