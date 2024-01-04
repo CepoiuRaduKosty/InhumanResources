@@ -84,6 +84,13 @@ class BankInfoBeanTest {
     }
 
     @Test
+    void addBankInfo_negative_dtoNotValid() {
+        CreateBankInfoDto nonExistingBankInfoDto = new CreateBankInfoDto("lmao", "UpdatedBank");
+
+        assertThrows(InvalidBankInfoException.class, () -> bankInfoBean.addBankInfo(nonExistingBankInfoDto));
+    }
+
+    @Test
     void updateBankInfo_positive() throws InvalidBankInfoException {
         CreateBankInfoDto updatedBankInfoDto = new CreateBankInfoDto("RO49AAAA1B31007593840000", "UpdatedBank");
         Long updatedBankInfoId = 1L;
@@ -112,6 +119,13 @@ class BankInfoBeanTest {
         when(entityManager.find(BankInfo.class, Id)).thenReturn(null);
 
         assertThrows(NullPointerException.class, () -> bankInfoBean.updateBankInfo(Id, nonExistingBankInfoDto));
+    }
+
+    @Test
+    void updateBankInfo_negative_dtoNotValid() {
+        CreateBankInfoDto nonExistingBankInfoDto = new CreateBankInfoDto("lmao", "UpdatedBank");
+
+        assertThrows(InvalidBankInfoException.class, () -> bankInfoBean.updateBankInfo(99L, nonExistingBankInfoDto));
     }
 
     @Test
