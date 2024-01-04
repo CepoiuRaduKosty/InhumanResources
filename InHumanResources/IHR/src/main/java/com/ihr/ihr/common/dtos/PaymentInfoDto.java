@@ -3,16 +3,20 @@ package com.ihr.ihr.common.dtos;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 
+import java.util.List;
+
 public class PaymentInfoDto {
+
     private Long id;
-    private Integer monthlyBasicSalary;
+    private Double monthlyBasicSalary;
     private SalaryLevelEnum salaryLevel;
-    private Integer bonusForSuccess;
+    private Double bonusForSuccess;
     private Integer numberOfShares;
     private EmployeeDto employeeDto;
     private Integer cumulatedShares;
+    private List<Long> bonuses;
 
-    public PaymentInfoDto(Long id, Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel, Integer bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
+    public PaymentInfoDto(Long id, Double monthlyBasicSalary, SalaryLevelEnum salaryLevel, Double bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
         this.id = id;
         this.monthlyBasicSalary = monthlyBasicSalary;
         this.salaryLevel = salaryLevel;
@@ -29,11 +33,11 @@ public class PaymentInfoDto {
         this.id = id;
     }
 
-    public Integer getMonthlyBasicSalary() {
+    public Double getMonthlyBasicSalary() {
         return monthlyBasicSalary;
     }
 
-    public void setMonthlyBasicSalary(Integer monthlyBasicSalary) {
+    public void setMonthlyBasicSalary(Double monthlyBasicSalary) {
         this.monthlyBasicSalary = monthlyBasicSalary;
     }
 
@@ -45,11 +49,11 @@ public class PaymentInfoDto {
         this.salaryLevel = salaryLevel;
     }
 
-    public Integer getBonusForSuccess() {
+    public Double getBonusForSuccess() {
         return bonusForSuccess;
     }
 
-    public void setBonusForSuccess(Integer bonusForSuccess) {
+    public void setBonusForSuccess(Double bonusForSuccess) {
         this.bonusForSuccess = bonusForSuccess;
     }
 
@@ -83,5 +87,13 @@ public class PaymentInfoDto {
         this.salaryLevel = createPaymentInfoDto.getSalaryLevel();
         this.bonusForSuccess = createPaymentInfoDto.getBonusForSuccess();
         this.numberOfShares = createPaymentInfoDto.getNumberOfShares();
+    }
+
+    public List<Long> getBonuses() {
+        return bonuses;
+    }
+
+    public void setBonuses(List<Long> bonuses) {
+        this.bonuses = bonuses;
     }
 }

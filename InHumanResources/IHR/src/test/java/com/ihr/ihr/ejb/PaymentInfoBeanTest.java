@@ -1,17 +1,9 @@
 package com.ihr.ihr.ejb;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-
-
 import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import com.ihr.ihr.common.excep.NonPositiveIncomeException;
-import com.ihr.ihr.common.interf.PaymentInfoProvider;
-
-import com.ihr.ihr.entities.BankInfo;
+import com.ihr.ihr.common.excep.InvalidPaymentInfoException;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
 import jakarta.persistence.EntityManager;
@@ -22,10 +14,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.logging.Logger;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentInfoBeanTest {
@@ -33,35 +26,45 @@ public class PaymentInfoBeanTest {
     @Mock
     private EntityManager entityManager;
 
+    @Mock
+    private TypedQuery<PaymentInfo> typedQuery;
+
     @InjectMocks
     private PaymentInfoBean paymentInfoBean;
 
+    PaymentInfoDto sampleValidPaymentInfoDto;
+
+    private PaymentInfo getPaymentInfoFromDto(PaymentInfoDto dto) {
+        PaymentInfo paymentInfoToReturn = new PaymentInfo();
+        paymentInfoToReturn.setId(dto.getId());
+        paymentInfoToReturn.setEmployee(null);
+        //paymentInfoToReturn.setBonuses();
+
+        //todo this func
+
+        return paymentInfoToReturn;
+    }
+
+    @BeforeEach
+    void setUp() {
+        sampleValidPaymentInfoDto = new PaymentInfoDto(1L, 5000.0, SalaryLevelEnum.LECTURER, 200.0, 100, 0);
+
+        when(entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class))
+                .thenReturn(typedQuery);
+    }
 
     @Test
     void findPaymentInfoById_positive_idExists() {
-        PaymentInfoDto samplePaymentInfoDto = new PaymentInfoDto(1L, 5000, SalaryLevelEnum.LECTURER, 200, 100, 0);
+        PaymentInfoDto expectedDto = sampleValidPaymentInfoDto;
+        Long givenId = sampleValidPaymentInfoDto.getId();
+         //todo return entity correspond to expectedDto when getSingleResult of query; get entity using method
 
-        TypedQuery<PaymentInfo> typedQuery = mock(TypedQuery.class);
-        when(entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class)).thenReturn(typedQuery);
-        when(typedQuery.setParameter("id", 1L)).thenReturn(typedQuery);
+        // todo build the execution
 
-        PaymentInfo tempPaymentInfo = new PaymentInfo();
-        tempPaymentInfo.setId(samplePaymentInfoDto.getId());
-        tempPaymentInfo.setMonthlyBasicSalary(samplePaymentInfoDto.getMonthlyBasicSalary());
-        tempPaymentInfo.setSalaryLevel(samplePaymentInfoDto.getSalaryLevel());
-        tempPaymentInfo.setBonusForSuccess(samplePaymentInfoDto.getBonusForSuccess());
-        tempPaymentInfo.setNumberOfShares(samplePaymentInfoDto.getNumberOfShares());
-        when(typedQuery.getSingleResult()).thenReturn(tempPaymentInfo);
-
-        PaymentInfoDto result = paymentInfoBean.findPaymentInfoById(1L);
-
-        assertEquals(samplePaymentInfoDto.getId(), result.getId());
-        assertEquals(samplePaymentInfoDto.getMonthlyBasicSalary(), result.getMonthlyBasicSalary());
-        assertEquals(samplePaymentInfoDto.getSalaryLevel(), result.getSalaryLevel());
-        assertEquals(samplePaymentInfoDto.getBonusForSuccess(), result.getBonusForSuccess());
-        assertEquals(samplePaymentInfoDto.getNumberOfShares(), result.getNumberOfShares());
+        // todo build the asserts, incl asserting query good
     }
 
+    // todo correct this test
     @Test
     void findPaymentInfoById_negative_idDoesNotExist() {
         TypedQuery<PaymentInfo> typedQuery = mock(TypedQuery.class);
@@ -72,15 +75,17 @@ public class PaymentInfoBeanTest {
         assertThrows(EJBException.class, () -> paymentInfoBean.findPaymentInfoById(999L));
     }
 
+    // todo correct this test
     @Test
-    void addPaymentInfo_positive() throws NonPositiveIncomeException {
-        CreatePaymentInfoDto samplePaymentInfoDto = new CreatePaymentInfoDto(5000, SalaryLevelEnum.LECTURER, 200, 100, 0);
+    void addPaymentInfo_positive() throws InvalidPaymentInfoException {
+        CreatePaymentInfoDto samplePaymentInfoDto = new CreatePaymentInfoDto(5000.0, SalaryLevelEnum.LECTURER, 200.0, 100, 0);
 
         paymentInfoBean.addPaymentInfo(samplePaymentInfoDto);
 
         verify(entityManager).persist(any(PaymentInfo.class));
     }
 
+    // todo correct this test
     @Test
     void addPaymentInfo_negative_null() {
         assertThrows(NullPointerException.class, () -> paymentInfoBean.addPaymentInfo(null));
@@ -88,16 +93,17 @@ public class PaymentInfoBeanTest {
         // Optionally, you can add additional assertions to ensure specific behavior after the exception is thrown
     }
 
+    // todo correct this test
     @Test
-    void updatePaymentInfo_positive() throws NonPositiveIncomeException {
+    void updatePaymentInfo_positive() throws InvalidPaymentInfoException {
         Long paymentInfoIdToUpdate = 1L;
-        PaymentInfoDto updatedPaymentInfoDto = new PaymentInfoDto(paymentInfoIdToUpdate, 6000, SalaryLevelEnum.LECTURER, 300, 150, 0);
+        PaymentInfoDto updatedPaymentInfoDto = new PaymentInfoDto(paymentInfoIdToUpdate, 6000.0, SalaryLevelEnum.LECTURER, 300.0, 150, 0);
 
         PaymentInfo existingPaymentInfo = new PaymentInfo();
         existingPaymentInfo.setId(paymentInfoIdToUpdate);
-        existingPaymentInfo.setMonthlyBasicSalary(5000);
+        existingPaymentInfo.setMonthlyBasicSalary(5000.0);
         existingPaymentInfo.setSalaryLevel(SalaryLevelEnum.ASSOCIATE);
-        existingPaymentInfo.setBonusForSuccess(200);
+        existingPaymentInfo.setBonusForSuccess(200.0);
         existingPaymentInfo.setNumberOfShares(100);
 
         when(entityManager.find(PaymentInfo.class, paymentInfoIdToUpdate)).thenReturn(existingPaymentInfo);
@@ -112,16 +118,18 @@ public class PaymentInfoBeanTest {
         assertEquals(updatedPaymentInfoDto.getNumberOfShares(), existingPaymentInfo.getNumberOfShares());
     }
 
+    // todo correct this test
     @Test
     void updatePaymentInfo_negative_idNotFound() {
         Long nonExistingPaymentInfoId = 999L;
-        PaymentInfoDto nonExistingPaymentInfoDto = new PaymentInfoDto(nonExistingPaymentInfoId, 6000, SalaryLevelEnum.ASSOCIATE, 300, 150, 0);
+        PaymentInfoDto nonExistingPaymentInfoDto = new PaymentInfoDto(nonExistingPaymentInfoId, 6000.0, SalaryLevelEnum.ASSOCIATE, 300.0, 150, 0);
 
         when(entityManager.find(PaymentInfo.class, nonExistingPaymentInfoId)).thenReturn(null);
 
         assertThrows(NullPointerException.class, () -> paymentInfoBean.updatePaymentInfo(nonExistingPaymentInfoId, nonExistingPaymentInfoDto));
     }
 
+    // todo correct this test
     @Test
     void deletePaymentInfo_positive() {
         Long paymentInfoIdToDelete = 1L;
@@ -136,6 +144,7 @@ public class PaymentInfoBeanTest {
         verify(entityManager).remove(existingPaymentInfo);
     }
 
+    // todo correct this test
     @Test
     void deletePaymentInfo_negative_idNotFound() {
         Long nonExistingPaymentInfoId = 999L;

@@ -2,7 +2,7 @@ package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
-import com.ihr.ihr.common.excep.NonPositiveIncomeException;
+import com.ihr.ihr.common.excep.InvalidPaymentInfoException;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
 import com.ihr.ihr.common.interf.PaymentInfoValidation;
 import com.ihr.ihr.entities.Paycheck;
@@ -14,9 +14,7 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-import jakarta.validation.ValidationException;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 @Stateless
@@ -51,11 +49,11 @@ public class PaymentInfoBean implements PaymentInfoProvider {
     }
 
     @Override
-    public Long addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws NonPositiveIncomeException, ValidationException {
+    public Long addPaymentInfo(CreatePaymentInfoDto createPaymentInfoDto) throws InvalidPaymentInfoException {
         LOG.info("addPaymentInfo");
         PaymentInfoDto extractedPaymentInfoDto = new PaymentInfoDto(createPaymentInfoDto);
         if (!paymentInfoValidation.isPaymentInfoDtoValid(extractedPaymentInfoDto))
-            throw new ValidationException("Wrong PaymentInfoDto");
+            throw new InvalidPaymentInfoException("Invalid payment info dto");
 
         try {
 
@@ -76,10 +74,10 @@ public class PaymentInfoBean implements PaymentInfoProvider {
     }
 
     @Override
-    public void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws NonPositiveIncomeException, ValidationException {
+    public void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws InvalidPaymentInfoException {
         LOG.info("updatePaymentInfo");
         if (!paymentInfoValidation.isPaymentInfoDtoValid(paymentInfoDto))
-            throw new ValidationException("Wrong PaymentInfoDto");
+            throw new InvalidPaymentInfoException("Invalid payment info dto");
 
         try {
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);

@@ -5,7 +5,6 @@ import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.GenderEnum;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import com.ihr.ihr.common.interf.EmployeeValidation;
 import com.ihr.ihr.entities.BankInfo;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
@@ -46,8 +45,8 @@ class EmployeeBeanTest {
         EmployeeDto testEmployeeDto = new EmployeeDto(2L, "Andrei", "Popa", GenderEnum.MALE, LocalDate.now(),
                 "Sibiu", "none", 30);
         BankInfoDto bankInfoDto = new BankInfoDto(1L, "IBAN1", "BCR");
-        PaymentInfoDto paymentInfoDto=new PaymentInfoDto(1L,1000, SalaryLevelEnum.ASSOCIATE,
-                66, 99, 0);
+        PaymentInfoDto paymentInfoDto=new PaymentInfoDto(1L,1000.0, SalaryLevelEnum.ASSOCIATE,
+                66.0, 99, 0);
 
         testEmployeeDto.setBankInfoDto(bankInfoDto);
         testEmployeeDto.setPaymentInfoDto(paymentInfoDto);
@@ -107,10 +106,10 @@ class EmployeeBeanTest {
         bankInfo.setId(1L);
         paymentInfo.setEmployee(mockEmployee);
         paymentInfo.setId(1L);
-        paymentInfo.setBonusForSuccess(66);
+        paymentInfo.setBonusForSuccess(66.0);
         paymentInfo.setSalaryLevel(SalaryLevelEnum.ASSOCIATE);
         paymentInfo.setNumberOfShares(0);
-        paymentInfo.setMonthlyBasicSalary(99);
+        paymentInfo.setMonthlyBasicSalary(99.0);
 
         mockEmployee.setPaymentInfo(paymentInfo);
         mockEmployee.setBankInfo(bankInfo);
@@ -179,7 +178,7 @@ class EmployeeBeanTest {
     @Test
     void findAllEmployees_positive_existentEmployees() {
 
-        List<Employee> testEmployees = new ArrayList<Employee>();
+        List<Employee> testEmployees = new ArrayList<>();
         BankInfo bankInfo=new BankInfo();
         PaymentInfo paymentInfo=new PaymentInfo();
 
@@ -187,10 +186,10 @@ class EmployeeBeanTest {
         bankInfo.setIBAN("Iban1");
         bankInfo.setId(1L);
         paymentInfo.setId(1L);
-        paymentInfo.setBonusForSuccess(66);
+        paymentInfo.setBonusForSuccess(66.0);
         paymentInfo.setSalaryLevel(SalaryLevelEnum.ASSOCIATE);
         paymentInfo.setNumberOfShares(0);
-        paymentInfo.setMonthlyBasicSalary(99);
+        paymentInfo.setMonthlyBasicSalary(99.0);
 
         Employee employee=new Employee();
         employee.setName("Andrei");
@@ -264,7 +263,7 @@ class EmployeeBeanTest {
     @Test
     void findAllEmployeesByName_positive_existentEmployees() {
 
-        List<Employee> testEmployees = new ArrayList<Employee>();
+        List<Employee> testEmployees = new ArrayList<>();
 
         Employee employee=new Employee();
 
@@ -275,10 +274,10 @@ class EmployeeBeanTest {
         bankInfo.setIBAN("Iban1");
         bankInfo.setId(1L);
         paymentInfo.setId(1L);
-        paymentInfo.setBonusForSuccess(66);
+        paymentInfo.setBonusForSuccess(66.0);
         paymentInfo.setSalaryLevel(SalaryLevelEnum.ASSOCIATE);
         paymentInfo.setNumberOfShares(0);
-        paymentInfo.setMonthlyBasicSalary(99);
+        paymentInfo.setMonthlyBasicSalary(99.0);
 
         employee.setName("Andrei");
         employee.setAddress("Sibiu");
@@ -356,10 +355,10 @@ class EmployeeBeanTest {
         bankInfo.setIBAN("Iban1");
         bankInfo.setId(1L);
         paymentInfo.setId(1L);
-        paymentInfo.setBonusForSuccess(66);
+        paymentInfo.setBonusForSuccess(66.0);
         paymentInfo.setSalaryLevel(SalaryLevelEnum.ASSOCIATE);
         paymentInfo.setNumberOfShares(0);
-        paymentInfo.setMonthlyBasicSalary(99);
+        paymentInfo.setMonthlyBasicSalary(99.0);
 
         mockEmployee.setId(testEmployeeId);
         mockEmployee.setName("John Doe");
