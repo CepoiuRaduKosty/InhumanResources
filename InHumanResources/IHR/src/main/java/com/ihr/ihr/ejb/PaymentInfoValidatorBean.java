@@ -1,16 +1,9 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import com.ihr.ihr.common.interf.PaymentInfoProvider;
 import com.ihr.ihr.common.interf.PaymentInfoValidation;
-import com.ihr.ihr.entities.PaymentInfo;
-import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 
 import java.util.logging.Logger;
 
@@ -58,17 +51,28 @@ public class PaymentInfoValidatorBean implements PaymentInfoValidation {
 
     @Override
     public boolean isPaymentInfoDtoValid(PaymentInfoDto paymentInfoDto) {
+        boolean isMonthlyBasicSalaryValid = isMonthlyBasicSalaryValid(paymentInfoDto.getMonthlyBasicSalary());
+
+        boolean isSalaryLevelValid = isSalaryLevelValid(paymentInfoDto.getSalaryLevel());
+
+        boolean isBonusForSuccessValid = isBonusForSuccessValid(paymentInfoDto.getBonusForSuccess());
+
+        boolean isNumberOfSharesValid = isNumberOfSharesValid(paymentInfoDto.getNumberOfShares());
+
+        boolean salaryLevelIsAssociateOrExecutive = salaryLevelIsAssociateOrExecutive(paymentInfoDto.getSalaryLevel(),
+                paymentInfoDto.getBonusForSuccess());
+
+        boolean salaryLevelIsExecutive = salaryLevelIsExecutive(paymentInfoDto.getSalaryLevel(),
+                paymentInfoDto.getNumberOfShares());
+
+        boolean isNumberOfSharesZeroForLecturerAssociate = isNumberOfSharesZeroForLecturerAssociate(paymentInfoDto.getSalaryLevel(), paymentInfoDto.getNumberOfShares());
+
+        boolean isPaymentInfoValid = isMonthlyBasicSalaryValid && isSalaryLevelValid && isBonusForSuccessValid &&
+                isNumberOfSharesValid && salaryLevelIsAssociateOrExecutive && salaryLevelIsExecutive && isNumberOfSharesZeroForLecturerAssociate;
 
         LOG.info("PaymentInfoDtoRules");
 
-        return isMonthlyBasicSalaryValid(paymentInfoDto.getMonthlyBasicSalary()) &&
-                isSalaryLevelValid(paymentInfoDto.getSalaryLevel()) &&
-                isBonusForSuccessValid(paymentInfoDto.getBonusForSuccess()) &&
-                isNumberOfSharesValid(paymentInfoDto.getNumberOfShares()) &&
-                salaryLevelIsAssociateOrExecutive(paymentInfoDto.getSalaryLevel(), paymentInfoDto.getBonusForSuccess()) &&
-                salaryLevelIsExecutive(paymentInfoDto.getSalaryLevel(), paymentInfoDto.getNumberOfShares()) &&
-                isCumulatedSharesValid(paymentInfoDto.getCumulatedShares()) &&
-                isNumberOfSharesZeroForLecturerAssociate(paymentInfoDto.getSalaryLevel(), paymentInfoDto.getNumberOfShares());
+        return isPaymentInfoValid;
     }
 
     @Override
