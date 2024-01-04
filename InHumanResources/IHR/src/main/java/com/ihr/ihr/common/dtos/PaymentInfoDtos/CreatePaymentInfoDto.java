@@ -1,4 +1,4 @@
-package com.ihr.ihr.common.dtos;
+package com.ihr.ihr.common.dtos.PaymentInfoDtos;
 
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 

@@ -1,7 +1,5 @@
 package com.ihr.ihr.common.dtos.EmployeeDtos;
 
-import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.GenderEnum;
 
 import java.time.LocalDate;

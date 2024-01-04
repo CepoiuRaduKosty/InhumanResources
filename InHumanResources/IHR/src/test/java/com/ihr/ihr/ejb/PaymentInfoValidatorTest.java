@@ -1,9 +1,7 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import com.ihr.ihr.common.interf.PaymentInfoValidation;
-import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

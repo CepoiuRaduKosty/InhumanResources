@@ -1,11 +1,9 @@
 package com.ihr.ihr.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 public class Paycheck {
@@ -33,6 +31,9 @@ public class Paycheck {
 
     @ManyToOne
     private PaymentInfo paymentInfo;
+
+    @OneToMany(mappedBy = "paycheck", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PaycheckBonus> paycheckBonuses;
 
     public Long getId() {
         return id;
@@ -120,5 +121,13 @@ public class Paycheck {
 
     public void setPaymentInfo(PaymentInfo paymentInfo) {
         this.paymentInfo = paymentInfo;
+    }
+
+    public List<PaycheckBonus> getPaycheckBonuses() {
+        return paycheckBonuses;
+    }
+
+    public void setPaycheckBonuses(List<PaycheckBonus> paycheckBonuses) {
+        this.paycheckBonuses = paycheckBonuses;
     }
 }

@@ -5,27 +5,21 @@ import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
 
-import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import com.ihr.ihr.common.excep.NonPositiveIncomeException;
-import com.ihr.ihr.common.interf.PaymentInfoProvider;
 
-import com.ihr.ihr.entities.BankInfo;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.logging.Logger;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentInfoBeanTest {

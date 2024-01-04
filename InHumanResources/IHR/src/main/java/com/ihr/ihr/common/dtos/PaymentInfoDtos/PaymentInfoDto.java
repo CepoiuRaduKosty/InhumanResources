@@ -1,6 +1,7 @@
-package com.ihr.ihr.common.dtos;
+package com.ihr.ihr.common.dtos.PaymentInfoDtos;
 
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 
 public class PaymentInfoDto {

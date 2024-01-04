@@ -4,7 +4,7 @@ import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.CreateEmployeeDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.UpdateEmployeeDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.InvalidEmployeeDto;
 import com.ihr.ihr.common.excep.UnknownBankInfoException;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
