@@ -4,11 +4,11 @@ import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 
 public interface PaymentInfoValidation {
-    boolean isMonthlyBasicSalaryValid(int monthlyBasicSalary);
+    boolean isMonthlyBasicSalaryValid(Double monthlyBasicSalary);
 
     boolean isSalaryLevelValid(SalaryLevelEnum salaryLevel);
 
-    boolean isBonusForSuccessValid(int bonusForSuccess);
+    boolean isBonusForSuccessValid(Double bonusForSuccess);
 
     boolean isNumberOfSharesValid(int numberOfShares);
 

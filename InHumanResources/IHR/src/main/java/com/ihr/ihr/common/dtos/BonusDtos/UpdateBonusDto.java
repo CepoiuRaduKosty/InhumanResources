@@ -1,19 +1,19 @@
 package com.ihr.ihr.common.dtos.BonusDtos;
 
 public class UpdateBonusDto {
-    Integer value;
+    Double value;
     String bonusDescription;
 
-    public UpdateBonusDto(Integer value, String bonusDescription) {
+    public UpdateBonusDto(Double value, String bonusDescription) {
         this.value = value;
         this.bonusDescription = bonusDescription;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 

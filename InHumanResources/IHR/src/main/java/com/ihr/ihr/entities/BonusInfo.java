@@ -14,7 +14,7 @@ public class BonusInfo {
     @ManyToOne
     private PaymentInfo paymentInfo;
 
-    Integer value;
+    Double value;
 
     String bonusDescription;
 
@@ -34,11 +34,11 @@ public class BonusInfo {
         this.paymentInfo = paymentInfo;
     }
 
-    public Integer getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Integer value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 

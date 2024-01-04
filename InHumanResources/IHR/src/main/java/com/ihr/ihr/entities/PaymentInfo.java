@@ -14,11 +14,11 @@ public class PaymentInfo {
     @GeneratedValue
     private Long id;
 
-    private Integer monthlyBasicSalary;
+    private Double monthlyBasicSalary;
 
     private SalaryLevelEnum salaryLevel;
 
-    private Integer bonusForSuccess;
+    private Double bonusForSuccess;
 
     private Integer numberOfShares;
 
@@ -42,11 +42,11 @@ public class PaymentInfo {
         this.id = id;
     }
 
-    public Integer getMonthlyBasicSalary() {
+    public Double getMonthlyBasicSalary() {
         return monthlyBasicSalary;
     }
 
-    public void setMonthlyBasicSalary(Integer monthlyBasicSalary) {
+    public void setMonthlyBasicSalary(Double monthlyBasicSalary) {
         this.monthlyBasicSalary = monthlyBasicSalary;
     }
 
@@ -58,11 +58,11 @@ public class PaymentInfo {
         this.salaryLevel = salaryLevel;
     }
 
-    public Integer getBonusForSuccess() {
+    public Double getBonusForSuccess() {
         return bonusForSuccess;
     }
 
-    public void setBonusForSuccess(Integer bonusForSuccess) {
+    public void setBonusForSuccess(Double bonusForSuccess) {
         this.bonusForSuccess = bonusForSuccess;
     }
 

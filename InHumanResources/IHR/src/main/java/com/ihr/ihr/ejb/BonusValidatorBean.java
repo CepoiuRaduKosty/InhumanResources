@@ -12,7 +12,7 @@ public class BonusValidatorBean implements BonusValidation {
 
     private static final Logger LOG = Logger.getLogger(BonusValidatorBean.class.getName());
     @Override
-    public boolean isValueValid(Integer value) {
+    public boolean isValueValid(Double value) {
         LOG.info("ValueValidator");
         return value > 0;
     }
