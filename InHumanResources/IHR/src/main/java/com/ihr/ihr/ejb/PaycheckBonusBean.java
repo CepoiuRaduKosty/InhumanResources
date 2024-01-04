@@ -3,10 +3,12 @@ package com.ihr.ihr.ejb;
 import com.ihr.ihr.common.dtos.PaycheckBonusDtos.CreatePaycheckBonusDto;
 import com.ihr.ihr.common.dtos.PaycheckBonusDtos.PaycheckBonusDto;
 import com.ihr.ihr.common.dtos.PaycheckDtos.PaycheckDto;
+import com.ihr.ihr.common.excep.InvalidPaycheckBonusException;
 import com.ihr.ihr.common.interf.PayckeckBonusProvider;
 import com.ihr.ihr.entities.Paycheck;
 import com.ihr.ihr.entities.PaycheckBonus;
 import jakarta.ejb.EJBException;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -17,6 +19,9 @@ import java.util.logging.Logger;
 
 public class PaycheckBonusBean implements PayckeckBonusProvider {
     private static final Logger LOG = Logger.getLogger(PaycheckBean.class.getName());
+
+    @Inject
+    BonusValidatorBean bonusValidatorBean;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -35,9 +40,11 @@ public class PaycheckBonusBean implements PayckeckBonusProvider {
     }
 
     @Override
-    public Long createPaycheckBonus(CreatePaycheckBonusDto createPaycheckBonusDto) {
+    public Long createPaycheckBonus(CreatePaycheckBonusDto createPaycheckBonusDto) throws InvalidPaycheckBonusException {
         LOG.info("createPaycheckBonus");
 
+        if(!bonusValidatorBean.isPaycheckBonusDtoValid(createPaycheckBonusDto))
+            throw new InvalidPaycheckBonusException();
 
         PaycheckBonus paycheckBonus = new PaycheckBonus();
 
@@ -55,6 +62,9 @@ public class PaycheckBonusBean implements PayckeckBonusProvider {
         LOG.info("updatePaycheckBonusById");
 
         try {
+            if(!bonusValidatorBean.isPaycheckBonusDtoValid(createPaycheckBonusDto))
+                throw new InvalidPaycheckBonusException();
+
             PaycheckBonus existingPaycheckBonus = entityManager.find(PaycheckBonus.class, paycheckBonusId);
 
             existingPaycheckBonus.setValue(createPaycheckBonusDto.getValue());

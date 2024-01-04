@@ -32,6 +32,6 @@ public class BonusValidatorBean implements BonusValidation {
     @Override
     public boolean isPaycheckBonusDtoValid(CreatePaycheckBonusDto createPaycheckBonusDto) {
         LOG.info("PaycheckBonusValidator");
-        return isValueValid(createPaycheckBonusDto.getValue() && isDenumireBonusValid(createPaycheckBonusDto.getBonusDescription());
+        return isValueValid(createPaycheckBonusDto.getValue()) && isDenumireBonusValid(createPaycheckBonusDto.getBonusDescription());
     }
 }
