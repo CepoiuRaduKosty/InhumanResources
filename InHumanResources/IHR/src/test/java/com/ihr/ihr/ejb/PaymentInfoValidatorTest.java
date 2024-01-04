@@ -81,6 +81,27 @@ public class PaymentInfoValidatorTest {
         PaymentInfoDto invalidDto = new PaymentInfoDto(1L, 1000.0, SalaryLevelEnum.EXECUTIVE, -1000.0, 1000, 0);
         assertFalse(paymentInfoValidatorBean.isPaymentInfoDtoValid(invalidDto));
     }
+
+    @Test
+    void isPaymentInfoDtoValid_negative_lecturer() {
+        PaymentInfoDto invalidDto = new PaymentInfoDto(1L, 1000.0, SalaryLevelEnum.LECTURER, -1000.0, 1000, 0);
+        assertFalse(paymentInfoValidatorBean.isPaymentInfoDtoValid(invalidDto));
+    }
+
+    @Test
+    void isPaymentInfoDtoValid_negative_null() {
+        assertFalse(paymentInfoValidatorBean.isPaymentInfoDtoValid(null));
+    }
+
+    @Test
+    void isCumulatedSharesValid_positive() {
+        assertTrue(paymentInfoValidatorBean.isCumulatedSharesValid(10));
+    }
+
+    @Test
+    void isCumulatedSharesValid_negative() {
+        assertFalse(paymentInfoValidatorBean.isCumulatedSharesValid(-110));
+    }
 }
 
 
