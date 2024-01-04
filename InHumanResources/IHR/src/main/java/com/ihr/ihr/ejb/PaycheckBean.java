@@ -1,10 +1,12 @@
 package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.CreatePaycheckDto;
+import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.PaycheckDto;
 import com.ihr.ihr.common.excep.UnknownPaycheckException;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.interf.PaycheckProvider;
+import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.Paycheck;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
@@ -136,6 +138,31 @@ public class PaycheckBean implements PaycheckProvider {
             List<Paycheck> paychecks = typedQuery.getResultList();
 
             return copyPaychecksToDto(paychecks);
+        }
+        catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    public EmployeeDto getEmployeeByPaycheck(Long paycheckId)
+    {
+        try {
+            LOG.info("getEmployeeByPaycheck");
+
+            Paycheck paycheck = findPaycheckById(paycheckId);
+
+            PaymentInfo paymentInfo =  paycheck.getPaymentInfo();
+
+            Employee employee = paymentInfo.getEmployee();
+
+            return new EmployeeDto(employee.getId(),
+                    employee.getName(),
+                    employee.getSurname(),
+                    employee.getGender(),
+                    employee.getDateOfBirth(),
+                    employee.getAddress(),
+                    employee.getReligion(),
+                    employee.getHoursPerWeek());
         }
         catch (Exception ex) {
             throw new EJBException(ex);
