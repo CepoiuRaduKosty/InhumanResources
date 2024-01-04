@@ -20,14 +20,14 @@ public class BonusValidatorBeanTest {
 
     @Test
     void isValueValid_positive() {
-        int value = 5;
+        Double value = 5.0;
         boolean isValid = bonusValidatorBean.isValueValid(value);
         assertTrue(isValid);
     }
 
     @Test
     void isValueValid_negative() {
-        int value = 0;
+        Double value = 0.0;
         boolean isValid = bonusValidatorBean.isValueValid(value);
         assertFalse(isValid);
     }
@@ -48,14 +48,14 @@ public class BonusValidatorBeanTest {
 
     @Test
     void isBonusDtoValid_positive() {
-        BonusDto validBonusDto = new BonusDto(1L, 2L, 300, "Bonus");
+        BonusDto validBonusDto = new BonusDto(1L, 2L, 300.0, "Bonus");
         boolean isValid = bonusValidatorBean.isBonusDtoValid(validBonusDto);
         assertTrue(isValid);
     }
 
     @Test
     void isBonusDtoValid_negative() {
-        BonusDto validBonusDto = new BonusDto(1L, 2L, 0, "Bonus");
+        BonusDto validBonusDto = new BonusDto(1L, 2L, 0.0, "Bonus");
         boolean isValid = bonusValidatorBean.isBonusDtoValid(validBonusDto);
         assertFalse(isValid);
     }

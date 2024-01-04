@@ -4,7 +4,7 @@ public class CreateBonusDto extends UpdateBonusDto {
 
     Long idPayment;
 
-    public CreateBonusDto(Integer value, String bonusDescription, Long idPayment) {
+    public CreateBonusDto(Double value, String bonusDescription, Long idPayment) {
         super(value, bonusDescription);
         this.idPayment = idPayment;
     }

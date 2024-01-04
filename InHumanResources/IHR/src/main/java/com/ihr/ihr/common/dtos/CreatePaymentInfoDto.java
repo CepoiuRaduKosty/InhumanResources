@@ -3,14 +3,14 @@ package com.ihr.ihr.common.dtos;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 
 public class CreatePaymentInfoDto {
-    private Integer monthlyBasicSalary;
+    private Double monthlyBasicSalary;
     private SalaryLevelEnum salaryLevel;
-    private Integer bonusForSuccess;
+    private Double bonusForSuccess;
     private Integer numberOfShares;
     private Integer cumulatedShares;
 
-    public CreatePaymentInfoDto(Integer monthlyBasicSalary, SalaryLevelEnum salaryLevel,
-                                Integer bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
+    public CreatePaymentInfoDto(Double monthlyBasicSalary, SalaryLevelEnum salaryLevel,
+                                Double bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
         this.monthlyBasicSalary = monthlyBasicSalary;
         this.salaryLevel = salaryLevel;
         this.bonusForSuccess = bonusForSuccess;
@@ -19,11 +19,11 @@ public class CreatePaymentInfoDto {
     }
 
 
-    public Integer getMonthlyBasicSalary() {
+    public Double getMonthlyBasicSalary() {
         return this.monthlyBasicSalary;
     }
 
-    public void setMonthlyBasicSalary(Integer monthlyBasicSalary) {
+    public void setMonthlyBasicSalary(Double monthlyBasicSalary) {
         this.monthlyBasicSalary = monthlyBasicSalary;
     }
 
@@ -35,11 +35,11 @@ public class CreatePaymentInfoDto {
         this.salaryLevel = salaryLevel;
     }
 
-    public Integer getBonusForSuccess() {
+    public Double getBonusForSuccess() {
         return this.bonusForSuccess;
     }
 
-    public void setBonusForSuccess(Integer bonusForSuccess) {
+    public void setBonusForSuccess(Double bonusForSuccess) {
         this.bonusForSuccess = bonusForSuccess;
     }
 

@@ -21,7 +21,7 @@ public class PaymentInfoValidatorBean implements PaymentInfoValidation {
     private static final Logger LOG = Logger.getLogger(PaymentInfoValidatorBean.class.getName());
 
     @Override
-    public boolean isMonthlyBasicSalaryValid(int monthlyBasicSalary) {
+    public boolean isMonthlyBasicSalaryValid(Double monthlyBasicSalary) {
         LOG.info("isMonthlyBasicSalaryValid");
         return monthlyBasicSalary > 0;
     }
@@ -33,7 +33,7 @@ public class PaymentInfoValidatorBean implements PaymentInfoValidation {
     }
 
     @Override
-    public boolean isBonusForSuccessValid(int bonusForSuccess) {
+    public boolean isBonusForSuccessValid(Double bonusForSuccess) {
         LOG.info("bonusForSuccessZeroOrAbove");
         return bonusForSuccess >= 0;
     }
@@ -44,7 +44,7 @@ public class PaymentInfoValidatorBean implements PaymentInfoValidation {
         return numberOfShares >= 0;
     }
 
-    private boolean salaryLevelIsAssociateOrExecutive(SalaryLevelEnum salaryLevelEnum, Integer bonusForSuccess) {
+    private boolean salaryLevelIsAssociateOrExecutive(SalaryLevelEnum salaryLevelEnum, Double bonusForSuccess) {
         if (salaryLevelEnum.equals(ASSOCIATE) || salaryLevelEnum.equals(EXECUTIVE)) {
             return bonusForSuccess > 0;
         } else return bonusForSuccess == 0;
