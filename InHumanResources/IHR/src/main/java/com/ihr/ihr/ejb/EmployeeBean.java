@@ -140,7 +140,7 @@ public class EmployeeBean implements EmployeeProvider {
             List<Employee> employeesSearch = new ArrayList<>();
             for (Employee employee : employees)
             {
-                if (employee.getName().contains(employeeName) || employee.getSurname().contains(employeeName)) {
+                if (employee.getName().toLowerCase().contains(employeeName.toLowerCase()) || employee.getSurname().toLowerCase().contains(employeeName.toLowerCase())) {
                     employeesSearch.add(employee);
                 }
             }

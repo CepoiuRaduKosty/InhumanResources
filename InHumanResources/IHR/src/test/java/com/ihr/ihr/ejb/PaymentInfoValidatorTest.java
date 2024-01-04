@@ -2,14 +2,13 @@ package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import com.ihr.ihr.common.interf.PaymentInfoValidation;
-import jakarta.inject.Inject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentInfoValidatorTest {
@@ -18,14 +17,14 @@ public class PaymentInfoValidatorTest {
 
     @Test
     void isMonthlyBasicSalaryValid_positive() {
-        int monthlyBasicSalary = 1000;
+        Double monthlyBasicSalary = 1000.0;
         boolean isValid = paymentInfoValidatorBean.isMonthlyBasicSalaryValid(monthlyBasicSalary);
         assertTrue(isValid);
     }
 
     @Test
     void isMonthlyBasicSalaryValid_negative() {
-        int monthlyBasicSalary = 0;
+        Double monthlyBasicSalary = 0.0;
         boolean isValid = paymentInfoValidatorBean.isMonthlyBasicSalaryValid(monthlyBasicSalary);
         assertFalse(isValid);
     }
@@ -39,21 +38,20 @@ public class PaymentInfoValidatorTest {
 
     @Test
     void isSalaryLevelValid_negative() {
-        SalaryLevelEnum person = null;
-        boolean isValid = paymentInfoValidatorBean.isSalaryLevelValid(person);
+        boolean isValid = paymentInfoValidatorBean.isSalaryLevelValid(null);
         assertFalse(isValid);
     }
 
     @Test
     void isBonusForSuccessValid_positive() {
-        int bonusForSuccess = 1000;
+        Double bonusForSuccess = 1000.0;
         boolean isValid = paymentInfoValidatorBean.isBonusForSuccessValid(bonusForSuccess);
         assertTrue(isValid);
     }
 
     @Test
     void isBonusForSuccessValid_negative() {
-        int bonusForSuccess = -1000;
+        Double bonusForSuccess = -1000.0;
         boolean isValid = paymentInfoValidatorBean.isBonusForSuccessValid(bonusForSuccess);
         assertFalse(isValid);
     }
@@ -74,13 +72,13 @@ public class PaymentInfoValidatorTest {
 
     @Test
     void isPaymentInfoDtoValid_positive() {
-        PaymentInfoDto validDto = new PaymentInfoDto(1L, 1000, SalaryLevelEnum.EXECUTIVE, 1000, 1000,0);
+        PaymentInfoDto validDto = new PaymentInfoDto(1L, 1000.0, SalaryLevelEnum.EXECUTIVE, 1000.0, 1000,0);
         assertTrue(paymentInfoValidatorBean.isPaymentInfoDtoValid(validDto));
     }
 
     @Test
     void isPaymentInfoDtoValid_negative() {
-        PaymentInfoDto invalidDto = new PaymentInfoDto(1L, 1000, SalaryLevelEnum.EXECUTIVE, -1000, 1000, 0);
+        PaymentInfoDto invalidDto = new PaymentInfoDto(1L, 1000.0, SalaryLevelEnum.EXECUTIVE, -1000.0, 1000, 0);
         assertFalse(paymentInfoValidatorBean.isPaymentInfoDtoValid(invalidDto));
     }
 }

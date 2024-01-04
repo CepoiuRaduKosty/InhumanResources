@@ -2,6 +2,7 @@ package com.ihr.ihr.common.dtos;
 
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
+import com.ihr.ihr.entities.PaymentInfo;
 
 import java.util.List;
 

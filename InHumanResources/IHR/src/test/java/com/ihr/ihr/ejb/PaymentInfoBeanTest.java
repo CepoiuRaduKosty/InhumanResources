@@ -4,8 +4,8 @@ import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import com.ihr.ihr.common.excep.InvalidPaymentInfoException;
+import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.entities.PaymentInfo;
-import jakarta.ejb.EJBException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,8 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,135 +31,187 @@ public class PaymentInfoBeanTest {
     @Mock
     private TypedQuery<PaymentInfo> typedQuery;
 
+    @Mock
+    private PaymentInfoValidatorBean paymentInfoValidatorBean;
+
     @InjectMocks
     private PaymentInfoBean paymentInfoBean;
 
     PaymentInfoDto sampleValidPaymentInfoDto;
+    PaymentInfoDto sampleInvalidPaymentInfoDto;
 
     private PaymentInfo getPaymentInfoFromDto(PaymentInfoDto dto) {
         PaymentInfo paymentInfoToReturn = new PaymentInfo();
         paymentInfoToReturn.setId(dto.getId());
         paymentInfoToReturn.setEmployee(null);
-        //paymentInfoToReturn.setBonuses();
-
-        //todo this func
-
+        paymentInfoToReturn.setBonuses(new ArrayList<>());
+        paymentInfoToReturn.setBonusForSuccess(dto.getBonusForSuccess());
+        paymentInfoToReturn.setCumulatedShares(dto.getCumulatedShares());
+        paymentInfoToReturn.setMonthlyBasicSalary(dto.getMonthlyBasicSalary());
+        paymentInfoToReturn.setNumberOfShares(dto.getNumberOfShares());
+        paymentInfoToReturn.setPaychecks(new ArrayList<>());
+        paymentInfoToReturn.setSalaryLevel(dto.getSalaryLevel());
         return paymentInfoToReturn;
+    }
+
+    private void assertPaymentInfoDtosEqual(PaymentInfoDto dto1, PaymentInfoDto dto2) {
+        assertEquals(dto1.getId(), dto2.getId());
+        assertEquals(dto1.getBonusForSuccess(), dto2.getBonusForSuccess());
+        assertEquals(dto1.getCumulatedShares(), dto2.getCumulatedShares());
+        assertEquals(dto1.getSalaryLevel(), dto2.getSalaryLevel());
+        assertEquals(dto1.getMonthlyBasicSalary(), dto2.getMonthlyBasicSalary());
+        assertEquals(dto1.getNumberOfShares(), dto2.getNumberOfShares());
+    }
+
+    private void assertPaymentInfoEqualNoID(PaymentInfo paymentInfo1, PaymentInfo paymentInfo2) {
+        assertEquals(paymentInfo1.getBonusForSuccess(), paymentInfo2.getBonusForSuccess());
+        assertEquals(paymentInfo1.getCumulatedShares(), paymentInfo2.getCumulatedShares());
+        assertEquals(paymentInfo1.getSalaryLevel(), paymentInfo2.getSalaryLevel());
+        assertEquals(paymentInfo1.getMonthlyBasicSalary(), paymentInfo2.getMonthlyBasicSalary());
+        assertEquals(paymentInfo1.getNumberOfShares(), paymentInfo2.getNumberOfShares());
+    }
+
+    private void assertPaymentInfoEqual(PaymentInfo paymentInfo1, PaymentInfo paymentInfo2) {
+        assertEquals(paymentInfo1.getId(), paymentInfo2.getId());
+        assertPaymentInfoEqualNoID(paymentInfo1, paymentInfo2);
     }
 
     @BeforeEach
     void setUp() {
         sampleValidPaymentInfoDto = new PaymentInfoDto(1L, 5000.0, SalaryLevelEnum.LECTURER, 200.0, 100, 0);
-
-        when(entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class))
-                .thenReturn(typedQuery);
+        sampleInvalidPaymentInfoDto = new PaymentInfoDto(2L, -5000.0, SalaryLevelEnum.EXECUTIVE, -200.0, -100, 33);
     }
 
     @Test
     void findPaymentInfoById_positive_idExists() {
         PaymentInfoDto expectedDto = sampleValidPaymentInfoDto;
         Long givenId = sampleValidPaymentInfoDto.getId();
-         //todo return entity correspond to expectedDto when getSingleResult of query; get entity using method
+        when(typedQuery.getSingleResult()).thenReturn(getPaymentInfoFromDto(expectedDto));
+        when(entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class))
+                .thenReturn(typedQuery);
 
-        // todo build the execution
+        PaymentInfoDto actualDto = paymentInfoBean.findPaymentInfoById(givenId);
 
-        // todo build the asserts, incl asserting query good
+        assertPaymentInfoDtosEqual(expectedDto, actualDto);
+        verify(typedQuery).getSingleResult();
+        verify(entityManager).createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class);
+        verify(typedQuery).setParameter("id", givenId);
     }
 
-    // todo correct this test
     @Test
     void findPaymentInfoById_negative_idDoesNotExist() {
-        TypedQuery<PaymentInfo> typedQuery = mock(TypedQuery.class);
-        when(entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class)).thenReturn(typedQuery);
-        when(typedQuery.setParameter(eq("id"), anyLong())).thenReturn(typedQuery);
-        when(typedQuery.getSingleResult()).thenThrow(EJBException.class);
+        Long givenId = 1L;
+        when(typedQuery.getSingleResult()).thenReturn(null);
+        when(entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class))
+                .thenReturn(typedQuery);
 
-        assertThrows(EJBException.class, () -> paymentInfoBean.findPaymentInfoById(999L));
+        PaymentInfoDto actualDto = paymentInfoBean.findPaymentInfoById(givenId);
+
+        assertNull(actualDto);
+        verify(typedQuery).getSingleResult();
+        verify(entityManager).createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class);
+        verify(typedQuery).setParameter("id", givenId);
     }
 
-    // todo correct this test
     @Test
     void addPaymentInfo_positive() throws InvalidPaymentInfoException {
-        CreatePaymentInfoDto samplePaymentInfoDto = new CreatePaymentInfoDto(5000.0, SalaryLevelEnum.LECTURER, 200.0, 100, 0);
+        when(paymentInfoValidatorBean.isPaymentInfoDtoValid(any(PaymentInfoDto.class))).thenReturn(true);
+        PaymentInfo expectedPayment = getPaymentInfoFromDto(sampleValidPaymentInfoDto);
 
-        paymentInfoBean.addPaymentInfo(samplePaymentInfoDto);
+        Long returnedId = paymentInfoBean.addPaymentInfo(new CreatePaymentInfoDto(sampleValidPaymentInfoDto));
 
-        verify(entityManager).persist(any(PaymentInfo.class));
+        //assertEquals(expectedPayment.getId(), returnedId); -> cannot verify this because id is assigned by em.persist automatically
+        ArgumentCaptor<PaymentInfo> captor = ArgumentCaptor.forClass(PaymentInfo.class);
+        verify(entityManager).persist(captor.capture());
+        assertPaymentInfoEqualNoID(expectedPayment, captor.getValue());
     }
 
-    // todo correct this test
     @Test
-    void addPaymentInfo_negative_null() {
-        assertThrows(NullPointerException.class, () -> paymentInfoBean.addPaymentInfo(null));
-
-        // Optionally, you can add additional assertions to ensure specific behavior after the exception is thrown
+    void addPaymentInfo_negative_invalidDto() {
+        assertThrows(InvalidPaymentInfoException.class, () -> paymentInfoBean.addPaymentInfo(new CreatePaymentInfoDto(sampleInvalidPaymentInfoDto)));
+        verify(entityManager, never()).persist(any());
     }
 
-    // todo correct this test
     @Test
-    void updatePaymentInfo_positive() throws InvalidPaymentInfoException {
-        Long paymentInfoIdToUpdate = 1L;
-        PaymentInfoDto updatedPaymentInfoDto = new PaymentInfoDto(paymentInfoIdToUpdate, 6000.0, SalaryLevelEnum.LECTURER, 300.0, 150, 0);
+    void updatePaymentInfo_positive() throws InvalidPaymentInfoException, UnknownPaymentInfoException {
+        when(paymentInfoValidatorBean.isPaymentInfoDtoValid(any(PaymentInfoDto.class))).thenReturn(true);
+        PaymentInfo actualPaymentInfo = getPaymentInfoFromDto(sampleInvalidPaymentInfoDto);
+        actualPaymentInfo.setId(1L);
+        when(entityManager.find(PaymentInfo.class, sampleValidPaymentInfoDto.getId())).thenReturn(actualPaymentInfo);
 
-        PaymentInfo existingPaymentInfo = new PaymentInfo();
-        existingPaymentInfo.setId(paymentInfoIdToUpdate);
-        existingPaymentInfo.setMonthlyBasicSalary(5000.0);
-        existingPaymentInfo.setSalaryLevel(SalaryLevelEnum.ASSOCIATE);
-        existingPaymentInfo.setBonusForSuccess(200.0);
-        existingPaymentInfo.setNumberOfShares(100);
+        paymentInfoBean.updatePaymentInfo(sampleValidPaymentInfoDto.getId(), sampleValidPaymentInfoDto);
 
-        when(entityManager.find(PaymentInfo.class, paymentInfoIdToUpdate)).thenReturn(existingPaymentInfo);
-
-        paymentInfoBean.updatePaymentInfo(paymentInfoIdToUpdate, updatedPaymentInfoDto);
-
-        verify(entityManager).find(PaymentInfo.class, paymentInfoIdToUpdate);
-
-        assertEquals(updatedPaymentInfoDto.getMonthlyBasicSalary(), existingPaymentInfo.getMonthlyBasicSalary());
-        assertEquals(updatedPaymentInfoDto.getSalaryLevel(), existingPaymentInfo.getSalaryLevel());
-        assertEquals(updatedPaymentInfoDto.getBonusForSuccess(), existingPaymentInfo.getBonusForSuccess());
-        assertEquals(updatedPaymentInfoDto.getNumberOfShares(), existingPaymentInfo.getNumberOfShares());
+        assertPaymentInfoEqual(getPaymentInfoFromDto(sampleValidPaymentInfoDto), actualPaymentInfo);
     }
 
-    // todo correct this test
     @Test
     void updatePaymentInfo_negative_idNotFound() {
         Long nonExistingPaymentInfoId = 999L;
-        PaymentInfoDto nonExistingPaymentInfoDto = new PaymentInfoDto(nonExistingPaymentInfoId, 6000.0, SalaryLevelEnum.ASSOCIATE, 300.0, 150, 0);
-
+        when(paymentInfoValidatorBean.isPaymentInfoDtoValid(any(PaymentInfoDto.class))).thenReturn(true);
         when(entityManager.find(PaymentInfo.class, nonExistingPaymentInfoId)).thenReturn(null);
 
-        assertThrows(NullPointerException.class, () -> paymentInfoBean.updatePaymentInfo(nonExistingPaymentInfoId, nonExistingPaymentInfoDto));
+        assertThrows(UnknownPaymentInfoException.class, () -> paymentInfoBean.updatePaymentInfo(nonExistingPaymentInfoId, sampleValidPaymentInfoDto));
     }
 
-    // todo correct this test
     @Test
-    void deletePaymentInfo_positive() {
-        Long paymentInfoIdToDelete = 1L;
+    void updatePaymentInfo_negative_dtoNotValid() {
+        when(paymentInfoValidatorBean.isPaymentInfoDtoValid(any(PaymentInfoDto.class))).thenReturn(false);
 
-        PaymentInfo existingPaymentInfo = new PaymentInfo();
-        existingPaymentInfo.setId(paymentInfoIdToDelete);
-
-        when(entityManager.find(PaymentInfo.class, paymentInfoIdToDelete)).thenReturn(existingPaymentInfo);
-
-        paymentInfoBean.deletePaymentInfo(paymentInfoIdToDelete);
-
-        verify(entityManager).remove(existingPaymentInfo);
+        assertThrows(InvalidPaymentInfoException.class, () -> paymentInfoBean.updatePaymentInfo(1L, sampleInvalidPaymentInfoDto));
     }
 
-    // todo correct this test
     @Test
-    void deletePaymentInfo_negative_idNotFound() {
-        Long nonExistingPaymentInfoId = 999L;
+    void deletePaymentInfo_positive() throws UnknownPaymentInfoException {
+        when(entityManager.find(PaymentInfo.class, sampleValidPaymentInfoDto.getId())).thenReturn(getPaymentInfoFromDto(sampleValidPaymentInfoDto));
 
-        when(entityManager.find(PaymentInfo.class, nonExistingPaymentInfoId)).thenReturn(null);
-
-        paymentInfoBean.deletePaymentInfo(nonExistingPaymentInfoId);
+        paymentInfoBean.deletePaymentInfo(sampleValidPaymentInfoDto.getId());
 
         ArgumentCaptor<PaymentInfo> captor = ArgumentCaptor.forClass(PaymentInfo.class);
         verify(entityManager).remove(captor.capture());
+        assertPaymentInfoEqual(getPaymentInfoFromDto(sampleValidPaymentInfoDto), captor.getValue());
+    }
 
-        PaymentInfo capturedPaymentInfo = captor.getValue();
-        assertNull(capturedPaymentInfo);
+    @Test
+    void deletePaymentInfo_negative_idNotFound() {
+        when(entityManager.find(PaymentInfo.class, sampleValidPaymentInfoDto.getId())).thenReturn(null);
+
+        assertThrows(UnknownPaymentInfoException.class, () -> paymentInfoBean.deletePaymentInfo(sampleValidPaymentInfoDto.getId()));
+        verify(entityManager, never()).remove(any());
+    }
+
+    @Test
+    void incrementCumulatedSharesByNumberOfShares_positive() throws UnknownPaymentInfoException {
+        PaymentInfo actualPayment = getPaymentInfoFromDto(sampleValidPaymentInfoDto);
+        when(entityManager.find(PaymentInfo.class, sampleValidPaymentInfoDto.getId())).thenReturn(actualPayment);
+
+        paymentInfoBean.incrementCumulatedSharesByNumberOfShares(sampleValidPaymentInfoDto.getId());
+
+        assertEquals(sampleValidPaymentInfoDto.getCumulatedShares()+sampleValidPaymentInfoDto.getNumberOfShares(), actualPayment.getCumulatedShares());
+    }
+
+    @Test
+    void incrementCumulatedSharesByNumberOfShares_negative() {
+        when(entityManager.find(PaymentInfo.class, sampleValidPaymentInfoDto.getId())).thenReturn(null);
+
+        assertThrows(UnknownPaymentInfoException.class, () -> paymentInfoBean.incrementCumulatedSharesByNumberOfShares(sampleValidPaymentInfoDto.getId()));
+    }
+
+    @Test
+    void resetCumulatedShares_positive() throws UnknownPaymentInfoException {
+        PaymentInfo actualPayment = getPaymentInfoFromDto(sampleValidPaymentInfoDto);
+        actualPayment.setCumulatedShares(360);
+        when(entityManager.find(PaymentInfo.class, sampleValidPaymentInfoDto.getId())).thenReturn(actualPayment);
+
+        paymentInfoBean.resetCumulatedShares(sampleValidPaymentInfoDto.getId());
+
+        assertEquals(0, actualPayment.getCumulatedShares());
+    }
+
+    @Test
+    void resetCumulatedShares_negative() {
+        when(entityManager.find(PaymentInfo.class, sampleValidPaymentInfoDto.getId())).thenReturn(null);
+
+        assertThrows(UnknownPaymentInfoException.class, () -> paymentInfoBean.resetCumulatedShares(sampleValidPaymentInfoDto.getId()));
     }
 }
 

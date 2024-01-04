@@ -3,6 +3,7 @@ package com.ihr.ihr.ejb;
 import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.InvalidPaymentInfoException;
+import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
 import com.ihr.ihr.common.interf.PaymentInfoValidation;
 import com.ihr.ihr.entities.Paycheck;
@@ -36,6 +37,9 @@ public class PaymentInfoBean implements PaymentInfoProvider {
             typedQuery.setParameter("id", paymentInfoId);
 
             PaymentInfo paymentInfo = typedQuery.getSingleResult();
+
+            if (paymentInfo == null)
+                return null;
 
             return new PaymentInfoDto(paymentInfo.getId(),
                     paymentInfo.getMonthlyBasicSalary(),
@@ -74,7 +78,7 @@ public class PaymentInfoBean implements PaymentInfoProvider {
     }
 
     @Override
-    public void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws InvalidPaymentInfoException {
+    public void updatePaymentInfo(Long paymentInfoId, PaymentInfoDto paymentInfoDto) throws InvalidPaymentInfoException, UnknownPaymentInfoException {
         LOG.info("updatePaymentInfo");
         if (!paymentInfoValidation.isPaymentInfoDtoValid(paymentInfoDto))
             throw new InvalidPaymentInfoException("Invalid payment info dto");
@@ -82,51 +86,64 @@ public class PaymentInfoBean implements PaymentInfoProvider {
         try {
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
 
+            if (paymentInfo == null)
+                throw new UnknownPaymentInfoException();
+
             paymentInfo.setMonthlyBasicSalary(paymentInfoDto.getMonthlyBasicSalary());
             paymentInfo.setSalaryLevel(paymentInfoDto.getSalaryLevel());
             paymentInfo.setBonusForSuccess(paymentInfoDto.getBonusForSuccess());
             paymentInfo.setNumberOfShares(paymentInfoDto.getNumberOfShares());
             paymentInfo.setCumulatedShares(paymentInfoDto.getCumulatedShares());
-        } catch (NullPointerException ex) {
-            throw new NullPointerException(ex.getMessage());
+        } catch (UnknownPaymentInfoException ex) {
+            throw ex;
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
 
     @Override
-    public void deletePaymentInfo(Long paymentInfoId) {
+    public void deletePaymentInfo(Long paymentInfoId) throws UnknownPaymentInfoException {
         try {
-            LOG.info("deletePaymentInfo");
-            TypedQuery<Paycheck> typedQuery = entityManager.createQuery("SELECT p FROM Paycheck p WHERE p.paymentInfo.id = :id", Paycheck.class);
-            typedQuery.setParameter("id", paymentInfoId);
-
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
+
+            if (paymentInfo == null)
+                throw new UnknownPaymentInfoException();
+
             entityManager.remove(paymentInfo);
+        } catch (UnknownPaymentInfoException ex) {
+            throw ex;
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
 
     @Override
-    public void incrementCumulatedSharesByNumberOfShares(Long paymentInfoId) {
+    public void incrementCumulatedSharesByNumberOfShares(Long paymentInfoId) throws UnknownPaymentInfoException {
         try {
             LOG.info("incrementCumulatedSharesByNumberOfShares");
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
+            if (paymentInfo == null)
+                throw new UnknownPaymentInfoException();
             Integer currentCumulatedShares = paymentInfo.getCumulatedShares();
             Integer numberOfMonthlyShares = paymentInfo.getNumberOfShares();
             paymentInfo.setCumulatedShares(currentCumulatedShares + numberOfMonthlyShares);
+        } catch (UnknownPaymentInfoException ex) {
+            throw ex;
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
     }
 
     @Override
-    public void resetCumulatedShares(Long paymentInfoId) {
+    public void resetCumulatedShares(Long paymentInfoId) throws UnknownPaymentInfoException {
         try {
             LOG.info("resetCumulatedShares");
             PaymentInfo paymentInfo = entityManager.find(PaymentInfo.class, paymentInfoId);
+            if (paymentInfo == null)
+                throw new UnknownPaymentInfoException();
             paymentInfo.setCumulatedShares(0);
+        } catch (UnknownPaymentInfoException ex) {
+            throw ex;
         } catch (Exception ex) {
             throw new EJBException(ex);
         }

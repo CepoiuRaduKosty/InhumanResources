@@ -1,3 +1,5 @@
+//file:noinspection ConfigurationAvoidance
+//file:noinspection GroovyUnusedAssignment
 plugins {
   id 'java'
   id 'war'
@@ -17,7 +19,7 @@ ext {
 sourceCompatibility = '11'
 targetCompatibility = '11'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
   options.encoding = 'UTF-8'
 }
 
