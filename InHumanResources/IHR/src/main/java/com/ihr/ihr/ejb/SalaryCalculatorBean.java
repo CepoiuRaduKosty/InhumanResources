@@ -59,6 +59,6 @@ public class SalaryCalculatorBean implements SalaryCalculatorProvider {
         double taxRate = TaxRate(paymentInfoDto.getSalaryLevel()) / 100;
         final double socialCharge = 1/10d;
 
-        return salaryBeforeTaxes - (salaryBeforeTaxes * taxRate) * (salaryBeforeTaxes - socialCharge);
+        return salaryBeforeTaxes - (salaryBeforeTaxes * taxRate) - (salaryBeforeTaxes * socialCharge);
     }
 }
