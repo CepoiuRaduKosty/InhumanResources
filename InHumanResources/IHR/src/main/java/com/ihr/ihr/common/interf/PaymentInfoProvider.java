@@ -1,7 +1,7 @@
 package com.ihr.ihr.common.interf;
 
-import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.NonPositiveIncomeException;
 import jakarta.ejb.Local;
 import jakarta.xml.bind.ValidationException;

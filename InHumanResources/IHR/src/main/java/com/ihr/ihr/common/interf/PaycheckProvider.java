@@ -1,7 +1,7 @@
 package com.ihr.ihr.common.interf;
 
-import com.ihr.ihr.common.dtos.CreatePaycheckDto;
-import com.ihr.ihr.common.dtos.PaycheckDto;
+import com.ihr.ihr.common.dtos.PaycheckDtos.CreatePaycheckDto;
+import com.ihr.ihr.common.dtos.PaycheckDtos.PaycheckDto;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 
 import java.util.List;

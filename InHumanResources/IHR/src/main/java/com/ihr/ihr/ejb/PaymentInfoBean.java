@@ -1,7 +1,7 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.CreatePaymentInfoDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.NonPositiveIncomeException;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
 import com.ihr.ihr.common.interf.PaymentInfoValidation;
@@ -16,7 +16,6 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.validation.ValidationException;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 @Stateless

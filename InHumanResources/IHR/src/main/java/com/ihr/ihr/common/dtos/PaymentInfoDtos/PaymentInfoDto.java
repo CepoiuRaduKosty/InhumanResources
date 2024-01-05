@@ -1,16 +1,20 @@
-package com.ihr.ihr.common.dtos;
+package com.ihr.ihr.common.dtos.PaymentInfoDtos;
 
+import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 
-public class CreatePaymentInfoDto {
+public class PaymentInfoDto {
+    private Long id;
     private Double monthlyBasicSalary;
     private SalaryLevelEnum salaryLevel;
     private Double bonusForSuccess;
     private Integer numberOfShares;
+    private EmployeeDto employeeDto;
     private Integer cumulatedShares;
 
-    public CreatePaymentInfoDto(Double monthlyBasicSalary, SalaryLevelEnum salaryLevel,
-                                Double bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
+    public PaymentInfoDto(Long id, Double monthlyBasicSalary, SalaryLevelEnum salaryLevel, Double bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
+        this.id = id;
         this.monthlyBasicSalary = monthlyBasicSalary;
         this.salaryLevel = salaryLevel;
         this.bonusForSuccess = bonusForSuccess;
@@ -18,9 +22,16 @@ public class CreatePaymentInfoDto {
         this.cumulatedShares = cumulatedShares;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Double getMonthlyBasicSalary() {
-        return this.monthlyBasicSalary;
+        return monthlyBasicSalary;
     }
 
     public void setMonthlyBasicSalary(Double monthlyBasicSalary) {
@@ -28,7 +39,7 @@ public class CreatePaymentInfoDto {
     }
 
     public SalaryLevelEnum getSalaryLevel() {
-        return this.salaryLevel;
+        return salaryLevel;
     }
 
     public void setSalaryLevel(SalaryLevelEnum salaryLevel) {
@@ -36,7 +47,7 @@ public class CreatePaymentInfoDto {
     }
 
     public Double getBonusForSuccess() {
-        return this.bonusForSuccess;
+        return bonusForSuccess;
     }
 
     public void setBonusForSuccess(Double bonusForSuccess) {
@@ -44,18 +55,34 @@ public class CreatePaymentInfoDto {
     }
 
     public Integer getNumberOfShares() {
-        return this.numberOfShares;
+        return numberOfShares;
     }
 
     public void setNumberOfShares(Integer numberOfShares) {
         this.numberOfShares = numberOfShares;
     }
 
+    public EmployeeDto getEmployeeDto() {
+        return employeeDto;
+    }
+
+    public void setEmployeeDto(EmployeeDto employeeDto) {
+        this.employeeDto = employeeDto;
+    }
+
     public Integer getCumulatedShares() {
-        return cumulatedShares;
+        return this.cumulatedShares;
     }
 
     public void setCumulatedShares(Integer cumulatedShares) {
         this.cumulatedShares = cumulatedShares;
+    }
+
+    public PaymentInfoDto(CreatePaymentInfoDto createPaymentInfoDto) {
+        this.id = 0L;
+        this.monthlyBasicSalary = createPaymentInfoDto.getMonthlyBasicSalary();
+        this.salaryLevel = createPaymentInfoDto.getSalaryLevel();
+        this.bonusForSuccess = createPaymentInfoDto.getBonusForSuccess();
+        this.numberOfShares = createPaymentInfoDto.getNumberOfShares();
     }
 }

@@ -2,10 +2,9 @@ package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.GenderEnum;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import com.ihr.ihr.common.interf.EmployeeValidation;
 import com.ihr.ihr.entities.BankInfo;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
