@@ -3,8 +3,12 @@ package com.ihr.ihr.common.dtos.PaymentInfoDtos;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
+import com.ihr.ihr.entities.PaymentInfo;
+
+import java.util.List;
 
 public class PaymentInfoDto {
+
     private Long id;
     private Double monthlyBasicSalary;
     private SalaryLevelEnum salaryLevel;
@@ -12,6 +16,7 @@ public class PaymentInfoDto {
     private Integer numberOfShares;
     private EmployeeDto employeeDto;
     private Integer cumulatedShares;
+    private List<Long> bonuses;
 
     public PaymentInfoDto(Long id, Double monthlyBasicSalary, SalaryLevelEnum salaryLevel, Double bonusForSuccess, Integer numberOfShares, Integer cumulatedShares) {
         this.id = id;
@@ -84,5 +89,13 @@ public class PaymentInfoDto {
         this.salaryLevel = createPaymentInfoDto.getSalaryLevel();
         this.bonusForSuccess = createPaymentInfoDto.getBonusForSuccess();
         this.numberOfShares = createPaymentInfoDto.getNumberOfShares();
+    }
+
+    public List<Long> getBonuses() {
+        return bonuses;
+    }
+
+    public void setBonuses(List<Long> bonuses) {
+        this.bonuses = bonuses;
     }
 }

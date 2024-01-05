@@ -18,6 +18,13 @@ public class CreatePaymentInfoDto {
         this.cumulatedShares = cumulatedShares;
     }
 
+    public CreatePaymentInfoDto(PaymentInfoDto paymentInfoDto) {
+        this.monthlyBasicSalary = paymentInfoDto.getMonthlyBasicSalary();
+        this.salaryLevel = paymentInfoDto.getSalaryLevel();
+        this.bonusForSuccess = paymentInfoDto.getBonusForSuccess();
+        this.numberOfShares = paymentInfoDto.getNumberOfShares();
+        this.cumulatedShares = paymentInfoDto.getCumulatedShares();
+    }
 
     public Double getMonthlyBasicSalary() {
         return this.monthlyBasicSalary;

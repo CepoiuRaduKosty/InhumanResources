@@ -7,7 +7,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 public class PaymentInfoValidatorTest {
@@ -37,8 +38,7 @@ public class PaymentInfoValidatorTest {
 
     @Test
     void isSalaryLevelValid_negative() {
-        SalaryLevelEnum person = null;
-        boolean isValid = paymentInfoValidatorBean.isSalaryLevelValid(person);
+        boolean isValid = paymentInfoValidatorBean.isSalaryLevelValid(null);
         assertFalse(isValid);
     }
 
@@ -80,6 +80,27 @@ public class PaymentInfoValidatorTest {
     void isPaymentInfoDtoValid_negative() {
         PaymentInfoDto invalidDto = new PaymentInfoDto(1L, 1000.0, SalaryLevelEnum.EXECUTIVE, -1000.0, 1000, 0);
         assertFalse(paymentInfoValidatorBean.isPaymentInfoDtoValid(invalidDto));
+    }
+
+    @Test
+    void isPaymentInfoDtoValid_negative_lecturer() {
+        PaymentInfoDto invalidDto = new PaymentInfoDto(1L, 1000.0, SalaryLevelEnum.LECTURER, -1000.0, 1000, 0);
+        assertFalse(paymentInfoValidatorBean.isPaymentInfoDtoValid(invalidDto));
+    }
+
+    @Test
+    void isPaymentInfoDtoValid_negative_null() {
+        assertFalse(paymentInfoValidatorBean.isPaymentInfoDtoValid(null));
+    }
+
+    @Test
+    void isCumulatedSharesValid_positive() {
+        assertTrue(paymentInfoValidatorBean.isCumulatedSharesValid(10));
+    }
+
+    @Test
+    void isCumulatedSharesValid_negative() {
+        assertFalse(paymentInfoValidatorBean.isCumulatedSharesValid(-110));
     }
 }
 

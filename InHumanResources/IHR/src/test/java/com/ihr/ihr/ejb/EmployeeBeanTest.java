@@ -178,7 +178,7 @@ class EmployeeBeanTest {
     @Test
     void findAllEmployees_positive_existentEmployees() {
 
-        List<Employee> testEmployees = new ArrayList<Employee>();
+        List<Employee> testEmployees = new ArrayList<>();
         BankInfo bankInfo=new BankInfo();
         PaymentInfo paymentInfo=new PaymentInfo();
 
@@ -263,7 +263,7 @@ class EmployeeBeanTest {
     @Test
     void findAllEmployeesByName_positive_existentEmployees() {
 
-        List<Employee> testEmployees = new ArrayList<Employee>();
+        List<Employee> testEmployees = new ArrayList<>();
 
         Employee employee=new Employee();
 

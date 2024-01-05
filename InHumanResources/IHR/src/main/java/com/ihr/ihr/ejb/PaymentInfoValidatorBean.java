@@ -51,6 +51,10 @@ public class PaymentInfoValidatorBean implements PaymentInfoValidation {
 
     @Override
     public boolean isPaymentInfoDtoValid(PaymentInfoDto paymentInfoDto) {
+        LOG.info("PaymentInfoDtoRules");
+        if(paymentInfoDto == null)
+            return false;
+
         boolean isMonthlyBasicSalaryValid = isMonthlyBasicSalaryValid(paymentInfoDto.getMonthlyBasicSalary());
 
         boolean isSalaryLevelValid = isSalaryLevelValid(paymentInfoDto.getSalaryLevel());
@@ -67,12 +71,8 @@ public class PaymentInfoValidatorBean implements PaymentInfoValidation {
 
         boolean isNumberOfSharesZeroForLecturerAssociate = isNumberOfSharesZeroForLecturerAssociate(paymentInfoDto.getSalaryLevel(), paymentInfoDto.getNumberOfShares());
 
-        boolean isPaymentInfoValid = isMonthlyBasicSalaryValid && isSalaryLevelValid && isBonusForSuccessValid &&
+        return isMonthlyBasicSalaryValid && isSalaryLevelValid && isBonusForSuccessValid &&
                 isNumberOfSharesValid && salaryLevelIsAssociateOrExecutive && salaryLevelIsExecutive && isNumberOfSharesZeroForLecturerAssociate;
-
-        LOG.info("PaymentInfoDtoRules");
-
-        return isPaymentInfoValid;
     }
 
     @Override
