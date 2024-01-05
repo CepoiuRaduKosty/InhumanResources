@@ -30,15 +30,11 @@ public class PayDayBean implements PayDayProvider {
     public Integer getDayOfMonth() {
         LOG.info("getDayOfMonth");
 
-        try {
-            List<PayDay> payDays = entityManager.createQuery("SELECT b FROM PayDay b", PayDay.class).getResultList();
-            if(payDays.isEmpty())
-                return null;
-            else
-                return payDays.get(0).getDayOfMonth();
-        } catch (Exception ex) {
-            throw new EJBException(ex);
-        }
+        List<PayDay> payDays = entityManager.createQuery("SELECT b FROM PayDay b", PayDay.class).getResultList();
+        if(payDays.isEmpty())
+            return null;
+        else
+            return payDays.get(0).getDayOfMonth();
     }
 
     @Override
@@ -69,12 +65,7 @@ public class PayDayBean implements PayDayProvider {
     @Override
     public boolean isPayDateSet() {
         LOG.info("isPayDateSet");
-
-        try {
-            List<PayDay> payDays = entityManager.createQuery("SELECT b FROM PayDay b", PayDay.class).getResultList();
-            return !payDays.isEmpty();
-        } catch (Exception ex) {
-            throw new EJBException(ex);
-        }
+        List<PayDay> payDays = entityManager.createQuery("SELECT b FROM PayDay b", PayDay.class).getResultList();
+        return !payDays.isEmpty();
     }
 }
