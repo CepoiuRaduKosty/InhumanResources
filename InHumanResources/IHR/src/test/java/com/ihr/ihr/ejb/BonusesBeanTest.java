@@ -34,6 +34,18 @@ public class BonusesBeanTest {
     @Spy
     BonusValidatorBean bonusValidatorBean;
 
+    void assertEqualsBonusInfoList(List<BonusInfo> expectedList, List<BonusDto> actualList) {
+        assertEquals(expectedList.size(), actualList.size(), "Lists have different sizes");
+
+        for (int i = 0; i < expectedList.size(); i++) {
+            BonusInfo expectedBonus = expectedList.get(i);
+            UpdateBonusDto actualBonusDto = actualList.get(i);
+            assertEquals(expectedBonus.getValue(), actualBonusDto.getValue(), "Values don't match");
+            assertEquals(expectedBonus.getBonusDescription(), actualBonusDto.getBonusDescription(), "Bonus descriptions don't match");
+        }
+    }
+
+
     @Test
     void getBonusDtoById_positive_idExists() throws UnknownBonusException {
         BonusInfo bonusInfo = new BonusInfo();
@@ -162,7 +174,7 @@ public class BonusesBeanTest {
 
         List<BonusDto> result = bonusesBean.getAllBonuses();
 
-        assertEquals(bonusInfos.size(), result.size());
+        assertEqualsBonusInfoList(bonusInfos, result);
     }
 
     @Test
@@ -188,6 +200,6 @@ public class BonusesBeanTest {
 
         List<BonusDto> result = bonusesBean.getAllBonusesByPaymentId(paymentId);
 
-        assertEquals(bonusInfos.size(), result.size());
+        assertEqualsBonusInfoList(bonusInfos, result);
     }
 }
