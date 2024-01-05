@@ -3,14 +3,16 @@ package com.ihr.ihr.ejb;
 import com.ihr.ihr.common.dtos.BonusDtos.BonusDto;
 import com.ihr.ihr.common.dtos.BonusDtos.CreateBonusDto;
 import com.ihr.ihr.common.dtos.BonusDtos.UpdateBonusDto;
+import com.ihr.ihr.common.excep.InvalidBonusException;
 import com.ihr.ihr.common.excep.UnknownBonusException;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.interf.BonusProvider;
+import com.ihr.ihr.common.interf.BonusValidation;
 import com.ihr.ihr.entities.BonusInfo;
-import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -24,6 +26,9 @@ public class BonusesBean implements BonusProvider {
     private static final Logger LOG = Logger.getLogger(BonusesBean.class.getName());
     @PersistenceContext
     EntityManager entityManager;
+
+    @Inject
+    BonusValidation bonusValidation;
 
     private BonusDto getBonusDtoFromBonusInfo(BonusInfo bonusInfo) {
         return new BonusDto(
@@ -42,7 +47,10 @@ public class BonusesBean implements BonusProvider {
         return bonusDtos;
     }
 
-    private void updateBonusInfoFromUpdateBonusDto(BonusInfo destinationBonusInfo, UpdateBonusDto updateBonusDto) {
+    private void updateBonusInfoFromUpdateBonusDto(BonusInfo destinationBonusInfo, UpdateBonusDto updateBonusDto) throws InvalidBonusException {
+        if(!bonusValidation.isBonusDtoValid(updateBonusDto))
+            throw new InvalidBonusException();
+
         destinationBonusInfo.setValue(updateBonusDto.getValue());
         destinationBonusInfo.setBonusDescription(updateBonusDto.getBonusDescription());
     }
@@ -73,17 +81,22 @@ public class BonusesBean implements BonusProvider {
     }
 
     @Override
-    public void updateBonusById(Long bonusId, UpdateBonusDto updateBonusDto) throws UnknownBonusException {
+    public void updateBonusById(Long bonusId, UpdateBonusDto updateBonusDto) throws UnknownBonusException, InvalidBonusException {
         LOG.info("updateBonusById");
         updateBonusInfoFromUpdateBonusDto(safeGetBonusInfoById(bonusId), updateBonusDto);
     }
 
     @Override
-    public void createBonusByDto(CreateBonusDto createBonusDto) throws UnknownPaymentInfoException {
+    public void createBonusByDto(CreateBonusDto createBonusDto) throws UnknownPaymentInfoException, InvalidBonusException {
         LOG.info("createBonusByDto");
+
+        if(!bonusValidation.isBonusDtoValid(createBonusDto))
+            throw new InvalidBonusException();
+
         BonusInfo newBonusInfo = new BonusInfo();
         updateBonusInfoFromUpdateBonusDto(newBonusInfo, createBonusDto);
         linkBonusInfoWithPaymentInfo(newBonusInfo, createBonusDto.getIdPayment());
+
         entityManager.persist(newBonusInfo);
     }
 
