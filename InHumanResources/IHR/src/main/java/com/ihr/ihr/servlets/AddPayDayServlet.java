@@ -42,14 +42,13 @@ public class AddPayDayServlet extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
         Integer dayOfMonth = Integer.parseInt(request.getParameter("payDayOfMonth"));
-
-        try {
-            payDayProvider.addPayDayOfMonth(dayOfMonth);
-        } catch (InvalidPayDayException | PayDayAlreadyExistsException e) {
-            throw new RuntimeException(e);
+        if (payDayValidation.isPayDayValid(dayOfMonth)) {
+            try {
+                payDayProvider.addPayDayOfMonth(dayOfMonth);
+            } catch (InvalidPayDayException | PayDayAlreadyExistsException e) {
+                throw new RuntimeException(e);
+            }
+            response.sendRedirect(request.getContextPath() + "/PayDay");
         }
-
-
-        response.sendRedirect(request.getContextPath() + "/PayDay");
     }
 }

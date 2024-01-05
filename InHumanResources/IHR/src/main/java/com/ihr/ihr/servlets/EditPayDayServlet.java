@@ -42,12 +42,15 @@ public class EditPayDayServlet extends HttpServlet {
                           HttpServletResponse response) throws ServletException, IOException {
 
         Integer dayOfMonth = Integer.parseInt(request.getParameter("payDayOfMonth"));
-        try {
-            payDayProvider.updatePayDay(dayOfMonth);
+        if (payDayValidation.isPayDayValid(dayOfMonth)) {
+            try {
+                payDayProvider.updatePayDay(dayOfMonth);
 
-        } catch (InvalidPayDayException | PayDayDoesNotExistException e) {
-            throw new RuntimeException(e);
+            } catch (InvalidPayDayException | PayDayDoesNotExistException e) {
+                throw new RuntimeException(e);
+            }
+            response.sendRedirect(request.getContextPath() + "/PayDay");
         }
-        response.sendRedirect(request.getContextPath() + "/PayDay");
+
     }
 }
