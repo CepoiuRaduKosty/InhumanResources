@@ -2,7 +2,7 @@ package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.BonusDtos.UpdateBonusDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.UpdateEmployeeDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import com.ihr.ihr.common.interf.SalaryCalculatorProvider;
 import jakarta.ejb.Stateless;
