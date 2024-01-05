@@ -10,9 +10,11 @@ public class PaycheckBonus {
     @Id
     @GeneratedValue
     private Long id;
-    Long paycheckId;
-    Double value;
-    String bonusDescription;
+
+    private Double value;
+
+    private String bonusDescription;
+
     @ManyToOne
     private Paycheck paycheck;
 
@@ -22,14 +24,6 @@ public class PaycheckBonus {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getPaycheckId() {
-        return paycheckId;
-    }
-
-    public void setPaycheckId(Long paycheckId) {
-        this.paycheckId = paycheckId;
     }
 
     public Double getValue() {

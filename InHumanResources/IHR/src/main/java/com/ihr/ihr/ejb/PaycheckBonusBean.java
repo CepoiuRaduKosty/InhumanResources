@@ -4,10 +4,12 @@ import com.ihr.ihr.common.dtos.PaycheckBonusDtos.CreatePaycheckBonusDto;
 import com.ihr.ihr.common.dtos.PaycheckBonusDtos.PaycheckBonusDto;
 import com.ihr.ihr.common.dtos.PaycheckDtos.PaycheckDto;
 import com.ihr.ihr.common.excep.InvalidPaycheckBonusException;
+import com.ihr.ihr.common.interf.BonusValidation;
 import com.ihr.ihr.common.interf.PayckeckBonusProvider;
 import com.ihr.ihr.entities.Paycheck;
 import com.ihr.ihr.entities.PaycheckBonus;
 import jakarta.ejb.EJBException;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,11 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Stateless
 public class PaycheckBonusBean implements PayckeckBonusProvider {
     private static final Logger LOG = Logger.getLogger(PaycheckBean.class.getName());
 
     @Inject
-    BonusValidatorBean bonusValidatorBean;
+    BonusValidation bonusValidatorBean;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -46,10 +49,12 @@ public class PaycheckBonusBean implements PayckeckBonusProvider {
         if(!bonusValidatorBean.isPaycheckBonusDtoValid(createPaycheckBonusDto))
             throw new InvalidPaycheckBonusException();
 
+        Paycheck paycheck = entityManager.find(Paycheck.class, createPaycheckBonusDto.getPaycheckId());
+
         PaycheckBonus paycheckBonus = new PaycheckBonus();
 
         paycheckBonus.setBonusDescription(createPaycheckBonusDto.getBonusDescription());
-        paycheckBonus.setPaycheckId(createPaycheckBonusDto.getPaycheckId());
+        paycheckBonus.setPaycheck(paycheck);
         paycheckBonus.setValue(createPaycheckBonusDto.getValue());
 
         entityManager.persist(paycheckBonus);
@@ -66,10 +71,16 @@ public class PaycheckBonusBean implements PayckeckBonusProvider {
                 throw new InvalidPaycheckBonusException();
 
             PaycheckBonus existingPaycheckBonus = entityManager.find(PaycheckBonus.class, paycheckBonusId);
-
-            existingPaycheckBonus.setValue(createPaycheckBonusDto.getValue());
-            existingPaycheckBonus.setPaycheckId(createPaycheckBonusDto.getPaycheckId());
             existingPaycheckBonus.setBonusDescription(createPaycheckBonusDto.getBonusDescription());
+            existingPaycheckBonus.setValue(createPaycheckBonusDto.getValue());
+
+            Paycheck oldPaycheck = existingPaycheckBonus.getPaycheck();
+            oldPaycheck.getPaycheckBonuses().remove(existingPaycheckBonus);
+
+            Paycheck newPaycheck = entityManager.find(Paycheck.class, createPaycheckBonusDto.getPaycheckId());
+            newPaycheck.getPaycheckBonuses().add(existingPaycheckBonus);
+
+            existingPaycheckBonus.setPaycheck(newPaycheck);
 
         } catch (Exception ex) {
             throw new EJBException(ex);
@@ -83,7 +94,7 @@ public class PaycheckBonusBean implements PayckeckBonusProvider {
         try {
             PaycheckBonus paycheckBonusToDelete = entityManager.find(PaycheckBonus.class, paycheckBonusId);
 
-             entityManager.remove(paycheckBonusToDelete);
+            entityManager.remove(paycheckBonusToDelete);
         } catch (Exception ex) {
             throw new EJBException(ex);
         }
@@ -94,7 +105,7 @@ public class PaycheckBonusBean implements PayckeckBonusProvider {
         LOG.info("getAllPaycheckBonusesByPaycheckId");
 
         try {
-             List<PaycheckBonus> paycheckBonuses = entityManager.createQuery("SELECT pb FROM PaycheckBonus pb WHERE pb.paycheckId = :paycheckId", PaycheckBonus.class)
+             List<PaycheckBonus> paycheckBonuses = entityManager.createQuery("SELECT pb FROM PaycheckBonus pb WHERE pb.paycheck.id = :paycheckId", PaycheckBonus.class)
                      .setParameter("paycheckId", paycheckId)
                      .getResultList();
 
@@ -105,7 +116,7 @@ public class PaycheckBonusBean implements PayckeckBonusProvider {
     }
 
     private PaycheckBonusDto copyPaycheckBonusToDto(PaycheckBonus paycheckBonus) {
-        return new PaycheckBonusDto(paycheckBonus.getPaycheckId(),
+        return new PaycheckBonusDto(paycheckBonus.getPaycheck().getId(),
                 paycheckBonus.getValue(),
                 paycheckBonus.getBonusDescription(),
                 paycheckBonus.getId());
@@ -116,7 +127,7 @@ public class PaycheckBonusBean implements PayckeckBonusProvider {
         List<PaycheckBonusDto> paycheckBonusDtos = new ArrayList<>();
         for (PaycheckBonus pb : paycheckBonuses)
         {
-              paycheckBonusDtos.add(new PaycheckBonusDto(pb.getPaycheckId(), pb.getValue(), pb.getBonusDescription(), pb.getId()));
+              paycheckBonusDtos.add(new PaycheckBonusDto(pb.getPaycheck().getId(), pb.getValue(), pb.getBonusDescription(), pb.getId()));
         }
         return paycheckBonusDtos;
     }
