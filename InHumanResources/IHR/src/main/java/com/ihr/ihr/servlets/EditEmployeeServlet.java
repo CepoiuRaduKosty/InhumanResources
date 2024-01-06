@@ -38,7 +38,19 @@ public class EditEmployeeServlet extends HttpServlet {
             response) throws ServletException, IOException {
         String id_link = null;
         id_link = request.getParameter("id_link");
+
+        if(id_link == null) {
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            return;
+        }
+
         EmployeeDto employeeDto = employeeProvider.findById(Long.parseLong(id_link));
+
+        if(employeeDto == null) {
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            return;
+        }
+
         PaymentInfoDto paymentInfoDto = paymentInfoProvider.findPaymentInfoById(employeeDto.getPaymentInfoDto().getId());
         BankInfoDto bankInfoDto = bankInfoProvider.getById(employeeDto.getBankInfoDto().getId());
         request.setAttribute("employee", employeeDto);
