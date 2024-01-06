@@ -4,6 +4,7 @@
     const forms = document.querySelectorAll('.needs-validation');
 
     Array.from(forms).forEach(form => {
+        form.reset();
         const dayOfMonthInput = form.querySelector('#payDayOfMonth');
 
         dayOfMonthInput.addEventListener('input', () => {
