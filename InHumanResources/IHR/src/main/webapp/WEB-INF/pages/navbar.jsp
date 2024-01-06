@@ -22,6 +22,16 @@
                     <li>
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PayDay">Pay Day</a>
                     </li>
+
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/AllPaychecks">AllPaychecks</a>
+                    </li>
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EmployeePaychecks">EmployeePaychecks</a>
+                    </li>
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PaycheckView">PaycheckView</a>
+                    </li>
                 </ul>
             </div>
         </div>

@@ -14,7 +14,10 @@ public class Employee {
     private Long id;
     private String name;
     private String surname;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "GENDER")
     private GenderEnum gender;
+
     private LocalDate dateOfBirth;
     private String address;
     private String religion;
