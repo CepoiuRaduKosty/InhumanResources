@@ -22,7 +22,14 @@ public class EmployeePaychecksServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Long employeeId = Long.parseLong(request.getParameter("employeeId"));
+        String employeeIdStr = request.getParameter("employeeId");
+
+        if(employeeIdStr == null) {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+            return;
+        }
+
+        Long employeeId = Long.parseLong(employeeIdStr);
 
         List<PaycheckDto> employeePaychecks = paycheckProvider.getAllPaychecksByEmployeeId(employeeId);
 

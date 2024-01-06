@@ -29,9 +29,22 @@ public class PaycheckViewServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Long paycheckId = Long.parseLong(request.getParameter("paycheckId"));
+        String paycheckIdStr = request.getParameter("paycheckId");
+
+
+        if(paycheckIdStr == null) {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+            return;
+        }
+
+        Long paycheckId = Long.parseLong((paycheckIdStr));
 
         PaycheckDto paycheckDto = paycheckProvider.getPaycheckById(paycheckId);
+
+        if(paycheckDto == null) {
+            request.getRequestDispatcher("index.jsp").forward(request, response);
+            return;
+        }
 
         List<PaycheckBonusDto> paycheckBonusDtos = paycheckBonusProvider.getAllPaycheckBonusesByPaycheckId(paycheckId);
 
