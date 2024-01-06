@@ -32,14 +32,11 @@ public class AddEmployeeServlet extends HttpServlet {
     BankInfoProvider bankInfoProvider;
     @Inject
     PaymentInfoProvider paymentInfoProvider;
-    @Inject
-    EmployeeValidation employeeValidation;
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
-        Employee employee = new Employee();
-        request.setAttribute("ëmployee", employee);
         request.getRequestDispatcher("/WEB-INF/pages/AddEmployee.jsp").forward(request, response);
     }
 
@@ -62,11 +59,10 @@ public class AddEmployeeServlet extends HttpServlet {
         SalaryLevelEnum salaryLevel = SalaryLevelEnum.valueOf(request.getParameter("salaryLevel"));
         Double bonusForSuccess = Double.parseDouble(request.getParameter("bonusForSuccess"));
         Integer numberOfShares = Integer.parseInt(request.getParameter("numberOfShares"));
-        Integer cumulatedShares = Integer.parseInt(request.getParameter("cumulatedShares"));
 
         Long id = 0L;
         BankInfoDto bankInfoDto = new BankInfoDto(1L, iBan, bankName);
-        PaymentInfoDto paymentInfoDto = new PaymentInfoDto(1L, monthlyBasicSalary, salaryLevel, bonusForSuccess, numberOfShares, cumulatedShares);
+        PaymentInfoDto paymentInfoDto = new PaymentInfoDto(1L, monthlyBasicSalary, salaryLevel, bonusForSuccess, numberOfShares, 0);
         EmployeeDto employeeDto = new EmployeeDto(1L, name, surname, genderEnum, dateOfBirth, address, religion, hoursPerWeek);
         employeeDto.setBankInfoDto(bankInfoDto);
         employeeDto.setPaymentInfoDto(paymentInfoDto);

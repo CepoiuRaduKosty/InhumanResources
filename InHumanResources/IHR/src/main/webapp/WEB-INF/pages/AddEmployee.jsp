@@ -43,7 +43,7 @@
             <div class="col-md-6 mb-3">
                 <label for="gender" class="form-label">Gender</label>
                 <select class="form-select" id="gender" name="gender" required>
-                    <option selected value="">Chose</option>
+                    <option selected value="">Choose</option>
                     <option value="MALE">Male</option>
                     <option value="FEMALE">Female</option>
                 </select>
@@ -135,7 +135,7 @@
             <div class="col-md-6 mb-3">
                 <label for="salaryLevel" class="form-label">Salary level</label>
                 <select class="form-select" id="salaryLevel" name="salaryLevel" required>
-                    <option selected value="">Chose</option>
+                    <option selected value="">Choose</option>
                     <option value="LECTURER">LECTURER</option>
                     <option value="ASSOCIATE">ASSOCIATE</option>
                     <option value="PROFESSOR">PROFESSOR</option>

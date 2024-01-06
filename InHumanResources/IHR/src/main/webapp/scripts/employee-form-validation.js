@@ -132,13 +132,13 @@
         {
             bonusForSuccessInput.setAttribute('placeholder', 'Bonus for Success');
             bonusForSuccessInput.removeAttribute('readonly');
-            return value>=0
+            return value>0
         }
         if (salaryLevelSelect && salaryLevelSelect.value === 'EXECUTIVE')
         {
             bonusForSuccessInput.setAttribute('placeholder', 'Bonus for Success');
             bonusForSuccessInput.removeAttribute('readonly');
-            return value>=0
+            return value>0
         }
         if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER')
         {
@@ -169,7 +169,7 @@
         {
             numberOfShares.setAttribute('placeholder', 'Number Of Shares');
             numberOfShares.removeAttribute('readonly');
-            return value>=0
+            return value>0
         }
         if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER')
         {
@@ -211,8 +211,8 @@
         if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR')
         {
             cumulatedShares.setAttribute('placeholder', 'Number Of Cumulated Shares');
-            cumulatedShares.removeAttribute('readonly');
-            return value>=0
+            cumulatedShares.setAttribute('readonly', 'readonly');
+            return true;
         }
     }
 
