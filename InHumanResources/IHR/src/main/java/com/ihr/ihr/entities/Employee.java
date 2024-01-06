@@ -79,7 +79,7 @@ public class Employee {
         this.hoursPerWeek = hoursPerWeek;
     }
 
-    @OneToOne
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private BankInfo bankInfo;
 
     public BankInfo getBankInfo() {
@@ -90,7 +90,7 @@ public class Employee {
         this.bankInfo = bankInfo;
     }
 
-    @OneToOne
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
     private PaymentInfo paymentInfo;
 
     public PaymentInfo getPaymentInfo() {
