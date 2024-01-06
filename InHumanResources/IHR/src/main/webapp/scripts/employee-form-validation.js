@@ -54,6 +54,10 @@
                validateNumberOfShares(numberOfSharesInput);
             });
 
+            salaryLevelSelect.addEventListener('change', () =>{
+                validateCumulatedShares(cumulatedSharesInput);
+            });
+
             form.addEventListener('submit', event => {
                 const dateOfBirthValue = dateOfBirthInput.value;
                 const hoursPerWeekValue = parseInt(hoursPerWeekInput.value, 10);
@@ -139,13 +143,13 @@
         if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER')
         {
             bonusForSuccessInput.value = 0;
-            bonusForSuccessInput.setAttribute('readonly', 'readonly'); // Optional: make the field read-only
+            bonusForSuccessInput.setAttribute('readonly', 'readonly');
             return true;
         }
         if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR')
         {
             bonusForSuccessInput.value = 0;
-            bonusForSuccessInput.setAttribute('readonly', 'readonly'); // Optional: make the field read-only
+            bonusForSuccessInput.setAttribute('readonly', 'readonly');
             return true;
         }
     }
@@ -158,7 +162,7 @@
         if (salaryLevelSelect && salaryLevelSelect.value === 'ASSOCIATE')
         {
             numberOfShares.value = 0;
-            numberOfShares.setAttribute('readonly', 'readonly'); // Optional: make the field read-only
+            numberOfShares.setAttribute('readonly', 'readonly');
             return true;
         }
         if (salaryLevelSelect && salaryLevelSelect.value === 'EXECUTIVE')
@@ -170,19 +174,46 @@
         if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER')
         {
             numberOfShares.value = 0;
-            numberOfShares.setAttribute('readonly', 'readonly'); // Optional: make the field read-only
+            numberOfShares.setAttribute('readonly', 'readonly');
             return true;
         }
         if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR')
         {
             numberOfShares.value = 0;
-            numberOfShares.setAttribute('readonly', 'readonly'); // Optional: make the field read-only
+            numberOfShares.setAttribute('readonly', 'readonly');
             return true;
         }
     }
 
     function cumulatedSharesIsValid(value) {
-        return value>=0;
+        const salaryLevelSelect = document.getElementById('salaryLevel');
+        const cumulatedShares = document.getElementById('cumulatedShares');
+
+
+        if (salaryLevelSelect && salaryLevelSelect.value === 'ASSOCIATE')
+        {
+            cumulatedShares.value = 0;
+            cumulatedShares.setAttribute('readonly', 'readonly');
+            return true;
+        }
+        if (salaryLevelSelect && salaryLevelSelect.value === 'EXECUTIVE')
+        {
+            cumulatedShares.value = 0;
+            cumulatedShares.setAttribute('readonly', 'readonly');
+            return true;
+        }
+        if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER')
+        {
+            cumulatedShares.value = 0;
+            cumulatedShares.setAttribute('readonly', 'readonly');
+            return true;
+        }
+        if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR')
+        {
+            cumulatedShares.setAttribute('placeholder', 'Number Of Cumulated Shares');
+            cumulatedShares.removeAttribute('readonly');
+            return value>=0
+        }
     }
 
 

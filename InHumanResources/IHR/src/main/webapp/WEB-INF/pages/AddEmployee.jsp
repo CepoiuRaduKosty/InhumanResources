@@ -44,8 +44,8 @@
                 <label for="gender" class="form-label">Gender</label>
                 <select class="form-select" id="gender" name="gender" required>
                     <option selected value="">Chose</option>
-                    <option value="1">Male</option>
-                    <option value="2">Female</option>
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
                 </select>
                 <div class="invalid-feedback">
                     Please input a gender.
@@ -64,11 +64,11 @@
         <div class="row">
 
             <div class="col-md-6 mb-3">
-                <label for="adress">Adress</label>
-                <input type="text" class="form-control" id="adress" name="adress" placeholder=""
-                       value="${adress}" required>
+                <label for="address">Address</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder=""
+                       value="${address}" required>
                 <div class="invalid-feedback">
-                    Please input a correct adress.
+                    Please input a correct address.
                 </div>
             </div>
 
