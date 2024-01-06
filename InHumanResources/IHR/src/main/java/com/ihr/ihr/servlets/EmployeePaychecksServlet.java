@@ -1,9 +1,6 @@
 package com.ihr.ihr.servlets;
 
-import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.PaycheckDtos.PaycheckDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
-import com.ihr.ihr.common.interf.EmployeeProvider;
 import com.ihr.ihr.common.interf.PaycheckProvider;
 import jakarta.inject.Inject;
 import jakarta.servlet.ServletException;
@@ -21,20 +18,13 @@ import java.util.List;
 public class EmployeePaychecksServlet extends HttpServlet {
 
     @Inject
-    EmployeeProvider employeeProvider;
-
-    @Inject
     PaycheckProvider paycheckProvider;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long employeeId = Long.parseLong(request.getParameter("employeeId"));
 
-        EmployeeDto employeeDto = employeeProvider.findById(employeeId);
-
-        PaymentInfoDto paymentDto = employeeDto.getPaymentInfoDto();
-
-        List<PaycheckDto> employeePaychecks = paycheckProvider.getAllPaychecksByPaymentInfoId(paymentDto.getId());
+        List<PaycheckDto> employeePaychecks = paycheckProvider.getAllPaychecksByEmployeeId(employeeId);
 
         Collections.sort(employeePaychecks, Comparator.comparing(PaycheckDto::getDate).reversed());
 

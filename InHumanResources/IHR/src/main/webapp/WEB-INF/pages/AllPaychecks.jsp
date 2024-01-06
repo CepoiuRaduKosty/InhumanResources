@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>All Paychecks</title>
@@ -14,7 +14,7 @@
 <body>
 <h2>All Paychecks</h2>
 
-<c:if test="${not empty allPaychecks && allPaychecks.size() > 0}">
+<c:if test="${not empty paycheckWithNames && paycheckWithNames.size() > 0}">
     <table border="1">
         <tr>
             <th>Row Number</th>
@@ -25,17 +25,18 @@
             <th>Details</th>
         </tr>
 
-        <c:forEach var="paycheck" items="${allPaychecks}" varStatus="rowNum">
+        <c:forEach var="paycheckWithNames" items="${paycheckWithNames}" varStatus="rowNum">
             <tr>
                 <td>${rowNum.index + 1}</td>
-                <td>${paycheck.date}</td>
-                <td>${paycheck.employeeName}</td>
-                <td>${paycheck.salaryBeforeTaxes}</td>
-                <td>${paycheck.salaryAfterTaxes}</td>
-                <td><a href="paycheck-view?paycheckId=${paycheck.id}">View Details</a></td>
+                <td>${paycheckWithNames.paycheckDto.date}</td>
+                <td>${paycheckWithNames.name}</td>
+                <td>${paycheckWithNames.paycheckDto.salaryBeforeTaxes}</td>
+                <td>${paycheckWithNames.paycheckDto.finalSalary}</td>
+                <td><a href="paycheck-view?paycheckId=${paycheckWithNames.paycheckDto.id}">View Details</a></td>
             </tr>
         </c:forEach>
     </table>
 </c:if>
+
 </body>
 </html>

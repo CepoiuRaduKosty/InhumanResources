@@ -2,10 +2,9 @@ package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.PaycheckBonusDtos.CreatePaycheckBonusDto;
 import com.ihr.ihr.common.dtos.PaycheckBonusDtos.PaycheckBonusDto;
-import com.ihr.ihr.common.dtos.PaycheckDtos.PaycheckDto;
 import com.ihr.ihr.common.excep.InvalidPaycheckBonusException;
 import com.ihr.ihr.common.interf.BonusValidation;
-import com.ihr.ihr.common.interf.PayckeckBonusProvider;
+import com.ihr.ihr.common.interf.PaycheckBonusProvider;
 import com.ihr.ihr.entities.Paycheck;
 import com.ihr.ihr.entities.PaycheckBonus;
 import jakarta.ejb.EJBException;
@@ -13,14 +12,13 @@ import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 @Stateless
-public class PaycheckBonusBean implements PayckeckBonusProvider {
+public class PaycheckBonusBean implements PaycheckBonusProvider {
     private static final Logger LOG = Logger.getLogger(PaycheckBean.class.getName());
 
     @Inject

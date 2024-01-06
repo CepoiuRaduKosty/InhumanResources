@@ -6,7 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Paycheck Details</title>
@@ -14,48 +14,45 @@
 <body>
 <h2>Paycheck Details</h2>
 
-<c:if test="${not empty paycheckDto}">
-    <p>Paycheck Date: ${paycheckDto.date}</p>
-    <p>Basic Salary: ${paycheckDto.basicSalary}</p>
+<c:if test="${not empty paycheck}">
+    <p>Paycheck Date: ${paycheck.date}</p>
+    <p>Basic Salary: ${paycheck.basicSalary}</p>
 
     <c:choose>
-        <c:when test="${paycheckDto.salaryLevel == 'ASSOCIATE' or paycheckDto.salaryLevel == 'EXECUTIVE'}">
-            <p>Bonus for Success: ${paycheckDto.bonusForSuccess}</p>
+        <c:when test="${salaryLevel == 'ASSOCIATE' or salaryLevel == 'EXECUTIVE'}">
+            <p>Bonus for Success: ${paycheck.bonusForSuccess}</p>
         </c:when>
-        <c:when test="${paycheckDto.salaryLevel == 'EXECUTIVE'}">
-            <p>Number of Shares: ${paycheckDto.numberOfShares}</p>
+        <c:when test="${salaryLevel == 'EXECUTIVE'}">
+            <p>Number of Shares: ${paycheck.numberOfShares}</p>
         </c:when>
-        <c:when test="${paycheckDto.salaryLevel == 'PROFESSOR' and paycheckDto.isAugust}">
-            <p>Cumulated Shares: ${paycheckDto.cumulatedShares}</p>
+        <c:when test="${salaryLevel == 'PROFESSOR' and monthIsAugust(paycheck.date)}">
+            <p>Cumulated Shares: ${paycheck.cumulatedShares}</p>
         </c:when>
     </c:choose>
 
-    <c:if test="${not empty paycheckDto.paycheckBonuses}">
+    <c:if test="${not empty paycheckBonus}">
         <p>Additional Bonuses:</p>
         <ul>
-            <c:forEach var="bonus" items="${paycheckDto.paycheckBonuses}">
+            <c:forEach var="bonus" items="${paycheckBonus}">
                 <li>${bonus.bonusDescription}: ${bonus.value}</li>
             </c:forEach>
         </ul>
     </c:if>
-    <p>Salary Before Taxes: ${paycheckDto.salaryBeforeTaxes}</p>
-    <p>Taxes (including percentage): ${paycheckDto.tax}</p>
-    <p>Social Charge (including percentage): ${paycheckDto.socialCharge}</p>
-    <p>Final Salary: ${paycheckDto.finalSalary}</p>
 
-    <label>Select Salary Level:</label>
-    <select id="salaryLevel" name="salaryLevel" onchange="filterPaychecks()">
-        <option value="ALL">All</option>
-        <c:forEach var="level" items="${salaryLevels}">
-            <option value="${level}">${level}</option>
-        </c:forEach>
-    </select>
+    <p>Salary Before Taxes: ${paycheck.salaryBeforeTaxes}</p>
+    <p>Taxes (including percentage): ${paycheck.tax}</p>
+    <p>Social Charge (including percentage): ${paycheck.socialCharge}</p>
+    <p>Final Salary: ${paycheck.finalSalary}</p>
+
 </c:if>
 
 <script>
-    function filterPaychecks() {
-        var salaryLevel = document.getElementById("salaryLevel").value;
-        window.location.href = "AllPaychecks?salaryLevel=" + salaryLevel;
+    function monthIsAugust(date) {
+        var parsedDate = new Date(date);
+
+        var month = parsedDate.getMonth();
+
+        return month === 7;
     }
 </script>
 </body>

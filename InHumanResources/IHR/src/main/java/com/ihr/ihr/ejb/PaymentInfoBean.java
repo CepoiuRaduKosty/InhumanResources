@@ -1,5 +1,6 @@
 package com.ihr.ihr.ejb;
 
+import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.NonPositiveIncomeException;
@@ -7,6 +8,7 @@ import com.ihr.ihr.common.excep.InvalidPaymentInfoException;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
 import com.ihr.ihr.common.interf.PaymentInfoValidation;
+import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.Paycheck;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.ejb.EJBException;
@@ -41,12 +43,27 @@ public class PaymentInfoBean implements PaymentInfoProvider {
         if (paymentInfo == null)
             return null;
 
-        return new PaymentInfoDto(paymentInfo.getId(),
+        PaymentInfoDto paymentInfoDto = new PaymentInfoDto(paymentInfo.getId(),
                 paymentInfo.getMonthlyBasicSalary(),
                 paymentInfo.getSalaryLevel(),
                 paymentInfo.getBonusForSuccess(),
                 paymentInfo.getNumberOfShares(),
                 paymentInfo.getCumulatedShares());
+
+        Employee employee = entityManager.find(Employee.class, paymentInfo.getEmployee().getId());
+
+        EmployeeDto employeeDto = new EmployeeDto(employee.getId(),
+                employee.getName(),
+                employee.getSurname(),
+                employee.getGender(),
+                employee.getDateOfBirth(),
+                employee.getAddress(),
+                employee.getReligion(),
+                employee.getHoursPerWeek());
+
+        paymentInfoDto.setEmployeeDto(employeeDto);
+
+        return paymentInfoDto;
     }
 
     @Override
