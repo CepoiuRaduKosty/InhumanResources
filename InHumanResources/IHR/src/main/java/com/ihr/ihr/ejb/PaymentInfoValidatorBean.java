@@ -55,6 +55,9 @@ public class PaymentInfoValidatorBean implements PaymentInfoValidation {
         if(paymentInfoDto == null)
             return false;
 
+        if(!isCumulatedSharesValid(paymentInfoDto.getCumulatedShares()))
+            return false;
+
         boolean isMonthlyBasicSalaryValid = isMonthlyBasicSalaryValid(paymentInfoDto.getMonthlyBasicSalary());
 
         boolean isSalaryLevelValid = isSalaryLevelValid(paymentInfoDto.getSalaryLevel());
