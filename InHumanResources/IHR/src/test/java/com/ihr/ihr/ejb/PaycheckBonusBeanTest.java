@@ -143,4 +143,61 @@ class PaycheckBonusBeanTest {
         verify(entityManager, never()).merge(any());
     }
 
+    @Test
+    public void testDeletePaycheckBonusById() {
+        Long paycheckBonusIdToDelete = 1L;
+        PaycheckBonus paycheckBonusToDelete = new PaycheckBonus();
+        paycheckBonusToDelete.setId(paycheckBonusIdToDelete);
+
+        when(entityManager.find(eq(PaycheckBonus.class), eq(paycheckBonusIdToDelete))).thenReturn(paycheckBonusToDelete);
+
+        paycheckBonusBean.deletePaycheckBonusById(paycheckBonusIdToDelete);
+
+        verify(entityManager).remove(eq(paycheckBonusToDelete));
+    }
+
+    @Test
+    public void testGetAllPaycheckBonusesByPaycheckId() {
+        Long paycheckId = 1L;
+        Paycheck paycheck = new Paycheck();
+        paycheck.setId(paycheckId);
+
+        PaycheckBonus bonus1 = new PaycheckBonus();
+        bonus1.setId(1L);
+        bonus1.setPaycheck(paycheck);
+
+        PaycheckBonus bonus2 = new PaycheckBonus();
+        bonus2.setId(2L);
+        bonus2.setPaycheck(paycheck);
+
+        List<PaycheckBonus> paycheckBonuses = new ArrayList<>();
+        paycheckBonuses.add(bonus1);
+        paycheckBonuses.add(bonus2);
+
+        when(entityManager.createQuery(
+                "SELECT pb FROM PaycheckBonus pb WHERE pb.paycheck.id = :paycheckId", PaycheckBonus.class))
+                .thenReturn(typedQuery);
+        when(typedQuery.setParameter("paycheckId", paycheckId)).thenReturn(typedQuery);
+        when(typedQuery.getResultList()).thenReturn(paycheckBonuses);
+
+        List<PaycheckBonusDto> result = paycheckBonusBean.getAllPaycheckBonusesByPaycheckId(paycheckId);
+
+        assertEquals(2, result.size());
+        assertEquals(paycheckId, result.get(0).getPaycheckId());
+        assertEquals(paycheckId, result.get(1).getPaycheckId());
+    }
+
+    @Test
+    public void testGetAllPaycheckBonusesByPaycheckId_InvalidId() {
+        Long invalidPaycheckId = 999L;
+
+        when(entityManager.createQuery(
+                "SELECT pb FROM PaycheckBonus pb WHERE pb.paycheck.id = :paycheckId", PaycheckBonus.class))
+                .thenReturn(typedQuery);
+        when(typedQuery.setParameter("paycheckId", invalidPaycheckId)).thenReturn(typedQuery);
+        when(typedQuery.getResultList()).thenThrow(new EJBException());
+
+        assertThrows(EJBException.class, () -> paycheckBonusBean.getAllPaycheckBonusesByPaycheckId(invalidPaycheckId));
+    }
+
 }
