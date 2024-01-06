@@ -5,6 +5,7 @@ import com.ihr.ihr.common.dtos.PaycheckBonusDtos.PaycheckBonusDto;
 import com.ihr.ihr.common.excep.InvalidPaycheckBonusException;
 import com.ihr.ihr.entities.Paycheck;
 import com.ihr.ihr.entities.PaycheckBonus;
+import jakarta.ejb.EJBException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.Test;
@@ -114,20 +115,32 @@ class PaycheckBonusBeanTest {
 
         when(bonusValidatorBean.isPaycheckBonusDtoValid(validPaycheckBonusDto)).thenReturn(true);
 
-        // Mocking the EntityManager behavior for the find operation (existing paycheck bonus)
         PaycheckBonus existingPaycheckBonus = new PaycheckBonus();
         existingPaycheckBonus.setValue(validPaycheckBonusDto.getValue());
         existingPaycheckBonus.setBonusDescription(validPaycheckBonusDto.getBonusDescription());
+        Paycheck paycheck = new Paycheck();
+        paycheck.setPaycheckBonuses(new ArrayList<>());
+        existingPaycheckBonus.setPaycheck(paycheck);
 
         when(entityManager.find(PaycheckBonus.class, paycheckBonusId)).thenReturn(existingPaycheckBonus);
+        when(entityManager.find(Paycheck.class, validPaycheckBonusDto.getPaycheckId())).thenReturn(paycheck);
 
-        // Testing the update of a paycheck bonus with valid input
         paycheckBonusBean.updatePaycheckBonusById(paycheckBonusId, validPaycheckBonusDto);
 
-        // Asserting that the properties of the existingPaycheckBonus match the updated DTO
         assertEquals(validPaycheckBonusDto.getValue(), existingPaycheckBonus.getValue());
         assertEquals(validPaycheckBonusDto.getBonusDescription(), existingPaycheckBonus.getBonusDescription());
-        // ... add assertions for other properties as needed
+    }
+
+    @Test
+    public void testUpdatePaycheckBonusByIdWithInvalidData() {
+        Long invalidPaycheckBonusId = 999L;
+        CreatePaycheckBonusDto invalidDto = new CreatePaycheckBonusDto(0L, 0.0, "");
+
+        when(bonusValidatorBean.isPaycheckBonusDtoValid(invalidDto)).thenReturn(false);
+
+        assertThrows(EJBException.class, () -> paycheckBonusBean.updatePaycheckBonusById(invalidPaycheckBonusId, invalidDto));
+
+        verify(entityManager, never()).merge(any());
     }
 
 }
