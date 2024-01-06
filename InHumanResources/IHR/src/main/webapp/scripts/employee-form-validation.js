@@ -179,9 +179,9 @@
         }
         if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR')
         {
-            numberOfShares.value = 0;
-            numberOfShares.setAttribute('readonly', 'readonly');
-            return true;
+            numberOfShares.setAttribute('placeholder', 'Number Of Shares');
+            numberOfShares.removeAttribute('readonly');
+            return value>0
         }
     }
 

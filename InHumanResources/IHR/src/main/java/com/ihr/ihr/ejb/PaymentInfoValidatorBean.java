@@ -44,7 +44,7 @@ public class PaymentInfoValidatorBean implements PaymentInfoValidation {
     }
 
     private boolean salaryLevelIsExecutive(SalaryLevelEnum salaryLevelEnum, Integer numberOfShares) {
-        if (salaryLevelEnum.equals(EXECUTIVE)) {
+        if (salaryLevelEnum.equals(EXECUTIVE)|| salaryLevelEnum.equals(PROFESSOR)) {
             return numberOfShares > 0;
         } else return numberOfShares == 0;
     }
