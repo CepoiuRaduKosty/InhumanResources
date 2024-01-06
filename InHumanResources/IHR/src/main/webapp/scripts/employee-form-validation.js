@@ -1,7 +1,7 @@
 (() => {
     'use strict';
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const forms = document.querySelectorAll('.needs-validation');
 
 
@@ -16,7 +16,7 @@
             const bonusForSuccessInput = form.querySelector('#bonusForSuccess');
             const numberOfSharesInput = form.querySelector('#numberOfShares');
             const cumulatedSharesInput = form.querySelector('#cumulatedShares');
-            const  salaryLevelSelect=form.querySelector('#salaryLevel');
+            const salaryLevelSelect = form.querySelector('#salaryLevel');
 
             dateOfBirthInput.addEventListener('input', () => {
                 validateDateOfBirth(dateOfBirthInput);
@@ -46,15 +46,15 @@
             cumulatedSharesInput.addEventListener('input', () => {
                 validateCumulatedShares(cumulatedSharesInput);
             });
-            salaryLevelSelect.addEventListener('change', () =>{
+            salaryLevelSelect.addEventListener('change', () => {
                 validateBonusForSuccess(bonusForSuccessInput);
             });
 
-            salaryLevelSelect.addEventListener('change', () =>{
-               validateNumberOfShares(numberOfSharesInput);
+            salaryLevelSelect.addEventListener('change', () => {
+                validateNumberOfShares(numberOfSharesInput);
             });
 
-            salaryLevelSelect.addEventListener('change', () =>{
+            salaryLevelSelect.addEventListener('change', () => {
                 validateCumulatedShares(cumulatedSharesInput);
             });
 
@@ -73,8 +73,7 @@
                     !monthlyBasicSalaryIsValid(monthlyBasicSalaryValue) ||
                     !bonusForSuccessIsValid(bonusForSuccessValue) ||
                     !numberOfSharesIsValid(numberOfSharesValue) ||
-                    !cumulatedSharesIsValid(cumulatedSharesValue))
-                {
+                    !cumulatedSharesIsValid(cumulatedSharesValue)) {
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -118,8 +117,9 @@
 
         return parseInt(remainder, 10) % 97 === 1;
     }
+
     function monthlyBasicSalaryIsValid(value) {
-        return value>0;
+        return value > 0;
     }
 
 
@@ -128,26 +128,22 @@
         const bonusForSuccessInput = document.getElementById('bonusForSuccess');
 
 
-        if (salaryLevelSelect && salaryLevelSelect.value === 'ASSOCIATE')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'ASSOCIATE') {
             bonusForSuccessInput.setAttribute('placeholder', 'Bonus for Success');
             bonusForSuccessInput.removeAttribute('readonly');
-            return value>0
+            return value > 0
         }
-        if (salaryLevelSelect && salaryLevelSelect.value === 'EXECUTIVE')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'EXECUTIVE') {
             bonusForSuccessInput.setAttribute('placeholder', 'Bonus for Success');
             bonusForSuccessInput.removeAttribute('readonly');
-            return value>0
+            return value > 0
         }
-        if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER') {
             bonusForSuccessInput.value = 0;
             bonusForSuccessInput.setAttribute('readonly', 'readonly');
             return true;
         }
-        if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR') {
             bonusForSuccessInput.value = 0;
             bonusForSuccessInput.setAttribute('readonly', 'readonly');
             return true;
@@ -159,29 +155,25 @@
         const numberOfShares = document.getElementById('numberOfShares');
 
 
-        if (salaryLevelSelect && salaryLevelSelect.value === 'ASSOCIATE')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'ASSOCIATE') {
             numberOfShares.value = 0;
             numberOfShares.setAttribute('readonly', 'readonly');
             return true;
         }
-        if (salaryLevelSelect && salaryLevelSelect.value === 'EXECUTIVE')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'EXECUTIVE') {
             numberOfShares.setAttribute('placeholder', 'Number Of Shares');
             numberOfShares.removeAttribute('readonly');
-            return value>0
+            return value > 0
         }
-        if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER') {
             numberOfShares.value = 0;
             numberOfShares.setAttribute('readonly', 'readonly');
             return true;
         }
-        if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR') {
             numberOfShares.setAttribute('placeholder', 'Number Of Shares');
             numberOfShares.removeAttribute('readonly');
-            return value>0
+            return value > 0
         }
     }
 
@@ -190,26 +182,22 @@
         const cumulatedShares = document.getElementById('cumulatedShares');
 
 
-        if (salaryLevelSelect && salaryLevelSelect.value === 'ASSOCIATE')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'ASSOCIATE') {
             cumulatedShares.value = 0;
             cumulatedShares.setAttribute('readonly', 'readonly');
             return true;
         }
-        if (salaryLevelSelect && salaryLevelSelect.value === 'EXECUTIVE')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'EXECUTIVE') {
             cumulatedShares.value = 0;
             cumulatedShares.setAttribute('readonly', 'readonly');
             return true;
         }
-        if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'LECTURER') {
             cumulatedShares.value = 0;
             cumulatedShares.setAttribute('readonly', 'readonly');
             return true;
         }
-        if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR')
-        {
+        if (salaryLevelSelect && salaryLevelSelect.value === 'PROFESSOR') {
             cumulatedShares.setAttribute('placeholder', 'Number Of Cumulated Shares');
             cumulatedShares.setAttribute('readonly', 'readonly');
             return true;
@@ -252,6 +240,7 @@
 
         return isValid;
     }
+
     function validateMonthlyBasicSalary(input) {
         const value = parseFloat(input.value);
         const isValid = monthlyBasicSalaryIsValid(value);

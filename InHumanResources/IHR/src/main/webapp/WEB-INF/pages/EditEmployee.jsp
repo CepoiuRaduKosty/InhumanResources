@@ -20,7 +20,7 @@
     <h1>Employee personal information:</h1>
     <br>
     <form class="needs-validation" novalidate method="post" action="${pageContext.request.contextPath}/EditEmployee">
-        <input type="text" name="employee_id" value="${employee_id}"/>
+        <input type="hidden" name="employee_id" value="${employee_id}"/>
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="name">Name</label>
@@ -136,10 +136,14 @@
                 <label for="salaryLevel" class="form-label">Salary level</label>
                 <select class="form-select" id="salaryLevel" name="salaryLevel" required>
                     <option selected value="">Choose</option>
-                    <option value="LECTURER" ${paymentInfo.salaryLevel == 'LECTURER' ? 'selected' : ''}>LECTURER</option>
-                    <option value="ASSOCIATE" ${paymentInfo.salaryLevel == 'ASSOCIATE' ? 'selected' : ''}>ASSOCIATE</option>
-                    <option value="PROFESSOR" ${paymentInfo.salaryLevel == 'PROFESSOR' ? 'selected' : ''}>PROFESSOR</option>
-                    <option value="EXECUTIVE" ${paymentInfo.salaryLevel == 'EXECUTIVE' ? 'selected' : ''}>EXECUTIVE</option>
+                    <option value="LECTURER" ${paymentInfo.salaryLevel == 'LECTURER' ? 'selected' : ''}>LECTURER
+                    </option>
+                    <option value="ASSOCIATE" ${paymentInfo.salaryLevel == 'ASSOCIATE' ? 'selected' : ''}>ASSOCIATE
+                    </option>
+                    <option value="PROFESSOR" ${paymentInfo.salaryLevel == 'PROFESSOR' ? 'selected' : ''}>PROFESSOR
+                    </option>
+                    <option value="EXECUTIVE" ${paymentInfo.salaryLevel == 'EXECUTIVE' ? 'selected' : ''}>EXECUTIVE
+                    </option>
                 </select>
                 <div class="invalid-feedback">
                     Please input a salary level.
@@ -156,7 +160,7 @@
                 Please input a correct bonus for success.
             </div>
         </div>
-        </div>
+
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="numberOfShares">Number of shares</label>

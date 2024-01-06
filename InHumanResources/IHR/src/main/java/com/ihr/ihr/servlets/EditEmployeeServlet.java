@@ -82,11 +82,13 @@ public class EditEmployeeServlet extends HttpServlet {
         } catch (DateOfBirthException | WorkingHoursException | InvalidEmployeeDto e) {
             throw new RuntimeException(e);
         }
+
         try {
             bankInfoProvider.updateBankInfo(bankInfoDto.getId(), bankInfoDto);
         } catch (InvalidBankInfoException e) {
             throw new RuntimeException(e);
         }
+
         try {
             paymentInfoProvider.updatePaymentInfo(paymentInfoDto.getId(), paymentInfoDto);
         } catch (NonPositiveIncomeException | ValidationException | InvalidPaymentInfoException |

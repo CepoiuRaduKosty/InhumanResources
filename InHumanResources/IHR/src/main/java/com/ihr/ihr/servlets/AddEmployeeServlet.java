@@ -73,19 +73,20 @@ public class AddEmployeeServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         bankInfoDto.setId(id);
+
         try {
             id = paymentInfoProvider.addPaymentInfo(new CreatePaymentInfoDto(paymentInfoDto));
         } catch (NonPositiveIncomeException | ValidationException | InvalidPaymentInfoException e) {
             throw new RuntimeException(e);
         }
         paymentInfoDto.setId(id);
+
         try {
             employeeProvider.createEmployee(employeeDto);
         } catch (WorkingHoursException | DateOfBirthException | UnknownBankInfoException | UnknownPaymentInfoException |
                  InvalidEmployeeDto e) {
             throw new RuntimeException(e);
         }
-
 
         response.sendRedirect(request.getContextPath() + "/Employee");
     }

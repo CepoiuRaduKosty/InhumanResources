@@ -156,7 +156,7 @@
                 Please input a correct bonus for success.
             </div>
         </div>
-        </div>
+
         <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="numberOfShares">Number of shares</label>
