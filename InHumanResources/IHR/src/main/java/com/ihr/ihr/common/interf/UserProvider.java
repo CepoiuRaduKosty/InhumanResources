@@ -1,9 +1,7 @@
 package com.ihr.ihr.common.interf;
 
-import com.ihr.ihr.common.dtos.UserDtos.UserDto;
-
-import java.util.List;
+import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
 
 public interface UserProvider {
-    List<UserDto> findAllUsers();
+    Long createUserByDto(UserCreationDto userCreationDto);
 }

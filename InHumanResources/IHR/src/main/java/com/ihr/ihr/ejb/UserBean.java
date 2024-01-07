@@ -1,14 +1,13 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.UserDtos.UserDto;
+import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
 import com.ihr.ihr.common.interf.UserProvider;
+import com.ihr.ihr.common.interf.mappers.UserCreationDtoMapping;
 import com.ihr.ihr.entities.User;
-import jakarta.ejb.EJBException;
+import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.TypedQuery;
 
-import java.util.List;
 import java.util.logging.Logger;
 
 public class UserBean implements UserProvider {
@@ -16,17 +15,14 @@ public class UserBean implements UserProvider {
     @PersistenceContext
     EntityManager entityManager;
 
+    @Inject
+    UserCreationDtoMapping userCreationDtoMapping;
+
     @Override
-    public List<UserDto> findAllUsers() {
-        try {
-            LOG.info("findAllUsers");
-            TypedQuery<User> typedQuery = entityManager.createQuery("SELECT u FROM User u", User.class);
-            List<User> users = typedQuery.getResultList();
-            return null;
-        }
-        catch (Exception ex) {
-            throw new EJBException(ex);
-        }
+    public Long createUserByDto(UserCreationDto userCreationDto) {
+        User user = userCreationDtoMapping.toUserEntity(userCreationDto);
+        entityManager.persist(user);
+        return user.getId();
     }
 
 
