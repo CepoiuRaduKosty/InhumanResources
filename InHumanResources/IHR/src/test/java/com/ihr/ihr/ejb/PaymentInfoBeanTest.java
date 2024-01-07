@@ -6,10 +6,12 @@ import static org.mockito.Mockito.*;
 
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
+import com.ihr.ihr.common.enums.GenderEnum;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import com.ihr.ihr.common.excep.InvalidPaymentInfoException;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.excep.NonPositiveIncomeException;
+import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -21,6 +23,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -91,9 +94,22 @@ public class PaymentInfoBeanTest {
     void findPaymentInfoById_positive_idExists() {
         PaymentInfoDto expectedDto = sampleValidPaymentInfoDto;
         Long givenId = sampleValidPaymentInfoDto.getId();
-        when(typedQuery.getSingleResult()).thenReturn(getPaymentInfoFromDto(expectedDto));
+        PaymentInfo mockPaymentInfo = getPaymentInfoFromDto(expectedDto);
+        Employee mockEmployee = new Employee();
+        mockEmployee.setId(1L);
+        mockEmployee.setAddress("aaa");
+        mockEmployee.setPaymentInfo(mockPaymentInfo);
+        mockEmployee.setGender(GenderEnum.MALE);
+        mockEmployee.setDateOfBirth(LocalDate.of(2002,2,2));
+        mockEmployee.setHoursPerWeek(40);
+        mockEmployee.setName("aaa");
+        mockEmployee.setReligion("aaa");
+        mockEmployee.setSurname("aaa");
+        mockPaymentInfo.setEmployee(mockEmployee);
+        when(typedQuery.getSingleResult()).thenReturn(mockPaymentInfo);
         when(entityManager.createQuery("SELECT p FROM PaymentInfo p WHERE p.id = :id", PaymentInfo.class))
                 .thenReturn(typedQuery);
+
 
         PaymentInfoDto actualDto = paymentInfoBean.findPaymentInfoById(givenId);
 

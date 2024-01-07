@@ -50,7 +50,7 @@ public class PaymentInfoBean implements PaymentInfoProvider {
                 paymentInfo.getNumberOfShares(),
                 paymentInfo.getCumulatedShares());
 
-        Employee employee = entityManager.find(Employee.class, paymentInfo.getEmployee().getId());
+        Employee employee = paymentInfo.getEmployee();
 
         EmployeeDto employeeDto = new EmployeeDto(employee.getId(),
                 employee.getName(),
