@@ -48,7 +48,6 @@ public class SearchBonusServlet extends HttpServlet {
         try {
             bonusProvider.removeBonusById(bonusId);
             response.sendRedirect(request.getContextPath() + "/SearchBonus");
-            return;  // Add this line to exit the method after redirecting
         } catch (UnknownBonusException e) {
             request.setAttribute("error", "Error deleting bonus: " + e.getMessage());
             request.getRequestDispatcher("/WEB-INF/pages/SearchBonus.jsp").forward(request, response);
