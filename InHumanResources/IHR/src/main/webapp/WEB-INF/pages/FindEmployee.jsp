@@ -29,11 +29,12 @@
         <c:if test="${not empty matchingEmployees}">
 
 
-            <c:forEach var="employee" items="${matchingEmployees}">
+            <c:forEach var="employee" items="${matchingEmployees}" varStatus="status">
                 <div class="row">
                     <br>
-                    <div class="col" value="${employee.getId()}"> Name: ${employee.getName()}   </div>
-                    <div class="col" value="${employee.getId()}"> Surname: ${employee.getSurname()}  </div>
+                    <div class="col" value="entryNumber">  ${status.index + 1}  </div>
+                    <div class="col" value="name"> Name: ${employee.getName()}   </div>
+                    <div class="col" value="surname"> Surname: ${employee.getSurname()}  </div>
                     <a class="btn btn-secondary col"
                        href="${pageContext.request.contextPath}/EmployeeDetails?id_link=${employee.id}">Details</a>
                     <a class="btn btn-primary col"
