@@ -66,50 +66,63 @@ public class EditEmployeeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
-
-        String name = request.getParameter("name");
-        String surname = request.getParameter("surname");
-        GenderEnum genderEnum = GenderEnum.valueOf(request.getParameter("gender"));
-        LocalDate dateOfBirth = LocalDate.parse(request.getParameter("dateOfBirth"));
-        String address = request.getParameter("address");
-        String religion = request.getParameter("religion");
-        Integer hoursPerWeek = Integer.parseInt(request.getParameter("hoursPerWeek"));
-
-        String bankName = request.getParameter("bankName");
-        String iBan = request.getParameter("iBan");
-
-        Double monthlyBasicSalary = Double.parseDouble(request.getParameter("monthlyBasicSalary"));
-        SalaryLevelEnum salaryLevel = SalaryLevelEnum.valueOf(request.getParameter("salaryLevel"));
-        Double bonusForSuccess = Double.parseDouble(request.getParameter("bonusForSuccess"));
-        Integer numberOfShares = Integer.parseInt(request.getParameter("numberOfShares"));
-
-
+        String action = request.getParameter("action");
         Long employee_id = Long.parseLong(request.getParameter("employee_id"));
-        Integer cumulatedShares = employeeProvider.findById(employee_id).getPaymentInfoDto().getCumulatedShares();
 
-        EmployeeDto employeeDto = new EmployeeDto(employee_id, name, surname, genderEnum, dateOfBirth, address, religion, hoursPerWeek);
-        BankInfoDto bankInfoDto = new BankInfoDto(employeeProvider.findById(employee_id).getBankInfoDto().getId(), iBan, bankName);
-        PaymentInfoDto paymentInfoDto = new PaymentInfoDto(employeeProvider.findById(employee_id).getPaymentInfoDto().getId(), monthlyBasicSalary, salaryLevel, bonusForSuccess, numberOfShares, cumulatedShares);
+        if ("save".equals(action)) {
+            String name = request.getParameter("name");
+            String surname = request.getParameter("surname");
+            GenderEnum genderEnum = GenderEnum.valueOf(request.getParameter("gender"));
+            LocalDate dateOfBirth = LocalDate.parse(request.getParameter("dateOfBirth"));
+            String address = request.getParameter("address");
+            String religion = request.getParameter("religion");
+            Integer hoursPerWeek = Integer.parseInt(request.getParameter("hoursPerWeek"));
 
-        try {
-            employeeProvider.updateEmployeeById(employee_id, employeeDto);
-        } catch (DateOfBirthException | WorkingHoursException | InvalidEmployeeDto e) {
-            throw new RuntimeException(e);
+            String bankName = request.getParameter("bankName");
+            String iBan = request.getParameter("iBan");
+
+            Double monthlyBasicSalary = Double.parseDouble(request.getParameter("monthlyBasicSalary"));
+            SalaryLevelEnum salaryLevel = SalaryLevelEnum.valueOf(request.getParameter("salaryLevel"));
+            Double bonusForSuccess = Double.parseDouble(request.getParameter("bonusForSuccess"));
+            Integer numberOfShares = Integer.parseInt(request.getParameter("numberOfShares"));
+            Integer cumulatedShares = employeeProvider.findById(employee_id).getPaymentInfoDto().getCumulatedShares();
+
+            EmployeeDto employeeDto = new EmployeeDto(employee_id, name, surname, genderEnum, dateOfBirth, address, religion, hoursPerWeek);
+            BankInfoDto bankInfoDto = new BankInfoDto(employeeProvider.findById(employee_id).getBankInfoDto().getId(), iBan, bankName);
+            PaymentInfoDto paymentInfoDto = new PaymentInfoDto(employeeProvider.findById(employee_id).getPaymentInfoDto().getId(), monthlyBasicSalary, salaryLevel, bonusForSuccess, numberOfShares, cumulatedShares);
+
+            try {
+                employeeProvider.updateEmployeeById(employee_id, employeeDto);
+            } catch (DateOfBirthException | WorkingHoursException | InvalidEmployeeDto e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                bankInfoProvider.updateBankInfo(bankInfoDto.getId(), bankInfoDto);
+            } catch (InvalidBankInfoException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                paymentInfoProvider.updatePaymentInfo(paymentInfoDto.getId(), paymentInfoDto);
+            } catch (NonPositiveIncomeException | ValidationException | InvalidPaymentInfoException |
+                     UnknownPaymentInfoException e) {
+                throw new RuntimeException(e);
+            }
+            response.sendRedirect(request.getContextPath() + "/EmployeeDetails?id_link=" + employee_id);
+
+        }
+        else if ("delete".equals(action))
+        {
+            employeeProvider.deleteEmployeeById(employee_id);
+            response.sendRedirect(request.getContextPath() + "/FindEmployee");
+
+
+        } else {
+            // Handle other cases or display an error
+            response.getWriter().write("Unknown action");
         }
 
-        try {
-            bankInfoProvider.updateBankInfo(bankInfoDto.getId(), bankInfoDto);
-        } catch (InvalidBankInfoException e) {
-            throw new RuntimeException(e);
-        }
 
-        try {
-            paymentInfoProvider.updatePaymentInfo(paymentInfoDto.getId(), paymentInfoDto);
-        } catch (NonPositiveIncomeException | ValidationException | InvalidPaymentInfoException |
-                 UnknownPaymentInfoException e) {
-            throw new RuntimeException(e);
-        }
-
-        response.sendRedirect(request.getContextPath() + "/EmployeeDetails?id_link=" + employee_id);
     }
 }
