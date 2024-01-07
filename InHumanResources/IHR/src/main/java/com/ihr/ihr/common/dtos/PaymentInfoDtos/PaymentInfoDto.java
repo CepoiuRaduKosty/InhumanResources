@@ -89,6 +89,7 @@ public class PaymentInfoDto {
         this.salaryLevel = createPaymentInfoDto.getSalaryLevel();
         this.bonusForSuccess = createPaymentInfoDto.getBonusForSuccess();
         this.numberOfShares = createPaymentInfoDto.getNumberOfShares();
+        this.cumulatedShares = 0;
     }
 
     public List<Long> getBonuses() {
