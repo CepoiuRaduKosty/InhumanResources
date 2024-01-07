@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 @Stateless
 public class PaycheckBonusBean implements PaycheckBonusProvider {
-    private static final Logger LOG = Logger.getLogger(PaycheckBean.class.getName());
+    private static final Logger LOG = Logger.getLogger(PaycheckBonusBean.class.getName());
 
     @Inject
     BonusValidation bonusValidatorBean;
@@ -33,6 +33,9 @@ public class PaycheckBonusBean implements PaycheckBonusProvider {
 
         try {
             PaycheckBonus paycheckBonus = entityManager.find(PaycheckBonus.class, id);
+
+            if(paycheckBonus == null)
+                return null;
 
             return copyPaycheckBonusToDto(paycheckBonus);
         } catch (Exception ex) {
