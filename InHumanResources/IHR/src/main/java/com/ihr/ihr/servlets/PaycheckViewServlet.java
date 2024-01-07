@@ -4,6 +4,7 @@ import com.ihr.ihr.common.dtos.PaycheckBonusDtos.PaycheckBonusDto;
 import com.ihr.ihr.common.dtos.PaycheckDtos.PaycheckDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
+import com.ihr.ihr.common.excep.UnknownPaycheckException;
 import com.ihr.ihr.common.interf.PaycheckBonusProvider;
 import com.ihr.ihr.common.interf.PaycheckProvider;
 import com.ihr.ihr.common.interf.PaymentInfoProvider;
@@ -39,7 +40,12 @@ public class PaycheckViewServlet extends HttpServlet {
 
         Long paycheckId = Long.parseLong((paycheckIdStr));
 
-        PaycheckDto paycheckDto = paycheckProvider.getPaycheckById(paycheckId);
+        PaycheckDto paycheckDto = null;
+        try {
+            paycheckDto = paycheckProvider.getPaycheckById(paycheckId);
+        } catch (UnknownPaycheckException e) {
+            throw new RuntimeException(e);
+        }
 
         if(paycheckDto == null) {
             request.getRequestDispatcher("index.jsp").forward(request, response);
