@@ -166,7 +166,7 @@
                     Please input a correct number of shares.
                 </div>
             </div>
-            <div class="col-md-6 mb-3" >
+            <div class="col-md-6 mb-3">
                 <label for="cumulatedShares">Cumulated shares</label>
                 <input type="text" class="form-control" id="cumulatedShares" name="cumulatedShares" placeholder=""
                        value="${cumulatedShares}" required>

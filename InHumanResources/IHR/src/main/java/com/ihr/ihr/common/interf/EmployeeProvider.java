@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface EmployeeProvider {
 
-    void createEmployee(CreateEmployeeDto createEmployeeDto) throws WorkingHoursException, DateOfBirthException, UnknownBankInfoException, UnknownPaymentInfoException, InvalidEmployeeDto;
+    Long createEmployee(CreateEmployeeDto createEmployeeDto) throws WorkingHoursException, DateOfBirthException, UnknownBankInfoException, UnknownPaymentInfoException, InvalidEmployeeDto;
 
     void updateEmployeeById(Long employeeId, UpdateEmployeeDto updateEmployeeDto) throws DateOfBirthException, WorkingHoursException, InvalidEmployeeDto;
 

@@ -2,6 +2,7 @@ package com.ihr.ihr.servlets;
 
 import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.BankInfoDtos.CreateBankInfoDto;
+import com.ihr.ihr.common.dtos.BonusDtos.BonusDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.CreateEmployeeDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
@@ -9,10 +10,7 @@ import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.GenderEnum;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import com.ihr.ihr.common.excep.*;
-import com.ihr.ihr.common.interf.BankInfoProvider;
-import com.ihr.ihr.common.interf.EmployeeProvider;
-import com.ihr.ihr.common.interf.EmployeeValidation;
-import com.ihr.ihr.common.interf.PaymentInfoProvider;
+import com.ihr.ihr.common.interf.*;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.inject.Inject;
@@ -82,12 +80,12 @@ public class AddEmployeeServlet extends HttpServlet {
         paymentInfoDto.setId(id);
 
         try {
-            employeeProvider.createEmployee(employeeDto);
+            id = employeeProvider.createEmployee(employeeDto);
         } catch (WorkingHoursException | DateOfBirthException | UnknownBankInfoException | UnknownPaymentInfoException |
                  InvalidEmployeeDto e) {
             throw new RuntimeException(e);
         }
 
-        response.sendRedirect(request.getContextPath() + "/EmployeeDetails");
+        response.sendRedirect(request.getContextPath() + "/EmployeeDetails?id_link=" + id);
     }
 }

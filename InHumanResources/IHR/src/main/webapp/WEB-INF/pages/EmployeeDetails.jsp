@@ -18,7 +18,7 @@
 
     <h1>Employee personal information:</h1>
     <br>
-    <form novalidate method="post" action="" >
+    <form novalidate method="post" action="">
 
         <div class="row">
             <div class="col-md-6 mb-3">
@@ -120,14 +120,38 @@
                 <input type="text" class="form-control" id="cumulatedShares" name="cumulatedShares" placeholder=""
                        value="${paymentInfo.cumulatedShares}" readonly>
             </div>
+            <br>
+            <br>
+            <h1>Employee bonuses information:</h1>
+            <br>
+            <br>
+            <br>
+
+            <c:forEach var="bonus" items="${bonuses}">
+                <br>
+                <br>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="bonusDescription">Bonus Description</label>
+                        <input type="text" class="form-control" id="bonusDescription" name="bonusDescription"
+                               placeholder=""
+                               value="${bonus.bonusDescription}" readonly>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="bonusValue">Bonus Value</label>
+                        <input type="text" class="form-control" id="bonusValue" name="bonusValue" placeholder=""
+                               value="${bonus.value}" readonly>
+                    </div>
+                </div>
+            </c:forEach>
 
         </div>
         <br>
         <br>
-        <a class="w-10 btn btn-primary btn-lg nav-link active"  href="${pageContext.request.contextPath}/EditEmployee?id_link=${employee.id}">Edit Employee</a>
-
-
         <hr>
+        <a class="w-10 btn btn-primary btn-lg nav-link active"
+           href="${pageContext.request.contextPath}/EditEmployee?id_link=${employee.id}">Edit Employee</a>
+
 
     </form>
 </t:pageTemplate>
