@@ -35,8 +35,8 @@
             </c:if>
 
             <p>Salary Before Taxes: ${paycheck.salaryBeforeTaxes}</p>
-            <p>Taxes (including percentage): ${paycheck.tax}</p>
-            <p>Social Charge (including percentage): ${paycheck.socialCharge}</p>
+            <p>Taxes (including percentage): ${paycheck.tax}%</p>
+            <p>Social Charge (including percentage): ${paycheck.socialCharge}%</p>
             <p>Final Salary: ${paycheck.finalSalary}</p>
 
         </c:if>
