@@ -23,13 +23,10 @@
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PayDay">|  Pay Day</a>
                     </li>
                     <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EmployeeDetails">|  Employee Details</a>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/CreateBonusFindEmployee">|  CreateBonusFindEmployee</a>
                     </li>
                     <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/AddEmployee"> |  Add Employee</a>
-                    </li>
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EditEmployee">|  Edit Employee</a>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/FindEmployee">|  Find Employee</a>
                     </li>
 
                     <li>

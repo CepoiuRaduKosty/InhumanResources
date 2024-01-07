@@ -181,7 +181,9 @@
         </div>
 
         <hr>
-        <button class="w-10 btn btn-primary btn-lg" type="submit">Save</button>
+        <button class="w-10 btn btn-primary btn-lg" type="submit" name="action" value="save">Save</button>
+        <button class="w-10 btn btn-danger btn-lg" type="submit" name="action" value="delete">Delete Employee</button>
+
     </form>
     <script src="${pageContext.request.contextPath}/scripts/employee-form-validation.js"></script>
 </t:pageTemplate>
