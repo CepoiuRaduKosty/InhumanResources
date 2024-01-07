@@ -1,59 +1,56 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Darius
-  Date: 1/6/2024
-  Time: 2:49 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<html>
-<head>
-    <title>Paycheck Details</title>
-</head>
-<body>
-<h2>Paycheck Details</h2>
+<%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<c:if test="${not empty paycheck}">
-    <p>Paycheck Date: ${paycheck.date}</p>
-    <p>Basic Salary: ${paycheck.basicSalary}</p>
+<t:pageTemplate pageTitle="Paycheck View">
 
-    <c:choose>
-        <c:when test="${salaryLevel == 'ASSOCIATE' or salaryLevel == 'EXECUTIVE'}">
-            <p>Bonus for Success: ${paycheck.bonusForSuccess}</p>
-        </c:when>
-        <c:when test="${salaryLevel == 'EXECUTIVE'}">
-            <p>Number of Shares: ${paycheck.numberOfShares}</p>
-        </c:when>
-        <c:when test="${salaryLevel == 'PROFESSOR' and monthIsAugust(paycheck.date)}">
-            <p>Cumulated Shares: ${paycheck.cumulatedShares}</p>
-        </c:when>
-    </c:choose>
+    <div class="container mt-5">
+        <br>
+        <br>
+        <h2 class="mb-4">Paycheck Details</h2>
 
-    <c:if test="${not empty paycheckBonus}">
-        <p>Additional Bonuses:</p>
-        <ul>
-            <c:forEach var="bonus" items="${paycheckBonus}">
-                <li>${bonus.bonusDescription}: ${bonus.value}</li>
-            </c:forEach>
-        </ul>
-    </c:if>
+        <c:if test="${not empty paycheck}">
+            <p>Paycheck Date: ${paycheck.date}</p>
+            <p>Basic Salary: ${paycheck.basicSalary}</p>
 
-    <p>Salary Before Taxes: ${paycheck.salaryBeforeTaxes}</p>
-    <p>Taxes (including percentage): ${paycheck.tax}</p>
-    <p>Social Charge (including percentage): ${paycheck.socialCharge}</p>
-    <p>Final Salary: ${paycheck.finalSalary}</p>
+            <c:choose>
+                <c:when test="${salaryLevel == 'ASSOCIATE' or salaryLevel == 'EXECUTIVE'}">
+                    <p>Bonus for Success: ${paycheck.bonusForSuccess}</p>
+                </c:when>
+                <c:when test="${salaryLevel == 'EXECUTIVE'}">
+                    <p>Number of Shares: ${paycheck.numberOfShares}</p>
+                </c:when>
+                <c:when test="${salaryLevel == 'PROFESSOR' and monthIsAugust(paycheck.date)}">
+                    <p>Cumulated Shares: ${paycheck.cumulatedShares}</p>
+                </c:when>
+            </c:choose>
 
-</c:if>
+            <c:if test="${not empty paycheckBonus}">
+                <p>Additional Bonuses:</p>
+                <ul>
+                    <c:forEach var="bonus" items="${paycheckBonus}">
+                        <li>${bonus.bonusDescription}: ${bonus.value}</li>
+                    </c:forEach>
+                </ul>
+            </c:if>
 
-<script>
-    function monthIsAugust(date) {
-        var parsedDate = new Date(date);
+            <p>Salary Before Taxes: ${paycheck.salaryBeforeTaxes}</p>
+            <p>Taxes (including percentage): ${paycheck.tax}</p>
+            <p>Social Charge (including percentage): ${paycheck.socialCharge}</p>
+            <p>Final Salary: ${paycheck.finalSalary}</p>
 
-        var month = parsedDate.getMonth();
+        </c:if>
 
-        return month === 7;
-    }
-</script>
-</body>
-</html>
+    </div>
+
+    <script>
+        function monthIsAugust(date) {
+            var parsedDate = new Date(date);
+
+            var month = parsedDate.getMonth();
+
+            return month === 7;
+        }
+    </script>
+
+</t:pageTemplate>

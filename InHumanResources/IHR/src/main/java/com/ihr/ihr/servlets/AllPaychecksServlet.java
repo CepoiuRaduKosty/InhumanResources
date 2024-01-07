@@ -19,7 +19,10 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.eclipse.tags.shaded.org.apache.xalan.templates.ElemApplyImport;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @WebServlet(name = "AllPaychecksServlet", value = "/AllPaychecks")
@@ -42,6 +45,11 @@ public class AllPaychecksServlet extends HttpServlet {
             String employeeName = paymentInfoDto.getEmployeeDto().getName();
             paycheckWithNamesDtos.add(new PaycheckWithNamesDto(p, employeeName));
         }
+
+        paycheckWithNamesDtos.sort(Comparator.<PaycheckWithNamesDto, LocalDate>comparing(dto -> dto.getPaycheckDto().getDate())
+                .reversed()
+                .thenComparing(PaycheckWithNamesDto::getName));
+
 
         request.setAttribute("paycheckWithNames", paycheckWithNamesDtos);
 
