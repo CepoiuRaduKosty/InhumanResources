@@ -20,7 +20,7 @@
                 <c:when test="${salaryLevel == 'EXECUTIVE'}">
                     <p>Number of Shares: ${paycheck.numberOfShares}</p>
                 </c:when>
-                <c:when test="${salaryLevel == 'PROFESSOR' and monthIsAugust(paycheck.date)}">
+                <c:when test="${salaryLevel == 'PROFESSOR' and paycheck.date.monthValue == 8}">
                     <p>Cumulated Shares: ${paycheck.cumulatedShares}</p>
                 </c:when>
             </c:choose>
@@ -42,15 +42,5 @@
         </c:if>
 
     </div>
-
-    <script>
-        function monthIsAugust(date) {
-            var parsedDate = new Date(date);
-
-            var month = parsedDate.getMonth();
-
-            return month === 7;
-        }
-    </script>
 
 </t:pageTemplate>
