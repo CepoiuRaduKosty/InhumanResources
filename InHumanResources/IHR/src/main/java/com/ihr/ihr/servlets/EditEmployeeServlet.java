@@ -66,6 +66,7 @@ public class EditEmployeeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
 
+
         String name = request.getParameter("name");
         String surname = request.getParameter("surname");
         GenderEnum genderEnum = GenderEnum.valueOf(request.getParameter("gender"));
@@ -89,6 +90,7 @@ public class EditEmployeeServlet extends HttpServlet {
         EmployeeDto employeeDto = new EmployeeDto(employee_id, name, surname, genderEnum, dateOfBirth, address, religion, hoursPerWeek);
         BankInfoDto bankInfoDto = new BankInfoDto(employeeProvider.findById(employee_id).getBankInfoDto().getId(), iBan, bankName);
         PaymentInfoDto paymentInfoDto = new PaymentInfoDto(employeeProvider.findById(employee_id).getPaymentInfoDto().getId(), monthlyBasicSalary, salaryLevel, bonusForSuccess, numberOfShares, cumulatedShares);
+
         try {
             employeeProvider.updateEmployeeById(employee_id, employeeDto);
         } catch (DateOfBirthException | WorkingHoursException | InvalidEmployeeDto e) {
