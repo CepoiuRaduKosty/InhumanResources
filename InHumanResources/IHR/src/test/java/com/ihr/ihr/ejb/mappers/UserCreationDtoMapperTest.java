@@ -2,6 +2,7 @@ package com.ihr.ihr.ejb.mappers;
 
 import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
 import com.ihr.ihr.common.dtos.UserDtos.UserDto;
+import com.ihr.ihr.entities.User;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -26,5 +27,18 @@ public class UserCreationDtoMapperTest {
         assertEquals(userCreationDto.getPassword(), userDto.getPassword());
         assertEquals(userCreationDto.getUsername(), userDto.getUsername());
         assertNull(userDto.getId());
+    }
+
+    @Test
+    void testToUserEntity() {
+        UserCreationDto userCreationDto = new UserCreationDto("test@example.com", "password123", "testUser");
+
+        User user = userCreationDtoMapper.toUserEntity(userCreationDto);
+
+        assertEquals(userCreationDto.getEmail(), user.getEmail());
+        assertEquals(userCreationDto.getPassword(), user.getPassword());
+        assertEquals(userCreationDto.getUsername(), user.getUsername());
+        assertNull(user.getId());
+        assertNull(user.getEmployee());
     }
 }

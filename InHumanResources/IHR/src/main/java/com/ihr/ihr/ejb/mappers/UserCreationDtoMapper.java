@@ -3,6 +3,7 @@ package com.ihr.ihr.ejb.mappers;
 import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
 import com.ihr.ihr.common.dtos.UserDtos.UserDto;
 import com.ihr.ihr.common.interf.mappers.UserCreationDtoMapping;
+import com.ihr.ihr.entities.User;
 import jakarta.ejb.Stateless;
 
 import java.util.logging.Logger;
@@ -19,5 +20,14 @@ public class UserCreationDtoMapper implements UserCreationDtoMapping {
                 userCreationDto.getPassword(),
                 userCreationDto.getUsername()
         );
+    }
+
+    @Override
+    public User toUserEntity(UserCreationDto userCreationDto) {
+        User user = new User();
+        user.setEmail(userCreationDto.getEmail());
+        user.setUsername(userCreationDto.getUsername());
+        user.setPassword(userCreationDto.getPassword());
+        return user;
     }
 }
