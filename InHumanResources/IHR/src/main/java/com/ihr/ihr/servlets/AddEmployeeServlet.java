@@ -88,6 +88,6 @@ public class AddEmployeeServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        response.sendRedirect(request.getContextPath() + "/Employee");
+        response.sendRedirect(request.getContextPath() + "/EmployeeDetails");
     }
 }

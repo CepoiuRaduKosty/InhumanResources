@@ -108,6 +108,6 @@ public class EditEmployeeServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        response.sendRedirect(request.getContextPath() + "/Employee");
+        response.sendRedirect(request.getContextPath() + "/EmployeeDetails?id_link="+employee_id);
     }
 }

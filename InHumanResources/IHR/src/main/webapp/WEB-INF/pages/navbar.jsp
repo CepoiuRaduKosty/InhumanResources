@@ -23,7 +23,7 @@
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PayDay">|  Pay Day</a>
                     </li>
                     <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/Employee">|  Employee</a>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EmployeeDetails">|  Employee Details</a>
                     </li>
                     <li>
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/AddEmployee"> |  Add Employee</a>
