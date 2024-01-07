@@ -19,5 +19,7 @@ public interface PaycheckProvider {
 
     List<PaycheckDto> getAllPaychecksByPaymentInfoId(Long paymentInfoId);
 
+    List<PaycheckDto> getAllPaychecksByEmployeeId(Long employeeId);
+
     List<PaycheckDto> getAllPaychecksByMonth(Integer month);
 }

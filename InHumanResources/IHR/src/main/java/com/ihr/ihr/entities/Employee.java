@@ -19,6 +19,10 @@ public class Employee {
     private String address;
     private String religion;
     private Integer hoursPerWeek;
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private BankInfo bankInfo;
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL, orphanRemoval = true)
+    private PaymentInfo paymentInfo;
 
     public Long getId() {
         return id;
@@ -76,24 +80,16 @@ public class Employee {
         this.hoursPerWeek = hoursPerWeek;
     }
 
-    @OneToOne
-    private BankInfo bankInfo;
-
     public BankInfo getBankInfo() {
         return bankInfo;
     }
-
     public void setBankInfo(BankInfo bankInfo) {
         this.bankInfo = bankInfo;
     }
 
-    @OneToOne
-    private PaymentInfo paymentInfo;
-
     public PaymentInfo getPaymentInfo() {
         return paymentInfo;
     }
-
     public void setPaymentInfo(PaymentInfo paymentInfo) {
         this.paymentInfo = paymentInfo;
     }
