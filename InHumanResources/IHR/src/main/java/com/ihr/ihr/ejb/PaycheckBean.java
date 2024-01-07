@@ -28,17 +28,12 @@ public class PaycheckBean implements PaycheckProvider {
     private EntityManager entityManager;
 
     @Override
-    public PaycheckDto getPaycheckById(Long paycheckId) {
-        try {
-            LOG.info("getPaycheckById");
+    public PaycheckDto getPaycheckById(Long paycheckId) throws UnknownPaycheckException {
+        LOG.info("getPaycheckById");
 
-            Paycheck paycheck = findPaycheckById(paycheckId);
+        Paycheck paycheck = findPaycheckById(paycheckId);
 
-            return copyPaycheckToDto(paycheck);
-        }
-        catch (Exception ex) {
-            throw new EJBException(ex);
-        }
+        return copyPaycheckToDto(paycheck);
     }
 
     @Override
@@ -64,39 +59,29 @@ public class PaycheckBean implements PaycheckProvider {
     }
 
     @Override
-    public void createPaycheck(CreatePaycheckDto createPaycheckDto) {
-        try{
-            LOG.info("createPaycheck");
-            PaymentInfo paymentInfo = findPaymentInfoById(createPaycheckDto.getPaymentId());
+    public void createPaycheck(CreatePaycheckDto createPaycheckDto) throws UnknownPaymentInfoException {
+        LOG.info("createPaycheck");
+        PaymentInfo paymentInfo = findPaymentInfoById(createPaycheckDto.getPaymentId());
 
-            Paycheck paycheck = new Paycheck();
-            setPaycheckInformation(paycheck, createPaycheckDto);
+        Paycheck paycheck = new Paycheck();
+        setPaycheckInformation(paycheck, createPaycheckDto);
 
-            paymentInfo.getPaychecks().add(paycheck);
+        paymentInfo.getPaychecks().add(paycheck);
 
-            paycheck.setPaymentInfo(paymentInfo);
+        paycheck.setPaymentInfo(paymentInfo);
 
-            entityManager.persist(paycheck);
-        }
-        catch (Exception ex) {
-            throw new EJBException(ex);
-        }
+        entityManager.persist(paycheck);
     }
 
     @Override
-    public void deletePaycheckById(Long paycheckId) {
-        try{
-            LOG.info("deletePaycheckById");
-            Paycheck paycheck = findPaycheckById(paycheckId);
+    public void deletePaycheckById(Long paycheckId) throws UnknownPaycheckException {
+        LOG.info("deletePaycheckById");
+        Paycheck paycheck = findPaycheckById(paycheckId);
 
-            PaymentInfo paymentInfo = paycheck.getPaymentInfo();
-            paymentInfo.getPaychecks().remove(paycheck);
+        PaymentInfo paymentInfo = paycheck.getPaymentInfo();
+        paymentInfo.getPaychecks().remove(paycheck);
 
-            entityManager.remove(paycheck);
-        }
-        catch (Exception ex) {
-            throw new EJBException(ex);
-        }
+        entityManager.remove(paycheck);
     }
 
     @Override
@@ -160,6 +145,7 @@ public class PaycheckBean implements PaycheckProvider {
         }
     }
 
+    @Override
     public EmployeeDto getEmployeeByPaycheck(Long paycheckId) throws UnknownPaycheckException {
         LOG.info("getEmployeeByPaycheck");
 
