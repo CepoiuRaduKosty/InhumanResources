@@ -31,7 +31,7 @@ public class PaymentInfo {
     @OneToMany(mappedBy = "paymentInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BonusInfo> bonuses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "paymentInfo")
+    @OneToMany(mappedBy = "paymentInfo", cascade = CascadeType.ALL, orphanRemoval = true)
     private Collection<Paycheck> paychecks;
 
     public Long getId() {

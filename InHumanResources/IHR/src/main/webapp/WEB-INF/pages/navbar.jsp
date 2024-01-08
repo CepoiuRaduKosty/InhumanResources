@@ -23,13 +23,23 @@
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PayDay">|  Pay Day</a>
                     </li>
                     <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/Employee">|  Employee</a>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EmployeeDetails">|  Employee Details</a>
                     </li>
                     <li>
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/AddEmployee"> |  Add Employee</a>
                     </li>
                     <li>
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EditEmployee">|  Edit Employee</a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/AllPaychecks">AllPaychecks</a>
+                    </li>
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EmployeePaychecks">EmployeePaychecks</a>
+                    </li>
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PaycheckView">PaycheckView</a>
                     </li>
                 </ul>
             </div>

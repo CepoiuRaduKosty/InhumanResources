@@ -15,7 +15,7 @@ import com.ihr.ihr.common.excep.WorkingHoursException;
 
 public interface EmployeeProvider {
 
-    void createEmployee(CreateEmployeeDto createEmployeeDto) throws WorkingHoursException, DateOfBirthException, UnknownBankInfoException, UnknownPaymentInfoException, InvalidEmployeeDto;
+    Long createEmployee(CreateEmployeeDto createEmployeeDto) throws WorkingHoursException, DateOfBirthException, UnknownBankInfoException, UnknownPaymentInfoException, InvalidEmployeeDto;
 
     void updateEmployeeById(Long employeeId, UpdateEmployeeDto updateEmployeeDto) throws DateOfBirthException, WorkingHoursException, InvalidEmployeeDto;
 

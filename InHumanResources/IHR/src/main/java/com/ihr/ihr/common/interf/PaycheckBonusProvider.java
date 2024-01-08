@@ -6,7 +6,7 @@ import com.ihr.ihr.common.excep.InvalidPaycheckBonusException;
 
 import java.util.List;
 
-public interface PayckeckBonusProvider {
+public interface PaycheckBonusProvider {
     PaycheckBonusDto getPaycheckBonusDtoById(Long id);
     Long createPaycheckBonus(CreatePaycheckBonusDto createPaycheckBonusDto) throws InvalidPaycheckBonusException;
     void updatePaycheckBonusById(Long paycheckBonusId, CreatePaycheckBonusDto createPaycheckBonusDto);

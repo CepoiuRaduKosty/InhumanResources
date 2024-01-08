@@ -39,14 +39,14 @@ public class EditEmployeeServlet extends HttpServlet {
         String id_link = null;
         id_link = request.getParameter("id_link");
 
-        if(id_link == null) {
+        if (id_link == null) {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
             return;
         }
 
         EmployeeDto employeeDto = employeeProvider.findById(Long.parseLong(id_link));
 
-        if(employeeDto == null) {
+        if (employeeDto == null) {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
             return;
         }
@@ -108,6 +108,6 @@ public class EditEmployeeServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        response.sendRedirect(request.getContextPath() + "/Employee");
+        response.sendRedirect(request.getContextPath() + "/EmployeeDetails?id_link=" + employee_id);
     }
 }

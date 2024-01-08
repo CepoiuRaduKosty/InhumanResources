@@ -50,7 +50,7 @@ public class EmployeeBean implements EmployeeProvider {
         employee.setHoursPerWeek(updateEmployeeDto.getHoursPerWeek());
     }
     @Override
-    public void createEmployee(CreateEmployeeDto createEmployeeDto) throws UnknownBankInfoException, UnknownPaymentInfoException, InvalidEmployeeDto {
+    public Long createEmployee(CreateEmployeeDto createEmployeeDto) throws UnknownBankInfoException, UnknownPaymentInfoException, InvalidEmployeeDto {
         LOG.info("createEmployee");
 
         if(!employeeValidation.isEmployeeDataValid(createEmployeeDto))
@@ -89,6 +89,7 @@ public class EmployeeBean implements EmployeeProvider {
         entityManager.merge(employee);
         entityManager.merge(bankInfo);
         entityManager.merge(paymentInfo);
+        return employee.getId();
     }
 
     @Override
