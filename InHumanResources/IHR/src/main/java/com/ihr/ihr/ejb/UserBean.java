@@ -86,7 +86,7 @@ public class UserBean implements UserProvider {
         if(user.getEmployee() != null) {
             Employee employee = user.getEmployee();
             employee.setUser(null);
-            entityManager.persist(employee);
+            entityManager.merge(employee);
         }
 
         entityManager.remove(user);

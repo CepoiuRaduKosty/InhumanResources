@@ -98,6 +98,12 @@ public class EmployeeBean implements EmployeeProvider {
         LOG.info("deleteEmployeeById");
         Employee employee = entityManager.find(Employee.class, employeeId);
 
+        if(employee.getUser() != null) {
+            User user = employee.getUser();
+            user.setEmployee(null);
+            entityManager.merge(user);
+        }
+
         BankInfo bankInfo = employee.getBankInfo();
         PaymentInfo paymentInfo = employee.getPaymentInfo();
 
