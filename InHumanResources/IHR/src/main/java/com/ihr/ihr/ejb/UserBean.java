@@ -83,6 +83,12 @@ public class UserBean implements UserProvider {
     @Override
     public void deleteUserById(Long userID) throws UnknownUserException {
         User user = safeGetUserEntityById(userID);
+        if(user.getEmployee() != null) {
+            Employee employee = user.getEmployee();
+            employee.setUser(null);
+            entityManager.merge(employee);
+        }
+
         entityManager.remove(user);
     }
 
