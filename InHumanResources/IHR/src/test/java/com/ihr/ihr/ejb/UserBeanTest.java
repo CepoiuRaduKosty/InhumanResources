@@ -1,26 +1,28 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
-import com.ihr.ihr.common.dtos.UserDtos.UserDto;
-import com.ihr.ihr.common.excep.InvalidUserException;
-import com.ihr.ihr.common.excep.UnknownUserException;
-import com.ihr.ihr.common.interf.validators.UserValidation;
-import com.ihr.ihr.ejb.mappers.UserCreationDtoMapper;
-import com.ihr.ihr.ejb.mappers.UserDtoMapper;
-import com.ihr.ihr.ejb.mappers.UserEntityMapper;
-import com.ihr.ihr.entities.User;
-import jakarta.persistence.EntityManager;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.argThat;
+import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
+import com.ihr.ihr.common.dtos.UserDtos.UserDto;
+import com.ihr.ihr.common.excep.InvalidUserException;
+import com.ihr.ihr.common.excep.UnknownEmployeeException;
+import com.ihr.ihr.common.excep.UnknownUserException;
+import com.ihr.ihr.common.interf.validators.UserValidation;
+import com.ihr.ihr.ejb.mappers.UserCreationDtoMapper;
+import com.ihr.ihr.ejb.mappers.UserDtoMapper;
+import com.ihr.ihr.ejb.mappers.UserEntityMapper;
+import com.ihr.ihr.entities.Employee;
+import com.ihr.ihr.entities.User;
+
+import jakarta.persistence.EntityManager;
 
 @ExtendWith(MockitoExtension.class)
 class UserBeanTest {
@@ -174,5 +176,44 @@ class UserBeanTest {
         when(entityManager.find(User.class, userId)).thenReturn(null);
 
         assertThrows(UnknownUserException.class, () -> userBean.deleteUserById(userId));
+    }
+
+    @Test
+    public void setEmployeeToUser_ValidIds_SuccessfullySetsEmployee() {
+        Long userId = 123L;
+        Long employeeId = 456L;
+
+        User user = new User();
+        Employee employee = new Employee();
+
+        when(entityManager.merge(any(User.class))).thenReturn(user);
+        when(entityManager.find(User.class, userId)).thenReturn(user);
+        when(entityManager.find(Employee.class, employeeId)).thenReturn(employee);
+
+        assertDoesNotThrow(() -> userBean.setEmployeeToUser(userId, employeeId));
+
+        assertEquals(employee, user.getEmployee());
+        verify(entityManager).merge(user);
+    }
+
+    @Test
+    public void setEmployeeToUser_UnknownUser_ExceptionThrown() {
+        Long userId = 123L;
+        Long employeeId = 456L;
+
+        when(entityManager.find(User.class, userId)).thenReturn(null);
+
+        assertThrows(UnknownUserException.class, () -> userBean.setEmployeeToUser(userId, employeeId));
+    }
+
+    @Test
+    public void setEmployeeToUser_UnknownEmployee_ExceptionThrown() {
+        Long userId = 123L;
+        Long employeeId = 456L;
+
+        when(entityManager.find(User.class, userId)).thenReturn(new User());
+        when(entityManager.find(Employee.class, employeeId)).thenReturn(null);
+
+        assertThrows(UnknownEmployeeException.class, () -> userBean.setEmployeeToUser(userId, employeeId));
     }
 }
