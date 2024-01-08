@@ -41,6 +41,12 @@
                     <li>
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PaycheckView">PaycheckView</a>
                     </li>
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/Login">Login</a>
+                    </li>
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/CreateAccount">Create Account</a>
+                    </li>
                 </ul>
             </div>
         </div>
