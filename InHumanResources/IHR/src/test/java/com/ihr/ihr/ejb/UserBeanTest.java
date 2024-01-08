@@ -216,4 +216,19 @@ class UserBeanTest {
 
         assertThrows(UnknownEmployeeException.class, () -> userBean.setEmployeeToUser(userId, employeeId));
     }
+
+    @Test
+    void testDeleteUserWithEmployee() throws UnknownUserException {
+        User mockUser = new User();
+        Employee mockEmployee = new Employee();
+        mockUser.setEmployee(mockEmployee);
+        mockEmployee.setUser(mockUser);
+
+        when(entityManager.find(User.class, 1L)).thenReturn(mockUser);
+
+        userBean.deleteUserById(1L);
+
+        verify(entityManager, times(1)).remove(mockUser);
+        assertNull(mockEmployee.getUser());
+    }
 }
