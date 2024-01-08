@@ -1,15 +1,15 @@
 package com.ihr.ihr.ejb;
 
-import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
-import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
-import com.ihr.ihr.common.enums.GenderEnum;
-import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import com.ihr.ihr.entities.BankInfo;
-import com.ihr.ihr.entities.Employee;
-import com.ihr.ihr.entities.PaymentInfo;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -18,14 +18,20 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
+import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
+import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
+import com.ihr.ihr.common.enums.GenderEnum;
+import com.ihr.ihr.common.enums.SalaryLevelEnum;
+import com.ihr.ihr.common.excep.UnknownEmployeeException;
+import com.ihr.ihr.common.excep.UnknownUserException;
+import com.ihr.ihr.entities.BankInfo;
+import com.ihr.ihr.entities.Employee;
+import com.ihr.ihr.entities.PaymentInfo;
+import com.ihr.ihr.entities.User;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 
 @ExtendWith(MockitoExtension.class)
 class EmployeeBeanTest {
@@ -389,5 +395,20 @@ class EmployeeBeanTest {
         assertNull(result);
     }
 
+    @Test
+    public void setUserToEmployee_ValidUserAndEmployee_SuccessfullySet() throws UnknownUserException, UnknownEmployeeException {
+        Long userId = 123L;
+        Long employeeId = 456L;
+        User user = new User();
+        Employee employee = new Employee();
+
+        when(entityManager.find(User.class, userId)).thenReturn(user);
+        when(entityManager.find(Employee.class, employeeId)).thenReturn(employee);
+
+        employeeBean.setUserToEmployee(userId, employeeId);
+
+        assertEquals(user, employee.getUser());
+        verify(entityManager).merge(employee);
+    }
 
 }
