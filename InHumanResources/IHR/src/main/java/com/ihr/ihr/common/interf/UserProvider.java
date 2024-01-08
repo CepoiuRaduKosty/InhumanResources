@@ -3,6 +3,7 @@ package com.ihr.ihr.common.interf;
 import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
 import com.ihr.ihr.common.dtos.UserDtos.UserDto;
 import com.ihr.ihr.common.excep.InvalidUserException;
+import com.ihr.ihr.common.excep.UnknownEmployeeException;
 import com.ihr.ihr.common.excep.UnknownUserException;
 
 public interface UserProvider {
@@ -13,4 +14,6 @@ public interface UserProvider {
     void updateUserById(Long userID, UserCreationDto userCreationDto) throws UnknownUserException, InvalidUserException;
 
     void deleteUserById(Long userID) throws UnknownUserException;
+
+    void setEmployeeToUser(Long userID, Long employeeID) throws UnknownUserException, UnknownEmployeeException;
 }
