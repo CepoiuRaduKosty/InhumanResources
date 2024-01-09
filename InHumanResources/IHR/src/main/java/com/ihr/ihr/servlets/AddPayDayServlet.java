@@ -5,6 +5,7 @@ import com.ihr.ihr.common.excep.PayDayAlreadyExistsException;
 import com.ihr.ihr.common.excep.PayDayDoesNotExistException;
 import com.ihr.ihr.common.interf.PayDayProvider;
 import com.ihr.ihr.common.interf.PayDayValidation;
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -12,6 +13,9 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
+@DeclareRoles({"EMPLOYEE", "ADMIN"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN"}),
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"ADMIN"})})
 @WebServlet(name = "AddPayDayServlet", value = "/AddPayDay")
 public class AddPayDayServlet extends HttpServlet {
     @Inject

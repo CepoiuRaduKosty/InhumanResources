@@ -4,6 +4,7 @@ import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.interf.EmployeeProvider;
 import com.ihr.ihr.common.interf.EmployeeValidation;
 import com.ihr.ihr.common.interf.UserProvider;
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -14,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@DeclareRoles({"EMPLOYEE", "ADMIN"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN"}),
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"ADMIN"})})
 @WebServlet(name = "FindEmployee", value = "/FindEmployee")
 public class FindEmployee extends HttpServlet {
     @Inject

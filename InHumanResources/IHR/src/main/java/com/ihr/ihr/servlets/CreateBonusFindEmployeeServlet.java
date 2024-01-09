@@ -6,6 +6,7 @@ import com.ihr.ihr.common.interf.BonusProvider;
 import com.ihr.ihr.common.interf.BonusValidation;
 import com.ihr.ihr.common.interf.EmployeeProvider;
 import com.ihr.ihr.common.interf.EmployeeValidation;
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -15,6 +16,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@DeclareRoles({"EMPLOYEE", "ADMIN"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN"}),
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"ADMIN"})})
 @WebServlet(name = "CreateBonusFindEmployeeServlet", value = "/CreateBonusFindEmployee")
 public class CreateBonusFindEmployeeServlet extends HttpServlet {
 

@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
+
 @WebServlet(name = "LogoutServlet", value = "/Logout")
 public class LogoutServlet extends HttpServlet {
     @Override
