@@ -1,6 +1,7 @@
 package com.ihr.ihr.ejb;
 
 import com.ihr.ihr.common.dtos.BonusDtos.BonusDto;
+import com.ihr.ihr.common.dtos.BonusDtos.BonusEntryDto;
 import com.ihr.ihr.common.dtos.BonusDtos.CreateBonusDto;
 import com.ihr.ihr.common.dtos.BonusDtos.UpdateBonusDto;
 import com.ihr.ihr.common.excep.InvalidBonusException;
@@ -132,4 +133,35 @@ public class BonusesBean implements BonusProvider {
             throw new EJBException(ex);
         }
     }
+
+    @Override
+    public List<BonusEntryDto> searchBonusesByEmployeeName(String employeeName) {
+        LOG.info("searchBonusesByEmployeeName");
+        TypedQuery<BonusInfo> typedQuery = entityManager.createQuery(
+                "SELECT b FROM BonusInfo b JOIN FETCH b.paymentInfo pi JOIN FETCH pi.employee e " +
+                        "WHERE LOWER(e.name) LIKE :employeeName OR LOWER(e.surname) LIKE :employeeName",
+                BonusInfo.class
+        );
+        typedQuery.setParameter("employeeName", "%" + employeeName.toLowerCase() + "%");
+
+        return copyBonusInfoToBonusEntry(typedQuery);
+    }
+
+    private static List<BonusEntryDto> copyBonusInfoToBonusEntry(TypedQuery<BonusInfo> typedQuery) {
+        List<BonusInfo> bonusInfos = typedQuery.getResultList();
+        List<BonusEntryDto> bonusEntryDtos = new ArrayList<>();
+
+        for (BonusInfo bonusInfo : bonusInfos) {
+            BonusEntryDto bonusEntryDto = new BonusEntryDto(
+                    bonusInfo.getId(),
+                    bonusInfo.getPaymentInfo().getEmployee().getName(),
+                    bonusInfo.getPaymentInfo().getEmployee().getSurname(),
+                    bonusInfo.getBonusDescription(),
+                    bonusInfo.getValue()
+            );
+            bonusEntryDtos.add(bonusEntryDto);
+        }
+        return bonusEntryDtos;
+    }
+
 }

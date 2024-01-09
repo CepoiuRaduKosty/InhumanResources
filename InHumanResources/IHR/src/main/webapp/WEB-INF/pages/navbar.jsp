@@ -38,6 +38,11 @@
                     <li>
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PaycheckView">PaycheckView</a>
                     </li>
+
+                    <li>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/SearchBonus">|  Search Bonus</a>
+                    </li>
+
                 </ul>
             </div>
         </div>
