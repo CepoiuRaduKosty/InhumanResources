@@ -19,31 +19,9 @@
                         <a class="nav-link active" aria-current="page"
                            href="${pageContext.request.contextPath}">Home</a>
                     </li>
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PayDay">|  Pay Day</a>
-                    </li>
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/CreateBonusFindEmployee">|  CreateBonusFindEmployee</a>
-                    </li>
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/FindEmployee">|  Find Employee</a>
-                    </li>
-
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/AllPaychecks">AllPaychecks</a>
-                    </li>
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EmployeePaychecks">EmployeePaychecks</a>
-                    </li>
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PaycheckView">PaycheckView</a>
-                    </li>
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/Login">Login</a>
-                    </li>
-                    <li>
-                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/CreateAccount">Create Account</a>
-                    </li>
+                    <li><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/FindEmployee">| Employees </a></li>
+                    <li><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/AllPaychecks">| All Paychecks </a></li>
+                    <li><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PayDay">| Pay Day </a></li>
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">

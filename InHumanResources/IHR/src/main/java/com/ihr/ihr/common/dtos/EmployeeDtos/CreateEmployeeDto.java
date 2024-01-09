@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class CreateEmployeeDto extends UpdateEmployeeDto{
     private PaymentInfoDto paymentInfoDto;
     private BankInfoDto bankInfoDto;
+    private Long userID;
 
     public CreateEmployeeDto(String name, String surname, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, Integer hoursPerWeek) {
         super(name, surname, gender, dateOfBirth, address, religion, hoursPerWeek);
@@ -34,5 +35,13 @@ public class CreateEmployeeDto extends UpdateEmployeeDto{
 
     public void setBankInfoDto(BankInfoDto bankInfoDto) {
         this.bankInfoDto = bankInfoDto;
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
     }
 }
