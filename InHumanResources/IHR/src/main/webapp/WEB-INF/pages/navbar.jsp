@@ -48,6 +48,18 @@
                         <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/CreateAccount">Create Account</a>
                     </li>
                 </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <c:choose>
+                            <c:when test="${pageContext.request.getRemoteUser() == null}">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/Login">Login</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/Logout">Logout</a>
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
