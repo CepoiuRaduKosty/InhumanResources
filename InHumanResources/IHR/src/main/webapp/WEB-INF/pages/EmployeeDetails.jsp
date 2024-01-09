@@ -68,6 +68,16 @@
         <br>
         <br>
 
+        <h1>Login Information:</h1>
+        <br>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <p>Username: ${employee.userDto.username}</p>
+                    <p>Email: ${employee.userDto.email}</p>
+                </div>
+            </div>
+        <br>
+
         <h1>Employee bank information:</h1>
         <br>
         <div class="row">

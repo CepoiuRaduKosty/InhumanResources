@@ -16,4 +16,10 @@ public interface UserValidation {
     boolean isUserDtoValid(UserDto userDto);
 
     boolean isUserEntityValid(User user);
+
+    boolean isUserCreationDtoValidNoPasswordCheck(UserCreationDto userCreationDto);
+
+    boolean isUserDtoValidNoPasswordCheck(UserDto userDto);
+
+    boolean isUserEntityValidNoPasswordCheck(User user);
 }

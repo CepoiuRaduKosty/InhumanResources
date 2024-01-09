@@ -6,6 +6,7 @@ import com.ihr.ihr.common.excep.InvalidUserException;
 import com.ihr.ihr.common.excep.UnknownEmployeeException;
 import com.ihr.ihr.common.excep.UnknownUserException;
 import com.ihr.ihr.common.interf.EmployeeProvider;
+import com.ihr.ihr.common.interf.PasswordProvider;
 import com.ihr.ihr.common.interf.UserProvider;
 import com.ihr.ihr.common.interf.mappers.UserCreationDtoMapping;
 import com.ihr.ihr.common.interf.mappers.UserEntityMapping;
@@ -17,6 +18,8 @@ import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.servlet.ServletException;
+import jakarta.transaction.Transactional;
 
 import java.util.Collection;
 import java.util.logging.Logger;
@@ -39,9 +42,13 @@ public class UserBean implements UserProvider {
     @Inject
     EmployeeProvider employeeProvider;
 
+    @Inject
+    PasswordProvider passwordProvider;
+
     private void copyUserCreationDtoToEntity(User destination, UserCreationDto source) {
         destination.setUsername(source.getUsername());
-        destination.setPassword(source.getPassword());
+        if(!source.getPassword().isBlank() && !source.getPassword().isEmpty())
+            destination.setPassword(passwordProvider.convertToSha256(source.getPassword()));
         destination.setEmail(source.getEmail());
     }
 
@@ -90,12 +97,18 @@ public class UserBean implements UserProvider {
         }
     }
 
+    private void checkPasswordFieldValidForUpdates(UserCreationDto userCreationDto) throws InvalidUserException {
+        String passwordFieldTxt = userCreationDto.getPassword();
+        if((passwordFieldTxt.isEmpty() || passwordFieldTxt.isBlank()) && !userValidation.isUserCreationDtoValidNoPasswordCheck(userCreationDto))
+            throw new InvalidUserException();
+        if(!passwordFieldTxt.isEmpty() && !passwordFieldTxt.isBlank() && !userValidation.isUserCreationDtoValid(userCreationDto))
+            throw new InvalidUserException();
+    }
+
     @Override
     public void updateUserById(Long userID, UserCreationDto userCreationDto)
             throws UnknownUserException, InvalidUserException {
-        if (userValidation.isUserCreationDtoValid(userCreationDto))
-            throw new InvalidUserException();
-
+        checkPasswordFieldValidForUpdates(userCreationDto);
         User user = safeGetUserEntityById(userID);
         copyUserCreationDtoToEntity(user, userCreationDto);
     }
@@ -109,6 +122,7 @@ public class UserBean implements UserProvider {
             entityManager.merge(employee);
             employeeProvider.deleteEmployeeById(employee.getId());
         }
+        removeUserGroupByUsername(user.getUsername());
 
         entityManager.remove(user);
     }
@@ -120,6 +134,13 @@ public class UserBean implements UserProvider {
 
         user.setEmployee(employee);
         entityManager.merge(user);
+    }
+
+    @Transactional
+    public void removeUserGroupByUsername(String username) {
+        entityManager.createQuery("DELETE FROM UserGroup u WHERE u.username = :username")
+                .setParameter("username", username)
+                .executeUpdate();
     }
 
 }

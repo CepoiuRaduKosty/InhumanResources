@@ -7,12 +7,13 @@ import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.UpdateEmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
 import com.ihr.ihr.common.enums.GenderEnum;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import com.ihr.ihr.common.excep.*;
-import com.ihr.ihr.common.interf.BankInfoProvider;
-import com.ihr.ihr.common.interf.EmployeeProvider;
-import com.ihr.ihr.common.interf.PaymentInfoProvider;
+import com.ihr.ihr.common.interf.*;
+import com.ihr.ihr.common.interf.mappers.UserCreationDtoMapping;
+import com.ihr.ihr.common.interf.validators.UserValidation;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.inject.Inject;
@@ -32,6 +33,24 @@ public class EditEmployeeServlet extends HttpServlet {
     BankInfoProvider bankInfoProvider;
     @Inject
     PaymentInfoProvider paymentInfoProvider;
+
+    @Inject
+    UserCreationDtoMapping userCreationDtoMapping;
+
+    @Inject
+    EmployeeValidation employeeValidation;
+
+    @Inject
+    BankInfoValidation bankInfoValidation;
+
+    @Inject
+    PaymentInfoValidation paymentInfoValidation;
+
+    @Inject
+    UserValidation userValidation;
+
+    @Inject
+    UserProvider userProvider;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
@@ -60,6 +79,14 @@ public class EditEmployeeServlet extends HttpServlet {
         request.setAttribute("employee_id", id_link);
         request.getRequestDispatcher("/WEB-INF/pages/EditEmployee.jsp").forward(request, response);
 
+    }
+
+    private void checkPasswordFieldValid(UserCreationDto userCreationDto) throws ServletException {
+        String passwordFieldTxt = userCreationDto.getPassword();
+        if((passwordFieldTxt.isEmpty() || passwordFieldTxt.isBlank()) && !userValidation.isUserCreationDtoValidNoPasswordCheck(userCreationDto))
+            throw new ServletException("invalid password format"); // todo change this to show user-friendly errors
+        if(!passwordFieldTxt.isEmpty() && !passwordFieldTxt.isBlank() && !userValidation.isUserCreationDtoValid(userCreationDto))
+            throw new ServletException("invalid password format"); // todo change this to show user-friendly errors
     }
 
     @Override
@@ -91,6 +118,15 @@ public class EditEmployeeServlet extends HttpServlet {
             BankInfoDto bankInfoDto = new BankInfoDto(employeeProvider.findById(employee_id).getBankInfoDto().getId(), iBan, bankName);
             PaymentInfoDto paymentInfoDto = new PaymentInfoDto(employeeProvider.findById(employee_id).getPaymentInfoDto().getId(), monthlyBasicSalary, salaryLevel, bonusForSuccess, numberOfShares, cumulatedShares);
 
+            UserCreationDto userCreationDto = userCreationDtoMapping.fromRequest(request);
+
+            if(!employeeValidation.isEmployeeDataValid(employeeDto) ||
+                    !paymentInfoValidation.isPaymentInfoDtoValid(paymentInfoDto) ||
+                    !bankInfoValidation.isBankInfoDtoValid(bankInfoDto))
+                throw new ServletException("invalid information"); // todo change this to show user-friendly errors
+
+            checkPasswordFieldValid(userCreationDto);
+
             try {
                 employeeProvider.updateEmployeeById(employee_id, employeeDto);
             } catch (DateOfBirthException | WorkingHoursException | InvalidEmployeeDto e) {
@@ -107,6 +143,12 @@ public class EditEmployeeServlet extends HttpServlet {
                 paymentInfoProvider.updatePaymentInfo(paymentInfoDto.getId(), paymentInfoDto);
             } catch (NonPositiveIncomeException | ValidationException | InvalidPaymentInfoException |
                      UnknownPaymentInfoException e) {
+                throw new RuntimeException(e);
+            }
+
+            try {
+                userProvider.updateUserById(employeeProvider.findById(employee_id).getUserDto().getId(), userCreationDto);
+            } catch (InvalidUserException | UnknownUserException e) {
                 throw new RuntimeException(e);
             }
             response.sendRedirect(request.getContextPath() + "/EmployeeDetails?id_link=" + employee_id);

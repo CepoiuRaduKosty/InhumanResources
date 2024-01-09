@@ -44,11 +44,9 @@ public class UserValidator implements UserValidation {
 
     @Override
     public boolean isUserCreationDtoValid(UserCreationDto userCreationDto) {
-        if(!isEmailValid(userCreationDto.getEmail()))
+        if(!isUserCreationDtoValidNoPasswordCheck(userCreationDto))
             return false;
-        if(!isPasswordValid(userCreationDto.getPassword()))
-            return false;
-        return isUsernameValid(userCreationDto.getUsername());
+        return isPasswordValid(userCreationDto.getPassword());
     }
 
     @Override
@@ -59,5 +57,22 @@ public class UserValidator implements UserValidation {
     @Override
     public boolean isUserEntityValid(User user) {
         return isUserCreationDtoValid(userEntityMapping.toUserCreationDto(user));
+    }
+
+    @Override
+    public boolean isUserCreationDtoValidNoPasswordCheck(UserCreationDto userCreationDto) {
+        if(!isEmailValid(userCreationDto.getEmail()))
+            return false;
+        return isUsernameValid(userCreationDto.getUsername());
+    }
+
+    @Override
+    public boolean isUserDtoValidNoPasswordCheck(UserDto userDto) {
+        return isUserCreationDtoValidNoPasswordCheck(userDtoMapping.toUserCreationDto(userDto));
+    }
+
+    @Override
+    public boolean isUserEntityValidNoPasswordCheck(User user) {
+        return isUserCreationDtoValidNoPasswordCheck(userEntityMapping.toUserCreationDto(user));
     }
 }

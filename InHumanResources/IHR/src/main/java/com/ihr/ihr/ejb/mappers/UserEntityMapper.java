@@ -15,15 +15,12 @@ import java.util.logging.Logger;
 public class UserEntityMapper implements UserEntityMapping {
     private static final Logger LOG = Logger.getLogger(UserEntityMapper.class.getName());
 
-    @Inject
-    PasswordProvider passwordProvider;
-
     @Override
     public UserDto toUserDto(User user) {
         UserDto userDto = new UserDto(
                 user.getId(),
                 user.getEmail(),
-                passwordProvider.convertToSha256(user.getPassword()),
+                user.getPassword(),
                 user.getUsername()
         );
         if(user.getEmployee() != null) {
@@ -36,7 +33,7 @@ public class UserEntityMapper implements UserEntityMapping {
     public UserCreationDto toUserCreationDto(User user) {
         return new UserCreationDto(
                 user.getEmail(),
-                passwordProvider.convertToSha256(user.getPassword()),
+                user.getPassword(),
                 user.getUsername()
         );
     }

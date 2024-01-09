@@ -94,6 +94,24 @@
         <br>
         <br>
 
+        <h1>Login information:</h1>
+        <br>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="username" class="sr-only col-md-6 mb-3">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required
+                       autofocus value="${employee.userDto.username}"/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required value="${employee.userDto.email}"/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="password" class="sr-only col-md-6 mb-3">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password"/>
+            </div>
+        </div>
+
         <h1>Employee bank information:</h1>
         <br>
         <div class="row">
