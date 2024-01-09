@@ -35,10 +35,14 @@
                     <div class="col" value="entryNumber">  ${status.index + 1}  </div>
                     <div class="col" value="name"> Name: ${employee.getName()}   </div>
                     <div class="col" value="surname"> Surname: ${employee.getSurname()}  </div>
-                    <a class="btn btn-secondary col"
-                       href="${pageContext.request.contextPath}/EmployeeDetails?id_link=${employee.id}">Details</a>
-                    <a class="btn btn-primary col"
-                       href="${pageContext.request.contextPath}/EditEmployee?id_link=${employee.id}">Edit</a>
+                    <div class="col" value="username"> Username: ${employee.userDto.username}  </div>
+                    <div class="col" value="email"> Email: ${employee.userDto.email}  </div>
+                    <div class="col" value="details">
+                        <a class="btn btn-secondary col" href="${pageContext.request.contextPath}/EmployeeDetails?id_link=${employee.id}">Details</a>
+                    </div>
+                    <div class="col" value="edit">
+                        <a class="btn btn-primary col" href="${pageContext.request.contextPath}/EditEmployee?id_link=${employee.id}">Edit</a>
+                    </div>
                 </div>
             </c:forEach>
 

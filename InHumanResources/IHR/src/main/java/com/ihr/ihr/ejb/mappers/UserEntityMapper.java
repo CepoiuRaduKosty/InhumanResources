@@ -2,9 +2,12 @@ package com.ihr.ihr.ejb.mappers;
 
 import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
 import com.ihr.ihr.common.dtos.UserDtos.UserDto;
+import com.ihr.ihr.common.interf.PasswordProvider;
 import com.ihr.ihr.common.interf.mappers.UserEntityMapping;
+import com.ihr.ihr.ejb.PasswordBean;
 import com.ihr.ihr.entities.User;
 import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
 
 import java.util.logging.Logger;
 
@@ -12,12 +15,15 @@ import java.util.logging.Logger;
 public class UserEntityMapper implements UserEntityMapping {
     private static final Logger LOG = Logger.getLogger(UserEntityMapper.class.getName());
 
+    @Inject
+    PasswordProvider passwordProvider;
+
     @Override
     public UserDto toUserDto(User user) {
         UserDto userDto = new UserDto(
                 user.getId(),
                 user.getEmail(),
-                user.getPassword(),
+                passwordProvider.convertToSha256(user.getPassword()),
                 user.getUsername()
         );
         if(user.getEmployee() != null) {
@@ -30,7 +36,7 @@ public class UserEntityMapper implements UserEntityMapping {
     public UserCreationDto toUserCreationDto(User user) {
         return new UserCreationDto(
                 user.getEmail(),
-                user.getPassword(),
+                passwordProvider.convertToSha256(user.getPassword()),
                 user.getUsername()
         );
     }

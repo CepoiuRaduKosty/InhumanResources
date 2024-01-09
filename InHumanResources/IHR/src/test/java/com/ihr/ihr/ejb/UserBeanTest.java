@@ -24,6 +24,8 @@ import com.ihr.ihr.entities.User;
 
 import jakarta.persistence.EntityManager;
 
+import java.util.List;
+
 @ExtendWith(MockitoExtension.class)
 class UserBeanTest {
 
@@ -57,7 +59,7 @@ class UserBeanTest {
         when(userValidation.isUserCreationDtoValid(any(UserCreationDto.class))).thenReturn(true);
         when(userCreationDtoMapper.toUserEntity(validDto)).thenReturn(mockUser);
 
-        Long userId = userBean.createUserByDto(validDto);
+        Long userId = userBean.createUserByDto(validDto, List.of());
 
         assertNotNull(userId);
         assertEquals(1L, userId);
@@ -76,7 +78,7 @@ class UserBeanTest {
 
         when(userValidation.isUserCreationDtoValid(invalidDto)).thenReturn(false);
 
-        assertThrows(InvalidUserException.class, () -> userBean.createUserByDto(invalidDto));
+        assertThrows(InvalidUserException.class, () -> userBean.createUserByDto(invalidDto, List.of()));
     }
 
     @Test

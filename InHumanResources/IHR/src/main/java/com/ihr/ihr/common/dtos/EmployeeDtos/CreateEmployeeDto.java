@@ -2,6 +2,7 @@ package com.ihr.ihr.common.dtos.EmployeeDtos;
 
 import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
+import com.ihr.ihr.common.dtos.UserDtos.UserDto;
 import com.ihr.ihr.common.enums.GenderEnum;
 
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import java.time.LocalDate;
 public class CreateEmployeeDto extends UpdateEmployeeDto{
     private PaymentInfoDto paymentInfoDto;
     private BankInfoDto bankInfoDto;
-    private Long userID;
+    private UserDto userDto;
 
     public CreateEmployeeDto(String name, String surname, GenderEnum gender, LocalDate dateOfBirth, String address, String religion, Integer hoursPerWeek) {
         super(name, surname, gender, dateOfBirth, address, religion, hoursPerWeek);
@@ -37,11 +38,11 @@ public class CreateEmployeeDto extends UpdateEmployeeDto{
         this.bankInfoDto = bankInfoDto;
     }
 
-    public Long getUserID() {
-        return userID;
+    public UserDto getUserDto() {
+        return userDto;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUserDto(UserDto userDto) {
+        this.userDto = userDto;
     }
 }

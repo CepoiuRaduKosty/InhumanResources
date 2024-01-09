@@ -94,6 +94,31 @@
         <br>
         <br>
 
+        <h1>Login information:</h1>
+        <br>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="username" class="sr-only col-md-6 mb-3">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required
+                       autofocus/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="password" class="sr-only col-md-6 mb-3">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="user_groups">Type of User</label>
+                <select class="custom-select d-block w-100" id="user_groups" name="user_groups">
+                    <option value="EMPLOYEE">Employee</option>
+                    <option value="ADMIN">Administrator</option>
+                </select>
+            </div>
+        </div>
+
         <h1>Employee bank information:</h1>
         <br>
         <div class="row">

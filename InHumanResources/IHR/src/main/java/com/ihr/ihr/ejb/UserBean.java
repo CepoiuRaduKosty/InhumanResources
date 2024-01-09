@@ -5,18 +5,23 @@ import com.ihr.ihr.common.dtos.UserDtos.UserDto;
 import com.ihr.ihr.common.excep.InvalidUserException;
 import com.ihr.ihr.common.excep.UnknownEmployeeException;
 import com.ihr.ihr.common.excep.UnknownUserException;
+import com.ihr.ihr.common.interf.EmployeeProvider;
 import com.ihr.ihr.common.interf.UserProvider;
 import com.ihr.ihr.common.interf.mappers.UserCreationDtoMapping;
 import com.ihr.ihr.common.interf.mappers.UserEntityMapping;
 import com.ihr.ihr.common.interf.validators.UserValidation;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.User;
+import com.ihr.ihr.entities.UserGroup;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+import java.util.Collection;
 import java.util.logging.Logger;
 
+@Stateless
 public class UserBean implements UserProvider {
     private static final Logger LOG = Logger.getLogger(UserBean.class.getName());
     @PersistenceContext
@@ -30,6 +35,9 @@ public class UserBean implements UserProvider {
 
     @Inject
     UserValidation userValidation;
+
+    @Inject
+    EmployeeProvider employeeProvider;
 
     private void copyUserCreationDtoToEntity(User destination, UserCreationDto source) {
         destination.setUsername(source.getUsername());
@@ -52,12 +60,24 @@ public class UserBean implements UserProvider {
     }
 
     @Override
-    public Long createUserByDto(UserCreationDto userCreationDto) throws InvalidUserException {
+    public Long createUserByDto(UserCreationDto userCreationDto, Collection<String> groups) throws InvalidUserException {
         if (!userValidation.isUserCreationDtoValid(userCreationDto))
             throw new InvalidUserException();
         User user = userCreationDtoMapping.toUserEntity(userCreationDto);
         entityManager.persist(user);
+
+        assignGroupsToUser(userCreationDto.getUsername(), groups);
+
         return user.getId();
+    }
+
+    private void assignGroupsToUser(String username, Collection<String> groups) {
+        for (String group : groups) {
+            UserGroup userGroup = new UserGroup();
+            userGroup.setUsername(username);
+            userGroup.setUserGroup(group);
+            entityManager.persist(userGroup);
+        }
     }
 
     @Override
@@ -87,6 +107,7 @@ public class UserBean implements UserProvider {
             Employee employee = user.getEmployee();
             employee.setUser(null);
             entityManager.merge(employee);
+            employeeProvider.deleteEmployeeById(employee.getId());
         }
 
         entityManager.remove(user);

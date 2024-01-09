@@ -3,12 +3,14 @@ package com.ihr.ihr.servlets;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.interf.EmployeeProvider;
 import com.ihr.ihr.common.interf.EmployeeValidation;
+import com.ihr.ihr.common.interf.UserProvider;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -20,6 +22,9 @@ public class FindEmployee extends HttpServlet {
     @Inject
     EmployeeValidation employeeValidation;
 
+    @Inject
+    UserProvider userProvider;
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
@@ -28,7 +33,6 @@ public class FindEmployee extends HttpServlet {
     }
     private void handleEmployeeSearch(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String employeeName = request.getParameter("employeeName");
-
         if (!employeeValidation.isNameValid(employeeName)) {
             request.setAttribute("error", "Invalid employee name. Please try again.");
             request.setAttribute("matchingEmployees", null);
@@ -41,7 +45,6 @@ public class FindEmployee extends HttpServlet {
                 request.setAttribute("matchingEmployees", employeesResult);
             }
         }
-
         request.getRequestDispatcher("/WEB-INF/pages/FindEmployee.jsp").forward(request, response);
     }
 

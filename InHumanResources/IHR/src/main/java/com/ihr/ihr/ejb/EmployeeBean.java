@@ -16,6 +16,8 @@ import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.excep.UnknownUserException;
 import com.ihr.ihr.common.interf.EmployeeProvider;
 import com.ihr.ihr.common.interf.EmployeeValidation;
+import com.ihr.ihr.common.interf.UserProvider;
+import com.ihr.ihr.common.interf.mappers.UserEntityMapping;
 import com.ihr.ihr.entities.BankInfo;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
@@ -38,6 +40,12 @@ public class EmployeeBean implements EmployeeProvider {
 
     @Inject
     EmployeeValidation employeeValidation;
+
+    @Inject
+    UserEntityMapping userEntityMapping;
+
+    @Inject
+    UserProvider userProvider;
 
     private void setEmployeeInformation(Employee employee, UpdateEmployeeDto updateEmployeeDto)
     {
@@ -102,6 +110,11 @@ public class EmployeeBean implements EmployeeProvider {
             User user = employee.getUser();
             user.setEmployee(null);
             entityManager.merge(user);
+            try {
+                userProvider.deleteUserById(user.getId());
+            } catch (UnknownUserException e) {
+                throw new RuntimeException(e);  // should not happen
+            }
         }
 
         BankInfo bankInfo = employee.getBankInfo();
@@ -209,6 +222,12 @@ public class EmployeeBean implements EmployeeProvider {
 
         employeeDto.setBankInfoDto(bankInfoDto);
         employeeDto.setPaymentInfoDto(paymentInfoDto);
+
+        if(employee.getUser() != null) {
+            employeeDto.setUserDto(userEntityMapping.toUserDto(employee.getUser()));
+            employeeDto.getUserDto().setPassword("");
+        }
+
 
         return employeeDto;
     }

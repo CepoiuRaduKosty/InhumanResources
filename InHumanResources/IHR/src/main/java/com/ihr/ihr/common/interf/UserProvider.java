@@ -6,8 +6,11 @@ import com.ihr.ihr.common.excep.InvalidUserException;
 import com.ihr.ihr.common.excep.UnknownEmployeeException;
 import com.ihr.ihr.common.excep.UnknownUserException;
 
+import java.util.Collection;
+
 public interface UserProvider {
-    Long createUserByDto(UserCreationDto userCreationDto) throws InvalidUserException;
+
+    Long createUserByDto(UserCreationDto userCreationDto, Collection<String> groups) throws InvalidUserException;
 
     UserDto getUserDtoById(Long userID);
 

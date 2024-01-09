@@ -5,6 +5,7 @@ import com.ihr.ihr.common.dtos.UserDtos.UserDto;
 import com.ihr.ihr.common.interf.mappers.UserCreationDtoMapping;
 import com.ihr.ihr.entities.User;
 import jakarta.ejb.Stateless;
+import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.logging.Logger;
 
@@ -29,5 +30,18 @@ public class UserCreationDtoMapper implements UserCreationDtoMapping {
         user.setUsername(userCreationDto.getUsername());
         user.setPassword(userCreationDto.getPassword());
         return user;
+    }
+
+    @Override
+    public UserCreationDto fromRequest(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        return new UserCreationDto(
+                email,
+                password,
+                username
+        );
     }
 }
