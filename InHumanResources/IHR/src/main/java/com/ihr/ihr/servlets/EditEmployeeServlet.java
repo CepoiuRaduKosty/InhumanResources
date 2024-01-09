@@ -16,6 +16,7 @@ import com.ihr.ihr.common.interf.mappers.UserCreationDtoMapping;
 import com.ihr.ihr.common.interf.validators.UserValidation;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -25,6 +26,9 @@ import jakarta.xml.bind.ValidationException;
 import java.io.IOException;
 import java.time.LocalDate;
 
+@DeclareRoles({"EMPLOYEE", "ADMIN"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN", "EMPLOYEE"}),
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"ADMIN", "EMPLOYEE"})})
 @WebServlet(name = "EditEmployeeServlet", value = "/EditEmployee")
 public class EditEmployeeServlet extends HttpServlet {
     @Inject
@@ -77,6 +81,13 @@ public class EditEmployeeServlet extends HttpServlet {
         request.setAttribute("bankInfo", bankInfoDto);
 
         request.setAttribute("employee_id", id_link);
+
+        if(request.isUserInRole("ADMIN")) {
+            request.setAttribute("isAdmin", true);
+        } else {
+            request.setAttribute("isAdmin", false);
+        }
+
         request.getRequestDispatcher("/WEB-INF/pages/EditEmployee.jsp").forward(request, response);
 
     }
