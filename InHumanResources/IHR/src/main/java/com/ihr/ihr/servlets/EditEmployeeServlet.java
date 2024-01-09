@@ -1,11 +1,7 @@
 package com.ihr.ihr.servlets;
 
 import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
-import com.ihr.ihr.common.dtos.BankInfoDtos.UpdateBankInfoDto;
-import com.ihr.ihr.common.dtos.EmployeeDtos.CreateEmployeeDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
-import com.ihr.ihr.common.dtos.EmployeeDtos.UpdateEmployeeDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDtos.CreatePaymentInfoDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.dtos.UserDtos.UserCreationDto;
 import com.ihr.ihr.common.enums.GenderEnum;
@@ -14,8 +10,6 @@ import com.ihr.ihr.common.excep.*;
 import com.ihr.ihr.common.interf.*;
 import com.ihr.ihr.common.interf.mappers.UserCreationDtoMapping;
 import com.ihr.ihr.common.interf.validators.UserValidation;
-import com.ihr.ihr.entities.Employee;
-import com.ihr.ihr.entities.PaymentInfo;
 import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
@@ -59,8 +53,7 @@ public class EditEmployeeServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
-        String id_link = null;
-        id_link = request.getParameter("id_link");
+        String id_link = request.getParameter("id_link");
 
         if (id_link == null) {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
@@ -82,7 +75,7 @@ public class EditEmployeeServlet extends HttpServlet {
 
         request.setAttribute("employee_id", id_link);
 
-        if(request.isUserInRole("ADMIN")) {
+        if(request.isUserInRole("ADMIN")){
             request.setAttribute("isAdmin", true);
         } else {
             request.setAttribute("isAdmin", false);
@@ -92,12 +85,12 @@ public class EditEmployeeServlet extends HttpServlet {
 
     }
 
-    private void checkPasswordFieldValid(UserCreationDto userCreationDto) throws ServletException {
+    private void checkPasswordFieldValidation(UserCreationDto userCreationDto) throws ServletException {
         String passwordFieldTxt = userCreationDto.getPassword();
         if((passwordFieldTxt.isEmpty() || passwordFieldTxt.isBlank()) && !userValidation.isUserCreationDtoValidNoPasswordCheck(userCreationDto))
-            throw new ServletException("invalid password format"); // todo change this to show user-friendly errors
+            throw new ServletException("invalid user format"); // todo change this to show user-friendly errors
         if(!passwordFieldTxt.isEmpty() && !passwordFieldTxt.isBlank() && !userValidation.isUserCreationDtoValid(userCreationDto))
-            throw new ServletException("invalid password format"); // todo change this to show user-friendly errors
+            throw new ServletException("invalid user format"); // todo change this to show user-friendly errors
     }
 
     @Override
@@ -107,7 +100,7 @@ public class EditEmployeeServlet extends HttpServlet {
         String action = request.getParameter("action");
         Long employee_id = Long.parseLong(request.getParameter("employee_id"));
 
-        if ("save".equals(action)) {
+        if ("save".equals(action) && request.isUserInRole("EMPLOYEE")) {
             String name = request.getParameter("name");
             String surname = request.getParameter("surname");
             GenderEnum genderEnum = GenderEnum.valueOf(request.getParameter("gender"));
@@ -119,24 +112,31 @@ public class EditEmployeeServlet extends HttpServlet {
             String bankName = request.getParameter("bankName");
             String iBan = request.getParameter("iBan");
 
-            Double monthlyBasicSalary = Double.parseDouble(request.getParameter("monthlyBasicSalary"));
-            SalaryLevelEnum salaryLevel = SalaryLevelEnum.valueOf(request.getParameter("salaryLevel"));
-            Double bonusForSuccess = Double.parseDouble(request.getParameter("bonusForSuccess"));
-            Integer numberOfShares = Integer.parseInt(request.getParameter("numberOfShares"));
-            Integer cumulatedShares = employeeProvider.findById(employee_id).getPaymentInfoDto().getCumulatedShares();
+            PaymentInfoDto paymentInfoDto = null;
+            if(request.isUserInRole("ADMIN")) {
+                Double monthlyBasicSalary = Double.parseDouble(request.getParameter("monthlyBasicSalary"));
+                SalaryLevelEnum salaryLevel = SalaryLevelEnum.valueOf(request.getParameter("salaryLevel"));
+                Double bonusForSuccess = Double.parseDouble(request.getParameter("bonusForSuccess"));
+                Integer numberOfShares = Integer.parseInt(request.getParameter("numberOfShares"));
+                Integer cumulatedShares = employeeProvider.findById(employee_id).getPaymentInfoDto().getCumulatedShares();
+                paymentInfoDto = new PaymentInfoDto(employeeProvider.findById(employee_id).getPaymentInfoDto().getId(), monthlyBasicSalary, salaryLevel, bonusForSuccess, numberOfShares, cumulatedShares);
+
+                if(!paymentInfoValidation.isPaymentInfoDtoValid(paymentInfoDto)) {
+                    throw new ServletException("invalid information"); // todo change this to show user-friendly errors
+                }
+            }
+
+
 
             EmployeeDto employeeDto = new EmployeeDto(employee_id, name, surname, genderEnum, dateOfBirth, address, religion, hoursPerWeek);
             BankInfoDto bankInfoDto = new BankInfoDto(employeeProvider.findById(employee_id).getBankInfoDto().getId(), iBan, bankName);
-            PaymentInfoDto paymentInfoDto = new PaymentInfoDto(employeeProvider.findById(employee_id).getPaymentInfoDto().getId(), monthlyBasicSalary, salaryLevel, bonusForSuccess, numberOfShares, cumulatedShares);
+
 
             UserCreationDto userCreationDto = userCreationDtoMapping.fromRequest(request);
 
-            if(!employeeValidation.isEmployeeDataValid(employeeDto) ||
-                    !paymentInfoValidation.isPaymentInfoDtoValid(paymentInfoDto) ||
-                    !bankInfoValidation.isBankInfoDtoValid(bankInfoDto))
+            if(!employeeValidation.isEmployeeDataValid(employeeDto) || !bankInfoValidation.isBankInfoDtoValid(bankInfoDto))
                 throw new ServletException("invalid information"); // todo change this to show user-friendly errors
-
-            checkPasswordFieldValid(userCreationDto);
+            checkPasswordFieldValidation(userCreationDto);
 
             try {
                 employeeProvider.updateEmployeeById(employee_id, employeeDto);
@@ -150,12 +150,15 @@ public class EditEmployeeServlet extends HttpServlet {
                 throw new RuntimeException(e);
             }
 
-            try {
-                paymentInfoProvider.updatePaymentInfo(paymentInfoDto.getId(), paymentInfoDto);
-            } catch (NonPositiveIncomeException | ValidationException | InvalidPaymentInfoException |
-                     UnknownPaymentInfoException e) {
-                throw new RuntimeException(e);
+            if(request.isUserInRole("ADMIN")) {
+                try {
+                    paymentInfoProvider.updatePaymentInfo(paymentInfoDto.getId(), paymentInfoDto);
+                } catch (NonPositiveIncomeException | ValidationException | InvalidPaymentInfoException |
+                         UnknownPaymentInfoException e) {
+                    throw new RuntimeException(e);
+                }
             }
+
 
             try {
                 userProvider.updateUserById(employeeProvider.findById(employee_id).getUserDto().getId(), userCreationDto);
@@ -165,15 +168,14 @@ public class EditEmployeeServlet extends HttpServlet {
             response.sendRedirect(request.getContextPath() + "/EmployeeDetails?id_link=" + employee_id);
 
         }
-        else if ("delete".equals(action))
+        else if ("delete".equals(action) && request.isUserInRole("ADMIN"))
         {
             employeeProvider.deleteEmployeeById(employee_id);
             response.sendRedirect(request.getContextPath() + "/FindEmployee");
 
 
         } else {
-            // Handle other cases or display an error
-            response.getWriter().write("Unknown action");
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
         }
 
 

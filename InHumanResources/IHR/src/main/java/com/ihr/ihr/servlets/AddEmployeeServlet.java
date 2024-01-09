@@ -27,6 +27,7 @@ import jakarta.xml.bind.ValidationException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -127,7 +128,7 @@ public class AddEmployeeServlet extends HttpServlet {
         if(role.equals("EMPLOYEE")) {
             groups = List.of("EMPLOYEE");
         } else if(role.equals("ADMIN")) {
-            groups = List.of("EMPLOYEE", "ADMIN");
+            groups = Arrays.asList("EMPLOYEE", "ADMIN");
         } else {
             throw new ServletException("Invalid user group");
         }

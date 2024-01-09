@@ -167,41 +167,42 @@
                     </div>
                 </div>
             </div>
-        </c:if>
 
-
-
-        <div class="col-md-6 mb-3">
-            <label for="bonusForSuccess">Bonus for success</label>
-            <input type="text" class="form-control" id="bonusForSuccess" name="bonusForSuccess" placeholder=""
-                   value="${paymentInfo.bonusForSuccess}" required>
-            <div class="invalid-feedback">
-                Please input a correct bonus for success.
-            </div>
-        </div>
-
-        <div class="row">
             <div class="col-md-6 mb-3">
-                <label for="numberOfShares">Number of shares</label>
-                <input type="text" class="form-control" id="numberOfShares" name="numberOfShares" placeholder=""
-                       value="${paymentInfo.numberOfShares}" required>
+                <label for="bonusForSuccess">Bonus for success</label>
+                <input type="text" class="form-control" id="bonusForSuccess" name="bonusForSuccess" placeholder=""
+                       value="${paymentInfo.bonusForSuccess}" required>
                 <div class="invalid-feedback">
-                    Please input a correct number of shares.
+                    Please input a correct bonus for success.
                 </div>
             </div>
-            <div class="col-md-6 mb-3" hidden>
-                <label for="cumulatedShares">Cumulated shares</label>
-                <input type="text" class="form-control" id="cumulatedShares" name="cumulatedShares" placeholder=""
-                       value="${paymentInfo.cumulatedShares}" required>
-                <div class="invalid-feedback">
-                    Please input a correct cumulated shares.
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="numberOfShares">Number of shares</label>
+                    <input type="text" class="form-control" id="numberOfShares" name="numberOfShares" placeholder=""
+                           value="${paymentInfo.numberOfShares}" required>
+                    <div class="invalid-feedback">
+                        Please input a correct number of shares.
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3" hidden>
+                    <label for="cumulatedShares">Cumulated shares</label>
+                    <input type="text" class="form-control" id="cumulatedShares" name="cumulatedShares" placeholder=""
+                           value="${paymentInfo.cumulatedShares}" required>
+                    <div class="invalid-feedback">
+                        Please input a correct cumulated shares.
+                    </div>
                 </div>
             </div>
-        </div>
+        </c:if>
 
         <hr>
         <button class="w-10 btn btn-primary btn-lg" type="submit" name="action" value="save">Save</button>
-        <button class="w-10 btn btn-danger btn-lg" type="submit" name="action" value="delete">Delete Employee</button>
+
+        <c:if test="${isAdmin == true}">
+            <button class="w-10 btn btn-danger btn-lg" type="submit" name="action" value="delete">Delete Employee</button>
+        </c:if>
 
     </form>
     <script src="${pageContext.request.contextPath}/scripts/employee-form-validation.js"></script>
