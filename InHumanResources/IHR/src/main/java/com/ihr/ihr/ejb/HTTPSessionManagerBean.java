@@ -40,11 +40,11 @@ public class HTTPSessionManagerBean implements HTTPSessionManagement {
             throw new ServletException("request lied!!1!");
 
         HttpSession session = request.getSession();
-        request.setAttribute("sessionUserID", userDto.getId());
-        request.setAttribute("sessionEmployeeID", userDto.getEmployeeId());
+        session.setAttribute("sessionUserID", userDto.getId());
+        session.setAttribute("sessionEmployeeID", userDto.getEmployeeId());
 
         EmployeeDto employeeDto = employeeProvider.findById(userDto.getEmployeeId());
-        request.setAttribute("sessionPaymentID", employeeDto.getPaymentInfoDto().getId());
+        session.setAttribute("sessionPaymentID", employeeDto.getPaymentInfoDto().getId());
 
         return true;
     }

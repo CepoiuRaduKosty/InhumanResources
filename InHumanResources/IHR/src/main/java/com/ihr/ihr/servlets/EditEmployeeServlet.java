@@ -53,29 +53,29 @@ public class EditEmployeeServlet extends HttpServlet {
     @Inject
     HTTPSessionManagement httpSessionManagement;
 
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {
         String id_link = request.getParameter("id_link");
-
-        if (id_link == null) {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        if (id_link == null ||
+                (!request.isUserInRole("ADMIN") && Long.parseLong(id_link) != httpSessionManagement.getEmployeeIdLoggedIn(request))) {
+            request.getRequestDispatcher("/WEB-INF/pages/accessDenied.jsp").forward(request, response);
             return;
         }
 
         EmployeeDto employeeDto = employeeProvider.findById(Long.parseLong(id_link));
-
         if (employeeDto == null) {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/pages/accessDenied.jsp").forward(request, response);
             return;
         }
 
         PaymentInfoDto paymentInfoDto = paymentInfoProvider.findPaymentInfoById(employeeDto.getPaymentInfoDto().getId());
         BankInfoDto bankInfoDto = bankInfoProvider.getById(employeeDto.getBankInfoDto().getId());
+
         request.setAttribute("employee", employeeDto);
         request.setAttribute("paymentInfo", paymentInfoDto);
         request.setAttribute("bankInfo", bankInfoDto);
-
         request.setAttribute("employee_id", id_link);
 
         if(request.isUserInRole("ADMIN")){
@@ -103,6 +103,12 @@ public class EditEmployeeServlet extends HttpServlet {
         String action = request.getParameter("action");
         Long employee_id = Long.parseLong(request.getParameter("employee_id"));
 
+        if(!request.isUserInRole("ADMIN") &&
+                !employee_id.equals(httpSessionManagement.getEmployeeIdLoggedIn(request))) {
+            request.getRequestDispatcher("/WEB-INF/pages/accessDenied.jsp").forward(request, response);
+            return;
+        }
+
         if ("save".equals(action) && request.isUserInRole("EMPLOYEE")) {
             String name = request.getParameter("name");
             String surname = request.getParameter("surname");
@@ -125,7 +131,8 @@ public class EditEmployeeServlet extends HttpServlet {
                 paymentInfoDto = new PaymentInfoDto(employeeProvider.findById(employee_id).getPaymentInfoDto().getId(), monthlyBasicSalary, salaryLevel, bonusForSuccess, numberOfShares, cumulatedShares);
 
                 if(!paymentInfoValidation.isPaymentInfoDtoValid(paymentInfoDto)) {
-                    throw new ServletException("invalid information"); // todo change this to show user-friendly errors
+                    request.getRequestDispatcher("/WEB-INF/pages/accessDenied.jsp").forward(request, response);
+                    return;
                 }
             }
 
@@ -137,8 +144,11 @@ public class EditEmployeeServlet extends HttpServlet {
 
             UserCreationDto userCreationDto = userCreationDtoMapping.fromRequest(request);
 
-            if(!employeeValidation.isEmployeeDataValid(employeeDto) || !bankInfoValidation.isBankInfoDtoValid(bankInfoDto))
-                throw new ServletException("invalid information"); // todo change this to show user-friendly errors
+            if(!employeeValidation.isEmployeeDataValid(employeeDto) || !bankInfoValidation.isBankInfoDtoValid(bankInfoDto)) {
+                request.getRequestDispatcher("/WEB-INF/pages/accessDenied.jsp").forward(request, response);
+                return;
+            }
+
             checkPasswordFieldValidation(userCreationDto);
 
             try {
