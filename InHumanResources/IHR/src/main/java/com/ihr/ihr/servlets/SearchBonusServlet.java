@@ -3,6 +3,7 @@ package com.ihr.ihr.servlets;
 import com.ihr.ihr.common.dtos.BonusDtos.BonusEntryDto;
 import com.ihr.ihr.common.excep.UnknownBonusException;
 import com.ihr.ihr.common.interf.BonusProvider;
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -11,6 +12,9 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
+@DeclareRoles({"EMPLOYEE", "ADMIN"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN"}),
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"ADMIN"})})
 @WebServlet(name = "SearchBonusServlet", value = "/SearchBonus")
 public class SearchBonusServlet extends HttpServlet {
 
