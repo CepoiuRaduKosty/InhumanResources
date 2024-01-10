@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+import com.ihr.ihr.common.interf.EmployeeProvider;
+import jakarta.persistence.TypedQuery;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -33,6 +35,9 @@ class UserBeanTest {
     EntityManager entityManager;
 
     @Mock
+    TypedQuery<User> typedQuery;
+
+    @Mock
     UserCreationDtoMapper userCreationDtoMapper;
 
     @Mock
@@ -43,6 +48,12 @@ class UserBeanTest {
 
     @Mock
     UserValidation userValidation;
+
+    @Mock
+    EmployeeBean employeeBean;
+
+    @Mock
+    PasswordBean passwordBean;
 
     @InjectMocks
     UserBean userBean;
@@ -125,7 +136,8 @@ class UserBeanTest {
         existingUser.setUsername("oldusername");
 
         when(entityManager.find(User.class, userId)).thenReturn(existingUser);
-        when(userValidation.isUserCreationDtoValid(validUserCreationDto)).thenReturn(false);
+        when(userValidation.isUserCreationDtoValid(validUserCreationDto)).thenReturn(true);
+        when(passwordBean.convertToSha256(anyString())).thenReturn("newpassword");
 
         userBean.updateUserById(userId, validUserCreationDto);
 
@@ -141,35 +153,39 @@ class UserBeanTest {
         Long userId = 123L;
         UserCreationDto validUserCreationDto = new UserCreationDto("newemail@example.com", "newpassword", "newusername");
 
+        when(userValidation.isUserCreationDtoValid(any(UserCreationDto.class))).thenReturn(true);
         when(entityManager.find(User.class, userId)).thenReturn(null);
 
         assertThrows(UnknownUserException.class, () -> userBean.updateUserById(userId, validUserCreationDto));
     }
 
     @Test
-    public void updateUserById_InvalidUserDetails_ThrowsInvalidUserException(){
-        Long userId = 123L;
-        UserCreationDto invalidUserCreationDto = new UserCreationDto("", "", "");
+    public void testUpdateUserById_InvalidDto() {
+        UserCreationDto invalidDto = new UserCreationDto("test@example.com", "", "testUser");
 
-        when(userValidation.isUserCreationDtoValid(invalidUserCreationDto)).thenReturn(true);
+        when(userValidation.isUserCreationDtoValidNoPasswordCheck(invalidDto)).thenReturn(false);
 
-        assertThrows(InvalidUserException.class, () -> userBean.updateUserById(userId, invalidUserCreationDto));
+        assertThrows(InvalidUserException.class, () -> userBean.updateUserById(1L, invalidDto));
     }
 
     @Test
     public void deleteUserById_ValidUserId_DeletesUser() throws UnknownUserException {
-        Long userId = 123L;
-        User existingUser = new User();
-        existingUser.setId(userId);
-        existingUser.setEmail("email@example.com");
-        existingUser.setPassword("password");
-        existingUser.setUsername("username");
+        // Mock a User entity for a valid user ID
+        User user = new User();
+        user.setId(1L);
+        user.setUsername("ion");// Set an example valid user ID
+        // Mock the behavior to return the user when finding by ID
+        when(entityManager.find(User.class, 1L)).thenReturn(user);
+        when(entityManager.createQuery(anyString())).thenReturn(typedQuery);
+        when(typedQuery.setParameter("username", user.getUsername())).thenReturn(typedQuery);
 
-        when(entityManager.find(User.class, userId)).thenReturn(existingUser);
+        // Perform the deletion
+        userBean.deleteUserById(1L);
 
-        userBean.deleteUserById(userId);
-
-        verify(entityManager).remove(existingUser);
+        // Verify that entityManager.remove was called with the user entity
+        verify(entityManager).remove(user);
+        verify(typedQuery).setParameter("username", user.getUsername());
+        verify(typedQuery).executeUpdate();
     }
 
     @Test
@@ -219,18 +235,4 @@ class UserBeanTest {
         assertThrows(UnknownEmployeeException.class, () -> userBean.setEmployeeToUser(userId, employeeId));
     }
 
-    @Test
-    void testDeleteUserWithEmployee() throws UnknownUserException {
-        User mockUser = new User();
-        Employee mockEmployee = new Employee();
-        mockUser.setEmployee(mockEmployee);
-        mockEmployee.setUser(mockUser);
-
-        when(entityManager.find(User.class, 1L)).thenReturn(mockUser);
-
-        userBean.deleteUserById(1L);
-
-        verify(entityManager, times(1)).remove(mockUser);
-        assertNull(mockEmployee.getUser());
-    }
 }
