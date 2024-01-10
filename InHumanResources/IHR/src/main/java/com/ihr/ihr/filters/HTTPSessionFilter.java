@@ -21,6 +21,8 @@ public class HTTPSessionFilter implements Filter {
         httpSessionManagement.getEmployeeIdLoggedIn((HttpServletRequest) request);
         httpSessionManagement.getUserIdLoggedIn((HttpServletRequest) request);
         httpSessionManagement.getPaymentIdLoggedIn((HttpServletRequest) request);
+        request.setAttribute("navIsAdmin", ((HttpServletRequest) request).isUserInRole("ADMIN"));
+        request.setAttribute("navIsEmployee", ((HttpServletRequest) request).isUserInRole("EMPLOYEE"));
         chain.doFilter(request, response);
     }
 
