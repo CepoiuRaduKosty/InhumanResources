@@ -50,6 +50,9 @@ public class EditEmployeeServlet extends HttpServlet {
     @Inject
     UserProvider userProvider;
 
+    @Inject
+    HTTPSessionManagement httpSessionManagement;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
             response) throws ServletException, IOException {

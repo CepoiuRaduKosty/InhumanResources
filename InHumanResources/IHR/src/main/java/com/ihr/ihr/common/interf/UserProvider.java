@@ -5,6 +5,7 @@ import com.ihr.ihr.common.dtos.UserDtos.UserDto;
 import com.ihr.ihr.common.excep.InvalidUserException;
 import com.ihr.ihr.common.excep.UnknownEmployeeException;
 import com.ihr.ihr.common.excep.UnknownUserException;
+import jakarta.transaction.Transactional;
 
 import java.util.Collection;
 
@@ -19,4 +20,9 @@ public interface UserProvider {
     void deleteUserById(Long userID) throws UnknownUserException;
 
     void setEmployeeToUser(Long userID, Long employeeID) throws UnknownUserException, UnknownEmployeeException;
+
+    @Transactional
+    void removeUserGroupByUsername(String username);
+
+    UserDto getUserDtoByUsername(String username);
 }

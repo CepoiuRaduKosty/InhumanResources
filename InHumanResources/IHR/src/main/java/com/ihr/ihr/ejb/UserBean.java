@@ -17,8 +17,8 @@ import com.ihr.ihr.entities.UserGroup;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.servlet.ServletException;
 import jakarta.transaction.Transactional;
 
 import java.util.Collection;
@@ -136,11 +136,26 @@ public class UserBean implements UserProvider {
         entityManager.merge(user);
     }
 
+    @Override
     @Transactional
     public void removeUserGroupByUsername(String username) {
         entityManager.createQuery("DELETE FROM UserGroup u WHERE u.username = :username")
                 .setParameter("username", username)
                 .executeUpdate();
+    }
+
+    @Override
+    public UserDto getUserDtoByUsername(String username) {
+        UserDto userDto;
+        try {
+            User user = entityManager.createQuery("SELECT u FROM User u WHERE u.username = :username", User.class)
+                    .setParameter("username", username)
+                    .getSingleResult();
+            userDto = userEntityMapping.toUserDto(user);
+        } catch (NoResultException e) {
+            return null;
+        }
+        return userDto;
     }
 
 }
