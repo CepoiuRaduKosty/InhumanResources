@@ -5,19 +5,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <header>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: linear-gradient(to right, #192a56, #0097e6);">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">IHR</a>
+            <a class="navbar-brand" href="#" style="color: white;">IHR</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page"
-                           href="${pageContext.request.contextPath}">Home</a>
+                        <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}" style="color: white;">Home</a>
                     </li>
                     <% request.setAttribute("navIsAdmin", request.isUserInRole("ADMIN")); %>
                     <% request.setAttribute("navIsEmployee", request.isUserInRole("EMPLOYEE")); %>
@@ -33,18 +31,15 @@
                             <li><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EmployeePaychecks?employeeId=${sessionScope.sessionEmployeeID}">| My Paychecks </a></li>
                         </c:when>
                     </c:choose>
-
-
-
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <c:choose>
                             <c:when test="${pageContext.request.getRemoteUser() == null}">
-                                <a class="nav-link" href="${pageContext.request.contextPath}/Login">Login</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/Login" style="color: white;">Login</a>
                             </c:when>
                             <c:otherwise>
-                                <a class="nav-link" href="${pageContext.request.contextPath}/Logout">Logout</a>
+                                <a class="nav-link" href="${pageContext.request.contextPath}/Logout" style="color: white;">Logout</a>
                             </c:otherwise>
                         </c:choose>
                     </li>
@@ -53,3 +48,4 @@
         </div>
     </nav>
 </header>
+

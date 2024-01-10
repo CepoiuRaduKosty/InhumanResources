@@ -33,6 +33,27 @@
                 opacity: 1;
             }
         }
+
+        .navbar {
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link {
+            transition: color 0.3s ease;
+        }
+
+        .navbar-toggler {
+            border-color: white;
+        }
+
+        /* Hover effect */
+        .navbar:hover {
+            background: linear-gradient(to right, #192a56, #0097e6);
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #192a56 !important;
+        }
     </style>
 </head>
 <body style="display: flex; flex-direction: column; min-height: 100vh;margin: 0;width: 100%;padding: 0;">
