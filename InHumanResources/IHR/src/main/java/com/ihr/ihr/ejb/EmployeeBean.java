@@ -1,5 +1,9 @@
 package com.ihr.ihr.ejb;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+
 import com.ihr.ihr.common.dtos.BankInfoDtos.BankInfoDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.CreateEmployeeDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
@@ -7,22 +11,24 @@ import com.ihr.ihr.common.dtos.EmployeeDtos.UpdateEmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.excep.InvalidEmployeeDto;
 import com.ihr.ihr.common.excep.UnknownBankInfoException;
+import com.ihr.ihr.common.excep.UnknownEmployeeException;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
+import com.ihr.ihr.common.excep.UnknownUserException;
 import com.ihr.ihr.common.interf.EmployeeProvider;
 import com.ihr.ihr.common.interf.EmployeeValidation;
+import com.ihr.ihr.common.interf.UserProvider;
+import com.ihr.ihr.common.interf.mappers.UserEntityMapping;
 import com.ihr.ihr.entities.BankInfo;
 import com.ihr.ihr.entities.Employee;
 import com.ihr.ihr.entities.PaymentInfo;
+import com.ihr.ihr.entities.User;
+
 import jakarta.ejb.EJBException;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 @Stateless
 public class EmployeeBean implements EmployeeProvider {
@@ -34,6 +40,12 @@ public class EmployeeBean implements EmployeeProvider {
 
     @Inject
     EmployeeValidation employeeValidation;
+
+    @Inject
+    UserEntityMapping userEntityMapping;
+
+    @Inject
+    UserProvider userProvider;
 
     private void setEmployeeInformation(Employee employee, UpdateEmployeeDto updateEmployeeDto)
     {
@@ -93,6 +105,17 @@ public class EmployeeBean implements EmployeeProvider {
     {
         LOG.info("deleteEmployeeById");
         Employee employee = entityManager.find(Employee.class, employeeId);
+
+        if(employee.getUser() != null) {
+            User user = employee.getUser();
+            user.setEmployee(null);
+            entityManager.merge(user);
+            try {
+                userProvider.deleteUserById(user.getId());
+            } catch (UnknownUserException e) {
+                throw new RuntimeException(e);  // should not happen
+            }
+        }
 
         BankInfo bankInfo = employee.getBankInfo();
         PaymentInfo paymentInfo = employee.getPaymentInfo();
@@ -200,6 +223,35 @@ public class EmployeeBean implements EmployeeProvider {
         employeeDto.setBankInfoDto(bankInfoDto);
         employeeDto.setPaymentInfoDto(paymentInfoDto);
 
+        if(employee.getUser() != null) {
+            employeeDto.setUserDto(userEntityMapping.toUserDto(employee.getUser()));
+            employeeDto.getUserDto().setPassword("");
+        }
+
+
         return employeeDto;
+    }
+
+    private User safeGetUserEntityById(Long userID) throws UnknownUserException {
+        User user = entityManager.find(User.class, userID);
+        if (user == null)
+            throw new UnknownUserException();
+        return user;
+    }
+
+    private Employee safeGetEmployeeEntityById(Long employeeID) throws UnknownEmployeeException {
+        Employee employee = entityManager.find(Employee.class, employeeID);
+        if (employee == null)
+            throw new UnknownEmployeeException();
+        return employee;
+    }
+
+    @Override
+    public void setUserToEmployee(Long userID, Long employeeID) throws UnknownEmployeeException, UnknownUserException {
+        User user = safeGetUserEntityById(userID);
+        Employee employee = safeGetEmployeeEntityById(employeeID);
+
+        employee.setUser(user);
+        entityManager.merge(employee);
     }
 }

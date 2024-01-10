@@ -7,6 +7,7 @@ import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.interf.BonusProvider;
 import com.ihr.ihr.common.interf.BonusValidation;
 import com.ihr.ihr.common.interf.EmployeeProvider;
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -14,6 +15,9 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 
+@DeclareRoles({"EMPLOYEE", "ADMIN"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN"}),
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"ADMIN"})})
 @WebServlet(name = "CreateBonusForEmployeeServlet", value = "/CreateBonusForEmployee")
 public class CreateBonusForEmployeeServlet extends HttpServlet {
 

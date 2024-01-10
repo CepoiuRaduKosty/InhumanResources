@@ -13,9 +13,11 @@
       <class>com.ihr.ihr.entities.BonusInfo</class>
       <class>com.ihr.ihr.entities.Paycheck</class>
     <class>com.ihr.ihr.entities.PaycheckBonus</class>
+      <class>com.ihr.ihr.entities.User</class>
+      <class>com.ihr.ihr.entities.UserGroup</class>
 
 
-    <properties>
+      <properties>
       <property name="jakarta.persistence.schema-generation.database.action" value="create-or-extend-tables" />
     </properties>
   </persistence-unit>

@@ -8,8 +8,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
 <t:pageTemplate pageTitle="Edit Employee">
     <br>
     <br>
@@ -94,6 +92,24 @@
         <br>
         <br>
 
+        <h1>Login information:</h1>
+        <br>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="username" class="sr-only col-md-6 mb-3">Username</label>
+                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required
+                       autofocus value="${employee.userDto.username}"/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Email" required value="${employee.userDto.email}"/>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="password" class="sr-only col-md-6 mb-3">Password</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password"/>
+            </div>
+        </div>
+
         <h1>Employee bank information:</h1>
         <br>
         <div class="row">
@@ -120,69 +136,73 @@
         <br>
         <br>
 
-        <h1>Employee payment information:</h1>
-        <br>
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="monthlyBasicSalary">Monthly basic salary</label>
-                <input type="text" class="form-control" id="monthlyBasicSalary" name="monthlyBasicSalary" placeholder=""
-                       value="${paymentInfo.monthlyBasicSalary}" required>
-                <div class="invalid-feedback">
-                    Please input a correct Monthly Basic Salary.
+        <c:if test="${isAdmin == true}">
+            <h1>Employee payment information:</h1>
+            <br>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="monthlyBasicSalary">Monthly basic salary</label>
+                    <input type="text" class="form-control" id="monthlyBasicSalary" name="monthlyBasicSalary" placeholder=""
+                           value="${paymentInfo.monthlyBasicSalary}" required>
+                    <div class="invalid-feedback">
+                        Please input a correct Monthly Basic Salary.
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="salaryLevel" class="form-label">Salary level</label>
+                    <select class="form-select" id="salaryLevel" name="salaryLevel" required>
+                        <option selected value="">Choose</option>
+                        <option value="LECTURER" ${paymentInfo.salaryLevel == 'LECTURER' ? 'selected' : ''}>LECTURER
+                        </option>
+                        <option value="ASSOCIATE" ${paymentInfo.salaryLevel == 'ASSOCIATE' ? 'selected' : ''}>ASSOCIATE
+                        </option>
+                        <option value="PROFESSOR" ${paymentInfo.salaryLevel == 'PROFESSOR' ? 'selected' : ''}>PROFESSOR
+                        </option>
+                        <option value="EXECUTIVE" ${paymentInfo.salaryLevel == 'EXECUTIVE' ? 'selected' : ''}>EXECUTIVE
+                        </option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please input a salary level.
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-6 mb-3">
-                <label for="salaryLevel" class="form-label">Salary level</label>
-                <select class="form-select" id="salaryLevel" name="salaryLevel" required>
-                    <option selected value="">Choose</option>
-                    <option value="LECTURER" ${paymentInfo.salaryLevel == 'LECTURER' ? 'selected' : ''}>LECTURER
-                    </option>
-                    <option value="ASSOCIATE" ${paymentInfo.salaryLevel == 'ASSOCIATE' ? 'selected' : ''}>ASSOCIATE
-                    </option>
-                    <option value="PROFESSOR" ${paymentInfo.salaryLevel == 'PROFESSOR' ? 'selected' : ''}>PROFESSOR
-                    </option>
-                    <option value="EXECUTIVE" ${paymentInfo.salaryLevel == 'EXECUTIVE' ? 'selected' : ''}>EXECUTIVE
-                    </option>
-                </select>
+                <label for="bonusForSuccess">Bonus for success</label>
+                <input type="text" class="form-control" id="bonusForSuccess" name="bonusForSuccess" placeholder=""
+                       value="${paymentInfo.bonusForSuccess}" required>
                 <div class="invalid-feedback">
-                    Please input a salary level.
+                    Please input a correct bonus for success.
                 </div>
             </div>
-        </div>
 
-
-        <div class="col-md-6 mb-3">
-            <label for="bonusForSuccess">Bonus for success</label>
-            <input type="text" class="form-control" id="bonusForSuccess" name="bonusForSuccess" placeholder=""
-                   value="${paymentInfo.bonusForSuccess}" required>
-            <div class="invalid-feedback">
-                Please input a correct bonus for success.
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="numberOfShares">Number of shares</label>
-                <input type="text" class="form-control" id="numberOfShares" name="numberOfShares" placeholder=""
-                       value="${paymentInfo.numberOfShares}" required>
-                <div class="invalid-feedback">
-                    Please input a correct number of shares.
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="numberOfShares">Number of shares</label>
+                    <input type="text" class="form-control" id="numberOfShares" name="numberOfShares" placeholder=""
+                           value="${paymentInfo.numberOfShares}" required>
+                    <div class="invalid-feedback">
+                        Please input a correct number of shares.
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3" hidden>
+                    <label for="cumulatedShares">Cumulated shares</label>
+                    <input type="text" class="form-control" id="cumulatedShares" name="cumulatedShares" placeholder=""
+                           value="${paymentInfo.cumulatedShares}" required>
+                    <div class="invalid-feedback">
+                        Please input a correct cumulated shares.
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 mb-3" hidden>
-                <label for="cumulatedShares">Cumulated shares</label>
-                <input type="text" class="form-control" id="cumulatedShares" name="cumulatedShares" placeholder=""
-                       value="${paymentInfo.cumulatedShares}" required>
-                <div class="invalid-feedback">
-                    Please input a correct cumulated shares.
-                </div>
-            </div>
-        </div>
+        </c:if>
 
         <hr>
         <button class="w-10 btn btn-primary btn-lg" type="submit" name="action" value="save">Save</button>
-        <button class="w-10 btn btn-danger btn-lg" type="submit" name="action" value="delete">Delete Employee</button>
+
+        <c:if test="${isAdmin == true}">
+            <button class="w-10 btn btn-danger btn-lg" type="submit" name="action" value="delete">Delete Employee</button>
+        </c:if>
 
     </form>
     <script src="${pageContext.request.contextPath}/scripts/employee-form-validation.js"></script>

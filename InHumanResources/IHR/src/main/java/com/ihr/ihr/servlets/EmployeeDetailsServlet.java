@@ -5,10 +5,8 @@ import com.ihr.ihr.common.dtos.BonusDtos.BonusDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
 import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
 import com.ihr.ihr.common.enums.SalaryLevelEnum;
-import com.ihr.ihr.common.interf.BankInfoProvider;
-import com.ihr.ihr.common.interf.BonusProvider;
-import com.ihr.ihr.common.interf.EmployeeProvider;
-import com.ihr.ihr.common.interf.PaymentInfoProvider;
+import com.ihr.ihr.common.interf.*;
+import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -18,6 +16,9 @@ import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 
+@DeclareRoles({"EMPLOYEE", "ADMIN"})
+@ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN", "EMPLOYEE"}),
+        httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"ADMIN", "EMPLOYEE"})})
 @WebServlet(name = "EmployeeDetailsServlet", value = "/EmployeeDetails")
 public class EmployeeDetailsServlet extends HttpServlet {
     @Inject
@@ -28,6 +29,8 @@ public class EmployeeDetailsServlet extends HttpServlet {
     PaymentInfoProvider paymentInfoProvider;
     @Inject
     BonusProvider bonusProvider;
+    @Inject
+    HTTPSessionManagement httpSessionManagement;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse
@@ -38,8 +41,9 @@ public class EmployeeDetailsServlet extends HttpServlet {
         boolean isnumberOfSharesHidden = true;
         id_link = request.getParameter("id_link");
 
-        if (id_link == null) {
-            request.getRequestDispatcher("/index.jsp").forward(request, response);
+        if (id_link == null ||
+                (!request.isUserInRole("ADMIN") && Long.parseLong(id_link) != httpSessionManagement.getEmployeeIdLoggedIn(request))) {
+            request.getRequestDispatcher("/WEB-INF/pages/accessDenied.jsp").forward(request, response);
             return;
         }
 
