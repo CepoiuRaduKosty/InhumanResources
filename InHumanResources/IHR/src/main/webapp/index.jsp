@@ -13,7 +13,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <div class="card mb-4">
+          <div class="card mb-4 my-card">
             <div class="card-body">
               <h2 class="card-title">Employee Management</h2>
               <p class="card-text">Effortlessly manage your employee records, roles, and permissions.</p>
@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card mb-4">
+          <div class="card mb-4 my-card">
             <div class="card-body">
               <h2 class="card-title">Custom Bonuses Management</h2>
               <p class="card-text">Manage custom bonuses for employees.</p>
@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card mb-4">
+          <div class="card mb-4 my-card">
             <div class="card-body">
               <h2 class="card-title">Custom Payment Date</h2>
               <p class="card-text">Set customized payment dates for employee compensation.</p>
@@ -37,7 +37,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card mb-4">
+          <div class="card mb-4 my-card">
             <div class="card-body">
               <h2 class="card-title">Paycheck Generator</h2>
               <p class="card-text">Generate employee paychecks with ease.</p>
@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="col-md-4">
-          <div class="card mb-4">
+          <div class="card mb-4 my-card">
             <div class="card-body">
               <h2 class="card-title">Paycheck History</h2>
               <p class="card-text">View the history of generated employee paychecks.</p>
