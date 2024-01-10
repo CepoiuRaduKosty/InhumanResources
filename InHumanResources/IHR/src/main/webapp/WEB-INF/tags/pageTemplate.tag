@@ -38,27 +38,112 @@
             transition: background-color 0.3s ease;
         }
 
-        .navbar-nav .nav-link {
-            transition: color 0.3s ease;
-        }
-
         .navbar-toggler {
             border-color: white;
         }
 
-        /* Hover effect */
         .navbar:hover {
             background: linear-gradient(to right, #192a56, #0097e6);
         }
 
         .navbar-nav .nav-link:hover {
+            color: #7ec8e3  !important;
+        }
+
+        .navbar-nav .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: -2px; /* Adjust as needed */
+            left: 0;
+            width: 0;
+            height: 2px; /* Bar height */
+            background-color: #7ec8e3;
+            transition: width 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover::before {
+            width: 100%;
+        }
+
+        .navbar-brand {
+            background: linear-gradient(to right, #7accee, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 5px 10px;
+            border: 2px solid white;
+            border-radius: 5px;
+            transition: background 0.7s ease, -webkit-text-fill-color 0.7s ease;
+        }
+
+        /* Hover effect */
+        .navbar-brand:hover {
+            background: linear-gradient(to right, #192a56, #0097e6);
+            -webkit-text-fill-color: white;
+            transition: background 0.7s ease, -webkit-text-fill-color 0.7s ease;
+            animation: gradientInvert 0.5s ease;
+        }
+
+        /* Optional: Add animation */
+        @keyframes gradientInvert {
+            from {
+                -webkit-text-fill-color: transparent;
+            }
+            to {
+                -webkit-text-fill-color: white;
+            }
+        }
+
+        .login-btn-container .login-btn .nav-link {
+            transition: color 0.3s ease;
+        }
+
+        .login-btn-container .login-btn .nav-link:hover {
             color: #192a56 !important;
+        }
+
+        .login-btn-container .login-btn .nav-link[href*="Login"] {
+            background-color: white;
+            color: #000000 !important; /* Set the default text color to black */
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .login-btn-container .login-btn .nav-link[href*="Login"]:hover {
+            background-color: #000000;
+            color: white !important;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .login-title {
+            background: linear-gradient(to right, #192a56, #0097e6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bolder;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
         }
     </style>
 </head>
 <body style="display: flex; flex-direction: column; min-height: 100vh;margin: 0;width: 100%;padding: 0;">
     <t:navbar/>
-    <main class="flex-grow-1 mt-5" style="width: 100%;margin: 0;">
+    <main class="flex-grow-1 mt-5" style="width: 100%;margin: 0;padding-top: 56px;">
         <jsp:doBody />
     </main>
     <footer class="footer mt-auto py-4" style="background: linear-gradient(to right, #192a56, #0097e6); color: white;">

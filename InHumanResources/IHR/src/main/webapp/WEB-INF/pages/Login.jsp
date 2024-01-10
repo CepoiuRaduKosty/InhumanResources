@@ -5,23 +5,48 @@
 
 <t:pageTemplate pageTitle="Login">
     <c:if test="${message != null}">
-        <div class="alert alert-warning" role="alert">
-            ${message}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     </c:if>
-    <form class="form-signin" method="POST" action="j_security_check">
-        <h1 class="h3 mb-3 font-weight-normal">Sign in</h1>
 
-        <label for="username" class="sr-only">Username</label>
-        <input type="text" id="username" name="j_username" class="form-control" placeholder="Username" required
-               autofocus/>
+    <h1 class="h3 mb-3 font-weight-normal text-center login-title">Sign in</h1>
+    <div class="mx-auto mt-5" style="max-width: 400px;">
+        <div class="card" style="background-color: #17202a; color: white; border: none;">
+            <div class="card-body">
+                <form class="form-signin" method="POST" action="j_security_check">
+                    <div class="mb-5">
+                        <label for="username" class="sr-only">Username</label>
+                        <input type="text" id="username" name="j_username" class="form-control" placeholder="Username" required autofocus/>
+                    </div>
 
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" name="j_password" class="form-control" placeholder="Password" required/>
+                    <div class="mb-5">
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" id="password" name="j_password" class="form-control" placeholder="Password" required/>
+                    </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-    </form>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                        </div>
+                        <div class="col-md-6">
+                            <a class="btn btn-lg btn-danger btn-block" href="${pageContext.request.contextPath}/CreateAccount">Create Account</a>
+                        </div>
+                    </div>
+
+                    <hr class="my-2">
+
+                    <p class="text-muted mb-0 text-center">By clicking Sign up, you agree to the terms of use.</p>
+                </form>
+                <script src="${pageContext.request.contextPath}/scripts/account-validation.js"></script>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <script src="${pageContext.request.contextPath}/scripts/account-validation.js"></script>
-    <a class="w-10 btn btn-primary btn-lg nav-link active"
-       href="${pageContext.request.contextPath}/CreateAccount">Create Account</a>
+
 </t:pageTemplate>
