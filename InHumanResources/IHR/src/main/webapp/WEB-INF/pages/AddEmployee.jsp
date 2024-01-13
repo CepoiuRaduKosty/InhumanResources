@@ -9,11 +9,16 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
+<style>
+    .page-container {
+        padding: 0 10%;
+    }
+</style>
 <t:pageTemplate pageTitle="Add Employee">
+    <div class="page-container">
     <br>
     <br>
-    <h1>Add Employee</h1>
+    <h1 class="d-flex justify-content-center">Add Employee</h1>
     <br>
     <br>
 
@@ -98,7 +103,7 @@
         <br>
         <div class="row">
             <div class="col-md-6 mb-3">
-                <label for="username" class="sr-only col-md-6 mb-3">Username</label>
+                <label for="username">Username</label>
                 <input type="text" id="username" name="username" class="form-control" placeholder="Username" required
                        autofocus/>
             </div>
@@ -106,16 +111,22 @@
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" class="form-control" placeholder="Email" required/>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6 mb-3">
-                <label for="password" class="sr-only col-md-6 mb-3">Password</label>
+                <label for="password">Password</label>
                 <input type="password" id="password" name="password" class="form-control" placeholder="Password" required/>
             </div>
             <div class="col-md-6 mb-3">
-                <label for="user_groups">Type of User</label>
-                <select class="custom-select d-block w-100" id="user_groups" name="user_groups">
+                <label for="user_groups" class="form-label">Type of User</label>
+                <select class="form-select" id="user_groups" name="user_groups" required>
+                    <option selected value="">Choose</option>
                     <option value="EMPLOYEE">Employee</option>
-                    <option value="ADMIN">Administrator</option>
+                    <option value="ADMIN">Admin</option>
                 </select>
+                <div class="invalid-feedback">
+                    Please input a salary level.
+                </div>
             </div>
         </div>
 
@@ -201,8 +212,8 @@
             </div>
         </div>
 
-        <hr>
         <button class="w-10 btn btn-primary btn-lg" type="submit">Save</button>
     </form>
     <script src="${pageContext.request.contextPath}/scripts/employee-form-validation.js"></script>
+    </div>
 </t:pageTemplate>

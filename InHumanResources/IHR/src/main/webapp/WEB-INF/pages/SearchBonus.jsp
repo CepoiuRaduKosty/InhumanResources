@@ -3,12 +3,13 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:pageTemplate pageTitle="Search Bonus">
-  <br>
+
+
   <div class="container mt-5">
-    <h2 class="mb-4">Search Bonus</h2>
+
+    <h2 class="d-flex justify-content-center">Search Bonus</h2>
 
     <!-- Add Bonus Button -->
-    <a href="${pageContext.request.contextPath}/CreateBonusFindEmployee" class="btn btn-primary mb-3">Add Bonus</a>
 
     <!-- Search Form -->
     <form action="${pageContext.request.contextPath}/SearchBonus" method="post">
@@ -20,8 +21,8 @@
       <!-- Add other search input fields as needed -->
 
       <button type="submit" class="btn btn-success">Search</button>
+      <a href="${pageContext.request.contextPath}/CreateBonusFindEmployee" class="btn btn-primary">Add Bonus</a>
     </form>
-
     <!-- Display Bonus Results -->
     <c:if test="${not empty bonusEntries}">
       <table class="table table-bordered">
@@ -42,12 +43,12 @@
             <td>${bonusEntry.employeeName} ${bonusEntry.employeeSurname}</td>
             <td>${bonusEntry.bonusDescription}</td>
             <td>${bonusEntry.bonusValue}</td>
-            <td><a href="${pageContext.request.contextPath}/EditBonus?bonusId=${bonusEntry.id}">Edit</a></td>
+            <td><a class="btn-link" href="${pageContext.request.contextPath}/EditBonus?bonusId=${bonusEntry.id}">Edit</a></td>
             <td>
               <form action="${pageContext.request.contextPath}/SearchBonus" method="post">
                 <input type="hidden" name="action" value="delete">
                 <input type="hidden" name="bonusId" value="${bonusEntry.id}">
-                <button type="submit" class="btn btn-link" onclick="return confirm('Are you sure you want to delete this bonus?')">Delete</button>
+                <a type="submit" class="btn-link" onclick="return confirm('Are you sure you want to delete this bonus?')">Delete</a>
               </form>
             </td>
           </tr>

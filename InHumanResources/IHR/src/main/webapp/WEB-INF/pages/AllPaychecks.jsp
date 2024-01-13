@@ -7,9 +7,9 @@
     <div class="container mt-5">
         <br>
         <br>
-        <h2 class="mb-4">All Paychecks</h2>
+        <h1 class="d-flex justify-content-center">All Paychecks</h1>
 
-        <div class="row mb-3">
+        <div class=" row d-flex justify-content-center">
             <div class="col-md-3">
                 <label for="filterDate">Filter by Date:</label>
                 <input type="date" id="filterDate" class="form-control" oninput="filterTable()" />

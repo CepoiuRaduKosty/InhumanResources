@@ -8,23 +8,35 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<style>
+    .page-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 10%;
+    }
+</style>
 
 <t:pageTemplate pageTitle="Add Pay Day">
-    <h1>Add Pay Day</h1>
-    <form class="needs-validation" novalidate method="post" action="${pageContext.request.contextPath}/AddPayDay">
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label for="payDayOfMonth">payDayOfMonth</label>
-                <input type="text" class="form-control" id="payDayOfMonth" name="payDayOfMonth" placeholder=""
-                       value="${payDayOfMonth}" required>
-                <div class="invalid-feedback">
-                    Please input a correct pay day.
+    <div class="container">
+        <div class="page-container">
+            <h1>Add Pay Day</h1>
+            <form class="needs-validation " novalidate method="post" action="${pageContext.request.contextPath}/AddPayDay">
+                <div class="row">
+                        <label for="payDayOfMonth">Pay day of the month</label>
+                        <input type="text" class="form-control" id="payDayOfMonth" name="payDayOfMonth" placeholder=""
+                               value="${payDayOfMonth}" required>
+                        <div class="invalid-feedback">
+                            Please input a correct pay day.
+                    </div>
                 </div>
-            </div>
+
+
+                <div class="row">
+                    <button class="w-10 btn btn-primary btn-lg mt-2" type="submit">Save</button>
+                </div>
+            </form>
+            <script src="${pageContext.request.contextPath}/scripts/payDay-form-validation.js"></script>
         </div>
-        <hr>
-        <button class="w-10 btn btn-primary btn-lg" type="submit">Save</button>
-    </form>
-    <script src="${pageContext.request.contextPath}/scripts/payDay-form-validation.js"></script>
+    </div>
 </t:pageTemplate>

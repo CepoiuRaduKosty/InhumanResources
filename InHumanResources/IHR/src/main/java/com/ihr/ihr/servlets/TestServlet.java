@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.sql.SQLRecoverableException;
 import java.util.ArrayList;
 
 @WebServlet(name = "TestServlet", value = "/test")
@@ -29,11 +30,11 @@ public class TestServlet extends HttpServlet {
         ArrayList<String> debug = new ArrayList<>();
 
         // test code
-        debug.add("asa se face debug");
+        throw new ServletException("HOMA");
         // end test
 
-        request.setAttribute("debugtxt", debug);
-        request.getRequestDispatcher("/WEB-INF/pages/test.jsp").forward(request, response);
+        //request.setAttribute("debugtxt", debug);
+       // request.getRequestDispatcher("/WEB-INF/pages/test.jsp").forward(request, response);
     }
 
     @Override

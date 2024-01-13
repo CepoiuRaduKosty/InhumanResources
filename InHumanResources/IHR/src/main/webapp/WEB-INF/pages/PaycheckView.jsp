@@ -1,10 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
-
+<style>
+    .page-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 0 10%;
+    }
+</style>
 <t:pageTemplate pageTitle="Paycheck View">
 
-    <div class="container mt-5">
+    <div class="mt-5 page-container">
         <br>
         <br>
         <h2 class="mb-4">Paycheck Details</h2>

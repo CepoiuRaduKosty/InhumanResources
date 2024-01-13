@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <h1>Create Bonus For Employee ${employeeDto.getName()} ${employeeDto.getSurname()}</h1>
+                <h1 class="d-flex justify-content-center">Create Bonus For Employee ${employeeDto.getName()} ${employeeDto.getSurname()}</h1>
                 <c:if test="${not empty error}">
                     <div class="alert alert-danger" role="alert">
                             ${error}

@@ -5,7 +5,7 @@
 <t:pageTemplate pageTitle="Employee Search">
     <div class="container mt-5">
 
-        <h1>Find Employee</h1>
+        <h1 class="d-flex justify-content-center">Find Employee</h1>
         <c:if test="${not empty error}">
             <div class="alert alert-danger" role="alert">
                     ${error}
@@ -22,15 +22,15 @@
                                        placeholder="Enter employee name" required>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col mt-3">
-                                <button type="submit" class="btn btn-primary btn-block">Search</button>
-                            </div>
-                            <div class="col mt-3">
-                                <a class="btn btn-secondary btn-block"
-                                   href="${pageContext.request.contextPath}/AddEmployee">Add a new
-                                    employee</a>
-                            </div>
+                        <div style="padding-top: 20px">
+
+                            <button type="submit" class="btn btn-primary btn-block">Search</button>
+
+
+                            <a class="btn btn-secondary btn-block"
+                               href="${pageContext.request.contextPath}/AddEmployee">Add a new
+                                employee</a>
+
                         </div>
                     </div>
                 </form>

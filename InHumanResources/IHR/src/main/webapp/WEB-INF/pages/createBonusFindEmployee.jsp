@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <t:pageTemplate pageTitle="Create Bonus For Employee">
     <div class="container mt-5">
-        <h1>Find Employee to Add Bonus To</h1>
+        <h1 class="d-flex justify-content-center">Find Employee to Add Bonus To</h1>
         <c:if test="${not empty error}">
             <div class="alert alert-danger" role="alert">
                     ${error}
@@ -14,7 +14,7 @@
                 <label for="employeeName">Employee Name:</label>
                 <input type="text" class="form-control" id="employeeName" name="employeeName" placeholder="Enter employee name" required>
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="submit" class="btn btn-primary mt-2">Search</button>
         </form>
 
         <c:if test="${not empty matchingEmployees}">
