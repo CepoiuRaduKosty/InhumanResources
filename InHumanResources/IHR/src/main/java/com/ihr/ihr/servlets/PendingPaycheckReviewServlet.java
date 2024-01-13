@@ -175,7 +175,7 @@ public class PendingPaycheckReviewServlet extends HttpServlet {
                 }
             }
 
-            response.sendRedirect(request.getContextPath() + "/PendingPaycheckReview?employeeId=" + employeeId);
+            response.sendRedirect(request.getContextPath() + "/PaycheckManagement");
 
         } catch (UnknownPaymentInfoException | InvalidPaycheckBonusException e) {
             throw new RuntimeException(e);
