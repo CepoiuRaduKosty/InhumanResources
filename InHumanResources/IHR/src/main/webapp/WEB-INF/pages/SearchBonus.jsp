@@ -3,8 +3,10 @@
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:pageTemplate pageTitle="Search Bonus">
-  <br>
+
+
   <div class="container mt-5">
+
     <h2 class="d-flex justify-content-center">Search Bonus</h2>
 
     <!-- Add Bonus Button -->
@@ -19,9 +21,8 @@
       <!-- Add other search input fields as needed -->
 
       <button type="submit" class="btn btn-success">Search</button>
-      <button href="${pageContext.request.contextPath}/CreateBonusFindEmployee" class="btn btn-primary">Add Bonus</button>
+      <a href="${pageContext.request.contextPath}/CreateBonusFindEmployee" class="btn btn-primary">Add Bonus</a>
     </form>
-
     <!-- Display Bonus Results -->
     <c:if test="${not empty bonusEntries}">
       <table class="table table-bordered">

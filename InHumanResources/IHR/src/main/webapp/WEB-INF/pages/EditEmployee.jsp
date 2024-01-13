@@ -206,7 +206,7 @@
             </div>
         </c:if>
 
-        <hr>
+
         <button class="w-10 btn btn-primary btn-lg" type="submit" name="action" value="save">Save</button>
 
         <c:if test="${isAdmin == true}">

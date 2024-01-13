@@ -212,7 +212,6 @@
             </div>
         </div>
 
-        <hr>
         <button class="w-10 btn btn-primary btn-lg" type="submit">Save</button>
     </form>
     <script src="${pageContext.request.contextPath}/scripts/employee-form-validation.js"></script>

@@ -16,12 +16,12 @@
         <div class="card" style="background-color: #17202a; color: white; border: none;">
             <div class="card-body">
                 <form class="form-signin" method="POST" action="j_security_check">
-                    <div class="mb-5">
+                    <div class="mb-3">
                         <label for="username" class="sr-only">Username</label>
                         <input type="text" id="username" name="j_username" class="form-control" placeholder="Username" required autofocus/>
                     </div>
 
-                    <div class="mb-5">
+                    <div class="mb-3">
                         <label for="password" class="sr-only">Password</label>
                         <input type="password" id="password" name="j_password" class="form-control" placeholder="Password" required/>
                     </div>
@@ -29,9 +29,6 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                        </div>
-                        <div class="col-md-6">
-                            <a class="btn btn-lg btn-danger btn-block" href="${pageContext.request.contextPath}/CreateAccount">Create Account</a>
                         </div>
                     </div>
 

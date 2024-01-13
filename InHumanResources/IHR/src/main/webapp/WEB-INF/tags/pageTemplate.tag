@@ -148,11 +148,11 @@
     </main>
     <footer class="footer mt-auto py-4" style="background: linear-gradient(to right, #192a56, #0097e6); color: white;">
         <div class="container text-center">
-            <p style="font-size: 16px;margin-bottom: 3px;">Created by:</p>
-            <div class="row justify-content-center">
+            <div style="font-size: 16px;margin-bottom: 3px;">Created by:</div>
+            <div class="row justify-content-center mt-2">
                 <div class="col-auto mb-1">
                     <div class="text-center">
-                        <p style="font-size: 14px; margin-top: 3px;"><strong>Cepoiu Radu</strong></p>
+                        <p style="font-size: 14px; margin-bottom: 3px;"><strong>Cepoiu Radu</strong></p>
                     </div>
                 </div>
                 <div class="col-auto mb-1">

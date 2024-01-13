@@ -1,6 +1,13 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+    .box
+    {
+        width: 380px;
+        min-height: 200px;
+    }
+</style>
 <t:pageTemplate pageTitle="InHumanResources">
     <section class="hero text-center py-5" style="color: black;">
         <div class="container-fluid">
@@ -16,7 +23,7 @@
                 <c:choose>
                     <c:when test="${requestScope.navIsAdmin}">
                         <div class="col-md-4">
-                            <div class="card mb-4 my-card">
+                            <div class="card mb-4 my-card box">
                                 <a class="nav-link active" aria-current="page"
                                    href="${pageContext.request.contextPath}/FindEmployee">
                                     <div class="card-body">
@@ -28,7 +35,7 @@
                             </div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card mb-4 my-card">
+                            <div class="card mb-4 my-card box">
                                 <a class="nav-link active" aria-current="page"
                                    href="${pageContext.request.contextPath}/SearchBonus">
                                     <div class="card-body">
@@ -40,7 +47,7 @@
                         </div>
 
                         <div class="col-md-4">
-                            <div class="card mb-4 my-card">
+                            <div class="card mb-4 my-card box">
                                 <a class="nav-link active" aria-current="page"
                                    href="${pageContext.request.contextPath}/PayDay">
                                     <div class="card-body">
@@ -52,7 +59,7 @@
                         </div>
 
                         <div class="col-md-4">
-                            <div class="card mb-4 my-card">
+                            <div class="card mb-4 my-card box">
                                 <div class="card-body">
                                     <h2 class="card-title">Paycheck Generator</h2>
                                     <p class="card-text">Generate employee paychecks with ease.</p>
@@ -63,7 +70,7 @@
                         <div class="col-md-4">
                             <a class="nav-link active" aria-current="page"
                                href="${pageContext.request.contextPath}/AllPaychecks">
-                                <div class="card mb-4 my-card">
+                                <div class="card mb-4 my-card box">
                                     <div class="card-body">
                                         <h2 class="card-title">Paycheck History</h2>
                                         <p class="card-text">View the history of generated employee paychecks.</p>
@@ -76,7 +83,7 @@
                     <c:when test="${!requestScope.navIsAdmin && requestScope.navIsEmployee}">
 
                         <div class="col-md-4">
-                            <div class="card mb-4 my-card">
+                            <div class="card mb-4 my-card box">
                                 <a class="nav-link active" aria-current="page"
                                    href="${pageContext.request.contextPath}/EmployeeDetails?id_link=${sessionScope.sessionEmployeeID}">
                                     <div class="card-body">
@@ -89,7 +96,7 @@
 
 
                         <div class="col-md-4">
-                            <div class="card mb-4 my-card">
+                            <div class="card mb-4 my-card box">
                                 <a class="nav-link active" aria-current="page"
                                    href="${pageContext.request.contextPath}/EmployeePaychecks?employeeId=${sessionScope.sessionEmployeeID}">
                                     <div class="card-body">
@@ -104,7 +111,7 @@
                     <c:otherwise>
                         <div class="row">
                             <div class="col-md-4">
-                                <div class="card mb-4 my-card">
+                                <div class="card mb-4 my-card box">
                                     <div class="card-body">
                                         <h2 class="card-title">Explore Employee Records</h2>
                                         <p class="card-text">Access a comprehensive database of employee
@@ -113,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card mb-4 my-card">
+                                <div class="card mb-4 my-card box">
                                     <div class="card-body">
                                         <h2 class="card-title">Custom Bonuses and Payments</h2>
                                         <p class="card-text">Manage custom bonuses and payment schedules for
@@ -122,7 +129,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card mb-4 my-card">
+                                <div class="card mb-4 my-card box">
                                     <div class="card-body">
                                         <h2 class="card-title">Generate Paychecks</h2>
                                         <p class="card-text">Create and access employee paychecks seamlessly.</p>
@@ -130,7 +137,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <div class="card mb-4 my-card">
+                                <div class="card mb-4 my-card box">
                                     <div class="card-body">
                                         <h2 class="card-title">Log in Now</h2>
                                         <p class="card-text">Sign in to access personalized features and more.</p>
