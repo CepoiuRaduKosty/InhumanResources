@@ -21,7 +21,7 @@ public class SalaryCalculatorBean implements SalaryCalculatorProvider {
     EntityManager entityManager;
 
     @Override
-    public double TaxRate(SalaryLevelEnum salaryLevelEnum) {
+    public Double TaxRate(SalaryLevelEnum salaryLevelEnum) {
         if(salaryLevelEnum.equals(SalaryLevelEnum.PROFESSOR))
             return 20d;
         if(salaryLevelEnum.equals(SalaryLevelEnum.LECTURER))
@@ -31,11 +31,11 @@ public class SalaryCalculatorBean implements SalaryCalculatorProvider {
         if(salaryLevelEnum.equals(SalaryLevelEnum.EXECUTIVE))
             return 0d;
 
-        return 0;
+        return (double) 0;
     }
 
     @Override
-    public double getSalaryBeforeTaxes(UpdateEmployeeDto updateEmployeeDto, PaymentInfoDto paymentInfoDto, List<UpdateBonusDto> updateBonusDtoList) {
+    public Double getSalaryBeforeTaxes(UpdateEmployeeDto updateEmployeeDto, PaymentInfoDto paymentInfoDto, List<UpdateBonusDto> updateBonusDtoList) {
 
         double additionalSalary = 0;
 
@@ -54,7 +54,7 @@ public class SalaryCalculatorBean implements SalaryCalculatorProvider {
     }
 
     @Override
-    public double getSalaryAfterTaxes(UpdateEmployeeDto updateEmployeeDto, PaymentInfoDto paymentInfoDto, List<UpdateBonusDto> updateBonusDtoList) {
+    public Double getSalaryAfterTaxes(UpdateEmployeeDto updateEmployeeDto, PaymentInfoDto paymentInfoDto, List<UpdateBonusDto> updateBonusDtoList) {
         double salaryBeforeTaxes = getSalaryBeforeTaxes(updateEmployeeDto, paymentInfoDto, updateBonusDtoList);
         double taxRate = TaxRate(paymentInfoDto.getSalaryLevel()) / 100;
         final double socialCharge = 1/10d;

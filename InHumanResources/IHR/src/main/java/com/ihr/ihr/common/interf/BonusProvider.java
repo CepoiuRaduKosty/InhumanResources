@@ -18,4 +18,5 @@ public interface BonusProvider {
     List<BonusDto> getAllBonuses();
     List<BonusDto> getAllBonusesByPaymentId(Long paymentId);
     List<BonusEntryDto> searchBonusesByEmployeeName(String employeeName);
+    List<BonusDto> getBonusDtoByPaymentId(Long paymentId) throws UnknownPaymentInfoException;
 }

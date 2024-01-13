@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface SalaryCalculatorProvider {
 
-    double TaxRate(SalaryLevelEnum salaryLevelEnum);
+    Double TaxRate(SalaryLevelEnum salaryLevelEnum);
 
-    double getSalaryBeforeTaxes(UpdateEmployeeDto updateEmployeeDto, PaymentInfoDto paymentInfoDto, List<UpdateBonusDto> updateBonusDtoList);
+    Double getSalaryBeforeTaxes(UpdateEmployeeDto updateEmployeeDto, PaymentInfoDto paymentInfoDto, List<UpdateBonusDto> updateBonusDtoList);
 
-    double getSalaryAfterTaxes(UpdateEmployeeDto updateEmployeeDto, PaymentInfoDto paymentInfoDto, List<UpdateBonusDto> updateBonusDtoList);
+    Double getSalaryAfterTaxes(UpdateEmployeeDto updateEmployeeDto, PaymentInfoDto paymentInfoDto, List<UpdateBonusDto> updateBonusDtoList);
 }

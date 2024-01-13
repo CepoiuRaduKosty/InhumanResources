@@ -26,4 +26,6 @@ public interface PaycheckProvider {
     List<PaycheckDto> getAllPaychecksByMonth(Integer month);
 
     EmployeeDto getEmployeeByPaycheck(Long paycheckId) throws UnknownPaycheckException;
+
+    PaycheckDto getLastPaycheckByPaymentInfoId(Long paymentInfoId);
 }

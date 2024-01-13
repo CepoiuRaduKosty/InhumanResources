@@ -6,18 +6,16 @@ public class PaycheckDto {
     private Long id;
     private Long paymentId;
     private LocalDate date;
-    private Integer basicSalary;
-    private Integer bonusForSuccess;
+    private Double basicSalary;
+    private Double bonusForSuccess;
     private Integer numberOfShares;
     private Integer cumulatedShares;
-    private Integer salaryBeforeTaxes;
-    private Integer tax;
-    private Integer socialCharge;
-    private Integer finalSalary;
+    private Double salaryBeforeTaxes;
+    private Double tax;
+    private Double socialCharge;
+    private Double finalSalary;
 
-    public PaycheckDto(Long id, Long paymentId, LocalDate date, Integer basicSalary, Integer bonusForSuccess,
-                       Integer numberOfShares, Integer cumulatedShares, Integer salaryBeforeTaxes, Integer tax,
-                       Integer socialCharge, Integer finalSalary) {
+    public PaycheckDto(Long id, Long paymentId, LocalDate date, Double basicSalary, Double bonusForSuccess, Integer numberOfShares, Integer cumulatedShares, Double salaryBeforeTaxes, Double tax, Double socialCharge, Double finalSalary) {
         this.id = id;
         this.paymentId = paymentId;
         this.date = date;
@@ -55,19 +53,19 @@ public class PaycheckDto {
         this.date = date;
     }
 
-    public Integer getBasicSalary() {
+    public Double getBasicSalary() {
         return basicSalary;
     }
 
-    public void setBasicSalary(Integer basicSalary) {
+    public void setBasicSalary(Double basicSalary) {
         this.basicSalary = basicSalary;
     }
 
-    public Integer getBonusForSuccess() {
+    public Double getBonusForSuccess() {
         return bonusForSuccess;
     }
 
-    public void setBonusForSuccess(Integer bonusForSuccess) {
+    public void setBonusForSuccess(Double bonusForSuccess) {
         this.bonusForSuccess = bonusForSuccess;
     }
 
@@ -87,35 +85,35 @@ public class PaycheckDto {
         this.cumulatedShares = cumulatedShares;
     }
 
-    public Integer getSalaryBeforeTaxes() {
+    public Double getSalaryBeforeTaxes() {
         return salaryBeforeTaxes;
     }
 
-    public void setSalaryBeforeTaxes(Integer salaryBeforeTaxes) {
+    public void setSalaryBeforeTaxes(Double salaryBeforeTaxes) {
         this.salaryBeforeTaxes = salaryBeforeTaxes;
     }
 
-    public Integer getTax() {
+    public Double getTax() {
         return tax;
     }
 
-    public void setTax(Integer tax) {
+    public void setTax(Double tax) {
         this.tax = tax;
     }
 
-    public Integer getSocialCharge() {
+    public Double getSocialCharge() {
         return socialCharge;
     }
 
-    public void setSocialCharge(Integer socialCharge) {
+    public void setSocialCharge(Double socialCharge) {
         this.socialCharge = socialCharge;
     }
 
-    public Integer getFinalSalary() {
+    public Double getFinalSalary() {
         return finalSalary;
     }
 
-    public void setFinalSalary(Integer finalSalary) {
+    public void setFinalSalary(Double finalSalary) {
         this.finalSalary = finalSalary;
     }
 }
