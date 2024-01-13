@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <h1>Edit Bonus</h1>
+                <h1 class="d-flex justify-content-center">Edit Bonus</h1>
                 <c:if test="${not empty error}">
                     <div class="alert alert-danger" role="alert">
                             ${error}

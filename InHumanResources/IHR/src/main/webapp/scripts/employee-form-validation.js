@@ -8,7 +8,7 @@
         Array.from(forms).forEach(form => {
             form.reset();
 
-
+            const emailInput = form.querySelector('#email');
             const dateOfBirthInput = form.querySelector('#dateOfBirth');
             const hoursPerWeekInput = form.querySelector('#hoursPerWeek');
             const iBanInput = form.querySelector('#iBan');
@@ -17,6 +17,10 @@
             const numberOfSharesInput = form.querySelector('#numberOfShares');
             const cumulatedSharesInput = form.querySelector('#cumulatedShares');
             const salaryLevelSelect = form.querySelector('#salaryLevel');
+
+            emailInput.addEventListener('input', () => {
+                validateEmail(emailInput);
+            });
 
             dateOfBirthInput.addEventListener('input', () => {
                 validateDateOfBirth(dateOfBirthInput);
@@ -82,6 +86,10 @@
             }, false);
         });
     });
+    function isEmailValid(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 
     function dateOfBirthIsValid(value) {
         const currentDate = new Date();
@@ -203,6 +211,18 @@
             return true;
         }
     }
+
+    function validateEmail(input) {
+        const value = input.value;
+        const isValid = isEmailValid(value);
+
+        if (!isValid) {
+            input.setCustomValidity('Invalid email address');
+        } else {
+            input.setCustomValidity('');
+        }
+    }
+
 
 
     function validateDateOfBirth(input) {
