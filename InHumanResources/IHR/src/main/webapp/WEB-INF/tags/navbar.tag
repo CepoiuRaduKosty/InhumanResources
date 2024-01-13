@@ -25,6 +25,7 @@
                             <li><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/AllPaychecks">All Paychecks</a></li>
                             <li><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PayDay">Pay Day</a></li>
                             <li><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/SearchBonus">Custom Bonuses</a></li>
+                            <li><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/PaycheckManagement">Paycheck Management</a></li>
                         </c:when>
                         <c:when test="${!requestScope.navIsAdmin && requestScope.navIsEmployee}">
                             <li><a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/EmployeeDetails?id_link=${sessionScope.sessionEmployeeID}">My Profile</a></li>

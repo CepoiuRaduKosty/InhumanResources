@@ -114,6 +114,23 @@ public class PaycheckBean implements PaycheckProvider {
     }
 
     @Override
+    public PaycheckDto getLastPaycheckByPaymentInfoId(Long paymentInfoId){
+        try {
+            LOG.info("getLastPaycheckByPaymentInfoId");
+            TypedQuery<Paycheck> typedQuery = entityManager.createQuery("SELECT p FROM Paycheck p WHERE p.paymentInfo.id = :id ORDER BY p.date DESC", Paycheck.class);
+            typedQuery.setParameter("id", paymentInfoId);
+            typedQuery.setMaxResults(1);
+
+            Paycheck paycheck = typedQuery.getSingleResult();
+
+            return copyPaycheckToDto(paycheck);
+        }
+        catch (Exception ex) {
+            throw new EJBException(ex);
+        }
+    }
+
+    @Override
     public List<PaycheckDto> getAllPaychecksByEmployeeId(Long employeeId) {
         try{
             LOG.info("getAllPaychecksByEmployeeId");

@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 @Stateless
 public class BonusesBean implements BonusProvider {
     private static final Logger LOG = Logger.getLogger(BonusesBean.class.getName());
+
     @PersistenceContext
     EntityManager entityManager;
 
@@ -74,6 +75,13 @@ public class BonusesBean implements BonusProvider {
         return paymentInfo;
     }
 
+    @Override
+    public List<BonusDto> getBonusDtoByPaymentId(Long paymentId) throws UnknownPaymentInfoException {
+        LOG.info("getBonusDtoByPaymentId");
+        PaymentInfo paymentInfo = safeGetPaymentInfoById(paymentId);
+        List<BonusInfo> bonuses = paymentInfo.getBonuses();
+        return getBonusDtoListFromBonusInfoList(bonuses);
+    }
 
     @Override
     public BonusDto getBonusDtoById(Long bonusId) throws UnknownBonusException {

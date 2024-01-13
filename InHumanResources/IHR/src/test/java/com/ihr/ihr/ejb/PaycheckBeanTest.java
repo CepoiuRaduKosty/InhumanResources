@@ -49,14 +49,14 @@ public class PaycheckBeanTest {
         Paycheck mockPaycheck = new Paycheck();
         mockPaycheck.setId(existingPaycheckId);
         mockPaycheck.setDate(LocalDate.now());
-        mockPaycheck.setBasicSalary(2500);
-        mockPaycheck.setBonusForSuccess(1000);
+        mockPaycheck.setBasicSalary(2500.0);
+        mockPaycheck.setBonusForSuccess(1000.0);
         mockPaycheck.setNumberOfShares(5);
         mockPaycheck.setCumulatedShares(15);
-        mockPaycheck.setSalaryBeforeTaxes(3000);
-        mockPaycheck.setTax(500);
-        mockPaycheck.setSocialCharge(200);
-        mockPaycheck.setFinalSalary(2300);
+        mockPaycheck.setSalaryBeforeTaxes(3000.0);
+        mockPaycheck.setTax(500.0);
+        mockPaycheck.setSocialCharge(200.0);
+        mockPaycheck.setFinalSalary(2300.0);
         PaymentInfo mockPaymentInfo = new PaymentInfo();
         mockPaymentInfo.setId(100L); // Assuming ID for PaymentInfo
         mockPaycheck.setPaymentInfo(mockPaymentInfo);
@@ -93,14 +93,14 @@ public class PaycheckBeanTest {
         CreatePaycheckDto updatedPaycheckDto = new CreatePaycheckDto(
                 100L,
                 LocalDate.of(2024, 1, 6),
-                3000,
-                1500,
+                3000.0,
+                1500.0,
                 100,
                 50,
-                2500,
-                100,
-                50,
-                2350
+                2500.0,
+                100.0,
+                50.0,
+                2350.0
         );
         PaymentInfo existingPaymentInfo = new PaymentInfo();
         existingPaymentInfo.setId(100L);
@@ -109,14 +109,14 @@ public class PaycheckBeanTest {
         Paycheck existingPaycheck = new Paycheck();
         existingPaycheck.setId(existingPaycheckId);
         existingPaycheck.setDate(LocalDate.now());
-        existingPaycheck.setBasicSalary(2500);
-        existingPaycheck.setBonusForSuccess(1500);
+        existingPaycheck.setBasicSalary(2500.0);
+        existingPaycheck.setBonusForSuccess(1500.0);
         existingPaycheck.setNumberOfShares(100);
         existingPaycheck.setCumulatedShares(50);
-        existingPaycheck.setSalaryBeforeTaxes(2500);
-        existingPaycheck.setTax(100);
-        existingPaycheck.setSocialCharge(50);
-        existingPaycheck.setFinalSalary(2350);
+        existingPaycheck.setSalaryBeforeTaxes(2500.0);
+        existingPaycheck.setTax(100.0);
+        existingPaycheck.setSocialCharge(50.0);
+        existingPaycheck.setFinalSalary(2350.0);
         existingPaycheck.setPaymentInfo(existingPaymentInfo);
 
         when(entityManager.find(Paycheck.class, existingPaycheckId)).thenReturn(existingPaycheck);
@@ -181,14 +181,14 @@ public class PaycheckBeanTest {
         CreatePaycheckDto invalidPaycheckDto = new CreatePaycheckDto(
                 null,
                 null,
-                -1000,
-                -500,
+                -1000.0,
+                -500.0,
                 -100,
                 -50,
-                -2000,
-                -100,
-                -150,
-                -3000
+                -2000.0,
+                -100.0,
+                -150.0,
+                -3000.0
         );
 
         when(entityManager.find(eq(Paycheck.class), anyLong())).thenReturn(mock(Paycheck.class));
@@ -203,14 +203,14 @@ public class PaycheckBeanTest {
         CreatePaycheckDto validPaycheckDto = new CreatePaycheckDto(
                 1L,
                 LocalDate.now(),
-                5000,
-                1000,
+                5000.0,
+                1000.0,
                 10,
                 5,
-                4500,
-                500,
-                300,
-                4200
+                4500.0,
+                500.0,
+                300.0,
+                4200.0
         );
 
         PaymentInfo paymentInfo = new PaymentInfo();
@@ -242,14 +242,14 @@ public class PaycheckBeanTest {
         CreatePaycheckDto invalidPaycheckDto = new CreatePaycheckDto(
                 999L,
                 LocalDate.now(),
-                5000,
-                1000,
+                5000.0,
+                1000.0,
                 10,
                 5,
-                4500,
-                500,
-                300,
-                4200
+                4500.0,
+                500.0,
+                300.0,
+                4200.0
         );
 
         when(entityManager.find(eq(PaymentInfo.class), anyLong())).thenReturn(null);
@@ -292,27 +292,27 @@ public class PaycheckBeanTest {
         Paycheck paycheck1 = new Paycheck();
         paycheck1.setId(1L);
         paycheck1.setDate(LocalDate.of(2023, 1, 15));
-        paycheck1.setBasicSalary(5000);
-        paycheck1.setBonusForSuccess(1000);
+        paycheck1.setBasicSalary(5000.0);
+        paycheck1.setBonusForSuccess(1000.0);
         paycheck1.setNumberOfShares(10);
         paycheck1.setCumulatedShares(100);
-        paycheck1.setSalaryBeforeTaxes(6000);
-        paycheck1.setTax(1000);
-        paycheck1.setSocialCharge(500);
-        paycheck1.setFinalSalary(4500);
+        paycheck1.setSalaryBeforeTaxes(6000.0);
+        paycheck1.setTax(1000.0);
+        paycheck1.setSocialCharge(500.0);
+        paycheck1.setFinalSalary(4500.0);
         paycheck1.setPaymentInfo(paymentInfo);
 
         Paycheck paycheck2 = new Paycheck();
         paycheck2.setId(2L);
         paycheck2.setDate(LocalDate.of(2023, 2, 28));
-        paycheck2.setBasicSalary(5500);
-        paycheck2.setBonusForSuccess(1200);
+        paycheck2.setBasicSalary(5500.0);
+        paycheck2.setBonusForSuccess(1200.0);
         paycheck2.setNumberOfShares(12);
         paycheck2.setCumulatedShares(120);
-        paycheck2.setSalaryBeforeTaxes(6700);
-        paycheck2.setTax(1200);
-        paycheck2.setSocialCharge(600);
-        paycheck2.setFinalSalary(5100);
+        paycheck2.setSalaryBeforeTaxes(6700.0);
+        paycheck2.setTax(1200.0);
+        paycheck2.setSocialCharge(600.0);
+        paycheck2.setFinalSalary(5100.0);
         paycheck2.setPaymentInfo(paymentInfo);
 
         return Arrays.asList(paycheck1, paycheck2);
