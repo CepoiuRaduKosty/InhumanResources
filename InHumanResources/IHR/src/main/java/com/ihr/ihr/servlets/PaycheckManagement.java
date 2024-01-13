@@ -50,8 +50,8 @@ public class PaycheckManagement extends HttpServlet {
             }
         }).collect(Collectors.toSet());
 
-        List<EmployeeDto> employeesWithoutPaychecks = employeeProvider.findAllEmployees().stream().map(employee ->
-                employeesWithPaychecksIds.contains(employee.getId()) ? null : employee).collect(Collectors.toList());
+        List<EmployeeDto> employeesWithoutPaychecks = employeeProvider.findAllEmployees().stream().filter(employee ->
+                !employeesWithPaychecksIds.contains(employee.getId())).collect(Collectors.toList());
 
         request.setAttribute("employees", employeesWithoutPaychecks);
 

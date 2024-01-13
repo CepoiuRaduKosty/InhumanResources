@@ -35,7 +35,7 @@
                         <c:forEach var="employee" items="${employees}" varStatus="rowNum">
                             <c:if test="${employee != null}">
                                 <tr>
-                                    <td>${rowNum.index}</td>
+                                    <td>${rowNum.index + 1}</td>
                                     <td>${employee.name} ${employee.surname}</td>
                                     <td>
                                         <a class="btn btn-secondary btn-sm"
