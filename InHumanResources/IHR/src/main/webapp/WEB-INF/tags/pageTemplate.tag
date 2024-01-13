@@ -157,22 +157,22 @@
                 </div>
                 <div class="col-auto mb-1">
                     <div class="text-center">
-                        <p style="font-size: 14px; margin-bottom: 3px;"><strong>Darius Onofrei</strong></p>
-                    </div>
-                </div>
-                <div class="col-auto mb-1">
-                    <div class="text-center">
-                        <p style="font-size: 14px; margin-bottom: 3px;"><strong>Radu Cruceat</strong></p>
-                    </div>
-                </div>
-                <div class="col-auto mb-1">
-                    <div class="text-center">
-                        <p style="font-size: 14px; margin-bottom: 3px;"><strong>Edi Tira</strong></p>
+                        <p style="font-size: 14px; margin-bottom: 3px;"><strong>Cruceat Radu</strong></p>
                     </div>
                 </div>
                 <div class="col-auto mb-1">
                     <div class="text-center">
                         <p style="font-size: 14px; margin-bottom: 3px;"><strong>Marian Alexandru</strong></p>
+                    </div>
+                </div>
+                <div class="col-auto mb-1">
+                    <div class="text-center">
+                        <p style="font-size: 14px; margin-bottom: 3px;"><strong>Onofrei Darius</strong></p>
+                    </div>
+                </div>
+                <div class="col-auto mb-1">
+                    <div class="text-center">
+                        <p style="font-size: 14px; margin-bottom: 3px;"><strong>Tira Eduard</strong></p>
                     </div>
                 </div>
             </div>

@@ -34,7 +34,7 @@
 
                     <hr class="my-2">
 
-                    <p class="text-muted mb-0 text-center">By clicking Sign up, you agree to the terms of use.</p>
+                    <p class="text-muted mb-0 text-center">By clicking Sign in, you agree to the terms of use.</p>
                 </form>
                 <script src="${pageContext.request.contextPath}/scripts/account-validation.js"></script>
             </div>
