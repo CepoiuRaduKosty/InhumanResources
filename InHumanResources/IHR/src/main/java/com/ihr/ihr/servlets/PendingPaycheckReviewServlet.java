@@ -120,6 +120,10 @@ public class PendingPaycheckReviewServlet extends HttpServlet {
                 request.setAttribute("isPayDateSet", false);
             }
 
+            if(payDayProvider.isPayDateSet() && payDayProvider.getDayOfMonth() != LocalDate.now().getDayOfMonth()) {
+                request.setAttribute("isTodayPayDay", false);
+            }
+
             request.getRequestDispatcher("/WEB-INF/pages/pendingPaycheckReview.jsp").forward(request, response);
         }
     }
@@ -128,8 +132,15 @@ public class PendingPaycheckReviewServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response) throws ServletException, IOException {
         try {
+
             Long employeeId = Long.parseLong(request.getParameter("employeeId"));
             EmployeeDto employeeDto = employeeProvider.findById(employeeId);
+
+            if(!payDayProvider.isPayDateSet() ||
+                (payDayProvider.isPayDateSet()) && payDayProvider.getDayOfMonth() != LocalDate.now().getDayOfMonth()) {
+                response.sendRedirect(request.getContextPath() + "/AccessDenied");
+                return;
+            }
 
             PaymentInfoDto paymentInfoDto = paymentInfoProvider.findPaymentInfoById(employeeDto.getPaymentInfoDto().getId());
             Double basicSalary = Double.parseDouble(request.getParameter("basicSalary"));

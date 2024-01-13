@@ -36,7 +36,7 @@
                             <c:if test="${employee != null}">
                                 <tr>
                                     <td>${rowNum.index}</td>
-                                    <td>${employee.name}</td>
+                                    <td>${employee.name} ${employee.surname}</td>
                                     <td>
                                         <a class="btn btn-secondary btn-sm"
                                            href="${pageContext.request.contextPath}/PendingPaycheckReview?employeeId=${employee.id}">Review Paycheck</a>

@@ -30,21 +30,21 @@
 
                             <div class="form-group">
                                 <label for="successBonus">Success Bonus:</label>
-                                <input type="text" class="form-control" id="successBonus" name="successBonus" value="${successBonus}">
+                                <input type="text" class="form-control" id="successBonus" name="successBonus" value="${successBonus}" readonly>
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="sharesNumber">Number of Shares:</label>
-                                <input type="text" class="form-control" id="sharesNumber" name="sharesNumber" value="${sharesNumber}">
+                                <input type="text" class="form-control" id="sharesNumber" name="sharesNumber" value="${sharesNumber}" readonly>
                             </div>
 
                             <br>
 
                             <div class="form-group">
                                 <label for="cumulatedSharesNumber">Cumulated Shares Number:</label>
-                                <input type="text" class="form-control" id="cumulatedSharesNumber" name="cumulatedSharesNumber" value="${cumulatedSharesNumber}">
+                                <input type="text" class="form-control" id="cumulatedSharesNumber" name="cumulatedSharesNumber" value="${cumulatedSharesNumber}" readonly>
                             </div>
 
                             <br>
@@ -54,7 +54,7 @@
                                 <c:forEach items="${extraBonuses}" var="extraBonus">
                                     <div class="row">
                                         <div class="col">
-                                            <input type="checkbox" name="extraBonusIds" value="${extraBonus.id}">
+                                            <input type="checkbox" name="extraBonusIds" value="${extraBonus.id}" >
                                         </div>
                                         <div class="col">
                                             <label>Description: ${extraBonus.bonusDescription}</label>
@@ -84,6 +84,12 @@
 
                             <c:choose>
                                 <c:when test="${isPayDateSet == false}">
+                                    <button type="submit" class="btn btn-primary" disabled>Submit</button>
+                                    <div class="alert alert-danger mt-3" role="alert">
+                                        Pay day has not been set, hence paychecks cannot be approved. Go to Edit Pay Day page.
+                                    </div>
+                                </c:when>
+                                <c:when test="${isTodayPayDay == false}">
                                     <button type="submit" class="btn btn-primary" disabled>Submit</button>
                                     <div class="alert alert-danger mt-3" role="alert">
                                         Today is not the pay day, hence paychecks cannot be approved.
