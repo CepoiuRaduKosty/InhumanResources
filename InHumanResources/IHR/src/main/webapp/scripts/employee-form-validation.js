@@ -70,6 +70,7 @@
                 const bonusForSuccessValue = parseFloat(bonusForSuccessInput.value);
                 const numberOfSharesValue = parseInt(numberOfSharesInput.value, 10);
                 const cumulatedSharesValue = parseInt(cumulatedSharesInput.value, 10);
+                const email = emailInput.value;
 
                 if (!dateOfBirthIsValid(dateOfBirthValue) ||
                     !hoursPerWeekIsValid(hoursPerWeekValue) ||
@@ -77,7 +78,9 @@
                     !monthlyBasicSalaryIsValid(monthlyBasicSalaryValue) ||
                     !bonusForSuccessIsValid(bonusForSuccessValue) ||
                     !numberOfSharesIsValid(numberOfSharesValue) ||
-                    !cumulatedSharesIsValid(cumulatedSharesValue)) {
+                    !cumulatedSharesIsValid(cumulatedSharesValue) ||
+                    !isEmailValid(email) ||
+                    !form.checkValidity()) {
                     event.preventDefault();
                     event.stopPropagation();
                 }
