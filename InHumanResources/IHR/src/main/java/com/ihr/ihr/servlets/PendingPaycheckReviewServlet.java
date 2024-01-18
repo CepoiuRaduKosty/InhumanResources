@@ -1,21 +1,9 @@
 package com.ihr.ihr.servlets;
 
-import com.ihr.ihr.common.dtos.BonusDtos.BonusDto;
-import com.ihr.ihr.common.dtos.BonusDtos.CreateBonusDto;
-import com.ihr.ihr.common.dtos.BonusDtos.UpdateBonusDto;
 import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
-import com.ihr.ihr.common.dtos.PaycheckBonusDtos.CreatePaycheckBonusDto;
-import com.ihr.ihr.common.dtos.PaycheckBonusDtos.PaycheckBonusDto;
-import com.ihr.ihr.common.dtos.PaycheckDtos.CreatePaycheckDto;
-import com.ihr.ihr.common.dtos.PaycheckDtos.PaycheckDto;
-import com.ihr.ihr.common.dtos.PaymentInfoDtos.PaymentInfoDto;
-import com.ihr.ihr.common.enums.SalaryLevelEnum;
 import com.ihr.ihr.common.excep.InvalidPaycheckBonusException;
-import com.ihr.ihr.common.excep.UnknownBonusException;
 import com.ihr.ihr.common.excep.UnknownPaymentInfoException;
 import com.ihr.ihr.common.interf.*;
-import com.ihr.ihr.entities.Paycheck;
-import com.ihr.ihr.entities.PaycheckBonus;
 import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
@@ -24,10 +12,6 @@ import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @DeclareRoles({"EMPLOYEE", "ADMIN"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN"}), httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"ADMIN"})})

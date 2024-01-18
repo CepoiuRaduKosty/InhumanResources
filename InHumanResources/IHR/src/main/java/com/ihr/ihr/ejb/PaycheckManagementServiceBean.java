@@ -7,6 +7,7 @@ import com.ihr.ihr.common.interf.EmployeeProvider;
 import com.ihr.ihr.common.interf.PayDayProvider;
 import com.ihr.ihr.common.interf.PaycheckManagementServiceProvider;
 import com.ihr.ihr.common.interf.PaycheckProvider;
+import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Stateless
 public class PaycheckManagementServiceBean implements PaycheckManagementServiceProvider {
     @Inject
     PayDayProvider payDayProvider;

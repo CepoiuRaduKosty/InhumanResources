@@ -1,8 +1,5 @@
 package com.ihr.ihr.servlets;
 
-import com.ihr.ihr.common.dtos.EmployeeDtos.EmployeeDto;
-import com.ihr.ihr.common.dtos.PaycheckDtos.PaycheckDto;
-import com.ihr.ihr.common.excep.UnknownPaycheckException;
 import com.ihr.ihr.common.interf.*;
 import jakarta.annotation.security.DeclareRoles;
 import jakarta.inject.Inject;
@@ -11,10 +8,6 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @DeclareRoles({"ADMIN"})
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"ADMIN"}),
