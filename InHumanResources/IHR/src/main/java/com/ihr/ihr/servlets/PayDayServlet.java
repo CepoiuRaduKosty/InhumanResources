@@ -31,7 +31,6 @@ public class PayDayServlet extends HttpServlet {
 
 
         if (dayOfMonth != null) {
-
             request.getRequestDispatcher("/WEB-INF/pages/PayDayIsSet.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("/WEB-INF/pages/PayDayNotSet.jsp").forward(request, response);
